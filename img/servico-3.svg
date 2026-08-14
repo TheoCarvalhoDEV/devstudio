@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Ilustração de dois programas conectados, com a confirmação do pagamento acontecendo sozinha no meio">
+  <rect width="800" height="500" fill="#f4f2ed"/>
+
+  <rect x="60" y="160" width="200" height="180" fill="#ffffff" stroke="#101114" stroke-width="4"/>
+  <rect x="88" y="196" width="144" height="12" fill="#101114" opacity=".28"/>
+  <rect x="88" y="228" width="112" height="10" fill="#101114" opacity=".16"/>
+  <rect x="88" y="256" width="130" height="10" fill="#101114" opacity=".16"/>
+  <rect x="88" y="284" width="96" height="10" fill="#101114" opacity=".16"/>
+
+  <rect x="540" y="160" width="200" height="180" fill="#ffffff" stroke="#101114" stroke-width="4"/>
+  <rect x="568" y="196" width="144" height="12" fill="#101114" opacity=".28"/>
+  <rect x="568" y="228" width="120" height="10" fill="#101114" opacity=".16"/>
+  <rect x="568" y="256" width="98" height="10" fill="#101114" opacity=".16"/>
+  <rect x="568" y="284" width="134" height="10" fill="#101114" opacity=".16"/>
+
+  <path d="M268 250h68M464 250h68" stroke="#101114" stroke-width="4"/>
+  <path d="M532 250l-16-9v18z" fill="#101114"/>
+
+  <circle cx="400" cy="250" r="60" fill="#2530e6"/>
+  <path d="M374 250l18 20 34-40" fill="none" stroke="#eeedfb" stroke-width="9" stroke-linecap="square"/>
+
+  <rect x="336" y="352" width="128" height="10" fill="#101114" opacity=".18"/>
+</svg>
