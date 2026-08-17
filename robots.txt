@@ -1,0 +1,7 @@
+# DevStudio — https://devstudio.theotheteo.workers.dev/
+# Tudo liberado: é um site de uma página só e queremos ele inteiro no índice.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://devstudio.theotheteo.workers.dev/sitemap.xml
