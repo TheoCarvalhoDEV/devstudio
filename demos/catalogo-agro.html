@@ -1,675 +1,1091 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgroPeças MT | Catálogo Técnico e Cotação de Peças Agrícolas</title>
-<meta name="description" content="Catálogo técnico de peças para plantadeiras, colheitadeiras e tratores. Consulta por SKU, saldo por unidade e cotação com protocolo.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-:root{
-  --ink:#10141a; --steel:#171d25; --line:#2c3846; --line-soft:#e4e8ed;
-  --paper:#f4f6f8; --dim:#8595a8; --slate:#4c5a6b; --text:#101820;
-  --amber:#ff8a1f; --amber-deep:#c96200; --signal:#3fc97a;
-  --r:4px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Archivo',system-ui,sans-serif;background:var(--paper);color:var(--text);-webkit-font-smoothing:antialiased}
-a{color:inherit}
-:focus-visible{outline:2px solid var(--amber);outline-offset:2px}
-button,input,select{font:inherit}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroPeças MT | Catálogo Técnico B2B & Reposição Agrícola</title>
+    <meta name="description" content="Catálogo técnico de peças originais e equivalentes para colheitadeiras, plantadeiras e tratores em Mato Grosso. Consulta com códigos cruzados OEM e saldo por filial.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #f1f4f8;
+            --bg-card: #ffffff;
+            --bg-dark: #121820;
+            --bg-panel: #1a222c;
+            --border-soft: #d2dae4;
+            --border-dark: #2c3846;
+            --text-main: #0f1722;
+            --text-muted: #526375;
+            --text-dim: #8494a5;
+            --agro-orange: #f26800;
+            --agro-orange-hover: #d95a00;
+            --agro-green: #15803d;
+            --agro-green-light: #eaf6ee;
+            --font-display: 'Barlow Condensed', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Inter', -apple-system, sans-serif;
+            --radius-sm: 4px;
+            --radius-md: 6px;
+            --radius-lg: 10px;
+            --shadow-card: 0 2px 8px rgba(18, 24, 32, 0.06), 0 1px 2px rgba(18, 24, 32, 0.04);
+        }
 
-/* ── faixa de status ────────────────────── */
-.strip{background:var(--ink);color:var(--dim);font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.04em;padding:7px 20px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.strip b{color:#dbe3ec;font-weight:500}
-.live{display:inline-flex;align-items:center;gap:7px;color:var(--signal)}
-.live i{width:6px;height:6px;border-radius:50%;background:var(--signal);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-/* ── barra ──────────────────────────────── */
-.bar{background:var(--steel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:60}
-.bar-in{max-width:1420px;margin:0 auto;padding:14px 20px;display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center}
-.mark{display:flex;align-items:center;gap:11px;text-decoration:none;flex-shrink:0}
-.mark-i{width:38px;height:38px;background:var(--amber);color:var(--ink);display:grid;place-items:center;border-radius:var(--r)}
-.mark-t{font-variation-settings:'wdth' 118;font-weight:800;font-size:17px;color:#fff;letter-spacing:-.01em;line-height:1.05;text-transform:uppercase}
-.mark-s{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase}
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
 
-.find{position:relative;max-width:620px}
-.find>svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--dim)}
-.find input{width:100%;background:var(--ink);border:1px solid var(--line);border-radius:var(--r);padding:12px 46px 12px 42px;color:#fff;font-family:'IBM Plex Mono',monospace;font-size:13px}
-.find input::placeholder{color:#5d6c7e}
-.find input:focus{border-color:var(--amber);outline:none;background:#0b0e13}
-.find-hint{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-family:'IBM Plex Mono',monospace;font-size:10px;color:#5d6c7e;border:1px solid var(--line);padding:2px 6px;border-radius:3px}
+        /* Top Operational Strip */
+        .op-strip {
+            background-color: var(--bg-dark);
+            color: #b0c0d0;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            padding: 8px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-dark);
+            gap: 16px;
+            flex-wrap: wrap;
+        }
 
-.quote-btn{display:flex;align-items:center;gap:9px;background:var(--amber);color:var(--ink);border:none;border-radius:var(--r);padding:11px 16px;font-weight:700;font-size:13px;cursor:pointer;transition:background .15s}
-.quote-btn:hover{background:#ffa04a}
-.quote-btn .n{background:var(--ink);color:var(--amber);font-family:'IBM Plex Mono',monospace;font-size:11px;min-width:20px;height:20px;border-radius:3px;display:grid;place-items:center;padding:0 5px}
+        .op-strip-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
 
-/* ── abertura ───────────────────────────── */
-.hero{background:var(--ink);color:#fff;border-bottom:3px solid var(--amber);position:relative;overflow:hidden}
-.hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:52px 52px;opacity:.35;-webkit-mask-image:linear-gradient(105deg,transparent 42%,#000);mask-image:linear-gradient(105deg,transparent 42%,#000)}
-.hero-in{max-width:1420px;margin:0 auto;padding:52px 20px 44px;position:relative;z-index:1;display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:end}
-.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:16px;display:block}
-.hero h2{font-variation-settings:'wdth' 112;font-weight:800;font-size:clamp(30px,4.4vw,52px);line-height:.98;letter-spacing:-.025em;text-transform:uppercase}
-.hero h2 em{font-style:normal;color:var(--amber)}
-.hero p{color:#a9b7c7;font-size:15px;line-height:1.6;max-width:52ch;margin-top:18px}
-.gauges{display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
-.gauge{background:var(--ink);padding:14px 16px;display:flex;justify-content:space-between;align-items:baseline;gap:12px}
-.gauge span{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
-.gauge b{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;color:#fff}
-.gauge b.on{color:var(--signal)}
+        .live-dot {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #4ade80;
+            font-weight: 600;
+        }
 
-/* ── grade ──────────────────────────────── */
-.wrap{max-width:1420px;margin:0 auto;padding:28px 20px 80px;display:grid;grid-template-columns:248px 1fr;gap:28px;align-items:start}
-.rail{position:sticky;top:88px;display:grid;gap:22px}
-.rail h3{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--slate);padding-bottom:8px;border-bottom:1px solid var(--line-soft);margin-bottom:8px}
-.rail-list{list-style:none;display:grid;gap:1px}
-.f-btn{width:100%;background:none;border:none;text-align:left;padding:9px 10px;border-radius:var(--r);font-size:13.5px;color:var(--slate);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px;transition:background .12s,color .12s}
-.f-btn:hover{background:#e9edf1;color:var(--text)}
-.f-btn[aria-pressed="true"]{background:var(--ink);color:#fff;font-weight:600}
-.f-btn .c{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--dim)}
-.f-btn[aria-pressed="true"] .c{color:var(--amber)}
-.rail-note{background:#fff;border:1px solid var(--line-soft);border-left:3px solid var(--amber);padding:13px 14px;font-size:12.5px;line-height:1.55;color:var(--slate)}
-.rail-note b{display:block;color:var(--text);font-size:12px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+        .live-dot span {
+            width: 7px;
+            height: 7px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px #22c55e;
+        }
 
-.view-top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding-bottom:14px;border-bottom:2px solid var(--ink)}
-.view-top h3{font-size:15px;font-weight:700;letter-spacing:-.01em}
-.view-top h3 span{font-family:'IBM Plex Mono',monospace;color:var(--amber-deep)}
-.tools{display:flex;gap:8px;align-items:center}
-.tools select{background:#fff;border:1px solid var(--line-soft);border-radius:var(--r);padding:8px 11px;font-size:12.5px;color:var(--slate);cursor:pointer}
-.tools select:focus{border-color:var(--ink);outline:none}
-.chips{display:flex;gap:6px;flex-wrap:wrap}
-.chips:not(:empty){margin:14px 0 0}
-.chip{font-family:'IBM Plex Mono',monospace;font-size:11px;background:var(--ink);color:#fff;padding:5px 9px;border-radius:3px;display:inline-flex;align-items:center;gap:7px;border:none}
-button.chip{cursor:pointer;background:#e9edf1;color:var(--slate)}
-button.chip:hover{background:var(--amber-deep);color:#fff}
+        .branch-select-wrap {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #cbd5e1;
+        }
 
-/* ── linhas do catálogo ─────────────────── */
-.rows{border:1px solid var(--line-soft);border-top:none;background:#fff;margin-top:16px}
-.row{display:grid;grid-template-columns:88px 1fr 176px 132px;gap:18px;padding:16px;border-top:1px solid var(--line-soft);align-items:center;transition:background .12s}
-.row:hover{background:#fbfcfd}
-.row-img{width:88px;height:72px;border-radius:3px;overflow:hidden;background:#e9edf1}
-.row-img img{width:100%;height:100%;object-fit:cover}
-.row-sku{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--amber-deep);letter-spacing:.04em;font-weight:500}
-.row-name{font-size:15px;font-weight:700;letter-spacing:-.01em;margin:3px 0 5px;line-height:1.25}
-.row-brand{font-size:12.5px;color:var(--slate);line-height:1.5}
-.compat{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
-.compat span{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--slate);background:#eef1f4;border-radius:2px;padding:3px 6px}
-.spec-toggle{background:none;border:none;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--slate);text-decoration:underline;text-underline-offset:3px;cursor:pointer;margin-top:9px;padding:0}
-.spec-toggle:hover{color:var(--amber-deep)}
+        .branch-select {
+            background: #1e2836;
+            color: #ffffff;
+            border: 1px solid var(--border-dark);
+            padding: 2px 8px;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            outline: none;
+            cursor: pointer;
+        }
 
-.stock{display:grid;gap:5px}
-.stock-tag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;display:inline-flex;align-items:center;gap:6px;font-weight:500}
-.stock-tag.ok{color:#0f7a42}
-.stock-tag.low{color:#95560a}
-.stock-tag.order{color:var(--slate)}
-.stock-tag i{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0}
-.stock-where{font-size:11.5px;color:var(--slate);line-height:1.4}
+        /* Header Navigation */
+        header {
+            background: #ffffff;
+            border-bottom: 2px solid var(--border-soft);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-.buy{display:grid;gap:8px;justify-items:end}
-.price{font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600;letter-spacing:-.02em;text-align:right}
-.price small{display:block;font-family:'Archivo',sans-serif;font-size:10.5px;color:#7a879a;letter-spacing:.06em;text-transform:uppercase;font-weight:500;margin-bottom:2px}
-.stepper{display:flex;border:1px solid var(--line-soft);border-radius:var(--r);overflow:hidden}
-.stepper button{width:28px;height:30px;background:#f4f6f8;border:none;cursor:pointer;color:var(--slate);font-size:15px;line-height:1}
-.stepper button:hover{background:var(--ink);color:#fff}
-.stepper input{width:44px;height:30px;border:none;border-left:1px solid var(--line-soft);border-right:1px solid var(--line-soft);text-align:center;font-family:'IBM Plex Mono',monospace;font-size:13px;-moz-appearance:textfield}
-.stepper input::-webkit-outer-spin-button,.stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-.add{width:100%;background:var(--ink);color:#fff;border:none;border-radius:var(--r);padding:9px;font-size:12.5px;font-weight:700;cursor:pointer;transition:background .15s,color .15s}
-.add:hover{background:var(--amber);color:var(--ink)}
-.add.done{background:var(--signal);color:var(--ink)}
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 16px 24px;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 24px;
+            align-items: center;
+        }
 
-.specs{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--line-soft);border-top:1px dashed #cfd6de;margin-top:4px}
-.specs>div{background:#fff;padding:10px 12px}
-.specs dt{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#7a879a;margin-bottom:3px}
-.specs dd{font-size:13px;font-weight:600}
-.empty{padding:64px 24px;text-align:center;background:#fff;border:1px solid var(--line-soft);border-top:none}
-.empty b{display:block;font-size:17px;margin-bottom:6px}
-.empty p{color:var(--slate);font-size:13.5px;margin-bottom:18px;line-height:1.6}
-.empty button{background:var(--ink);color:#fff;border:none;border-radius:var(--r);padding:11px 22px;font-weight:700;font-size:13px;cursor:pointer}
+        .brand-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+        }
 
-/* ── gaveta / ordem de compra ───────────── */
-.scrim{position:fixed;inset:0;background:rgba(10,14,19,.6);opacity:0;pointer-events:none;transition:opacity .25s;z-index:80}
-.scrim.on{opacity:1;pointer-events:auto}
-.drawer{position:fixed;top:0;right:0;bottom:0;width:min(520px,100%);background:var(--paper);z-index:90;transform:translateX(101%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-8px 0 40px rgba(0,0,0,.3)}
-.drawer.on{transform:none}
-.drawer-top{background:var(--ink);color:#fff;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid var(--amber);flex-shrink:0}
-.drawer-top h3{font-variation-settings:'wdth' 112;text-transform:uppercase;font-size:15px;letter-spacing:.02em}
-.drawer-top p{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--dim);margin-top:3px;letter-spacing:.06em}
-.x{background:none;border:1px solid var(--line);color:#fff;width:32px;height:32px;border-radius:var(--r);cursor:pointer;display:grid;place-items:center;flex-shrink:0}
-.x:hover{background:var(--line)}
-.drawer-body{flex:1;overflow-y:auto;padding:20px}
+        .brand-emblem {
+            width: 42px;
+            height: 42px;
+            background: var(--bg-dark);
+            border-left: 4px solid var(--agro-orange);
+            border-radius: var(--radius-sm);
+            display: grid;
+            place-items: center;
+            color: var(--agro-orange);
+        }
 
-.po{background:#fff;border:1px solid var(--line-soft)}
-.po-head{display:grid;grid-template-columns:1fr 70px 92px;gap:10px;padding:9px 14px;background:var(--ink);color:var(--dim);font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase}
-.po-head span:nth-child(2){text-align:center}
-.po-head span:last-child{text-align:right}
-.po-line{display:grid;grid-template-columns:1fr 70px 92px;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line-soft);align-items:center}
-.po-line:last-child{border-bottom:none}
-.po-line h4{font-size:13px;font-weight:700;line-height:1.3}
-.po-line .sk{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--slate);margin-top:3px;display:block}
-.po-qty{display:flex;align-items:center;justify-content:center;gap:4px}
-.po-qty button{width:22px;height:22px;border:1px solid var(--line-soft);background:#f4f6f8;border-radius:2px;cursor:pointer;font-size:12px;line-height:1;color:var(--slate)}
-.po-qty button:hover{background:var(--ink);color:#fff}
-.po-qty b{font-family:'IBM Plex Mono',monospace;font-size:12px;min-width:16px;text-align:center}
-.po-sum{font-family:'IBM Plex Mono',monospace;font-size:13px;text-align:right;font-weight:500}
-.po-empty{padding:52px 20px;text-align:center;color:var(--slate);font-size:13.5px;line-height:1.6}
-.po-empty b{display:block;color:var(--text);font-size:15px;margin-bottom:6px}
+        .brand-text h1 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 800;
+            line-height: 0.95;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
 
-.fields{margin-top:18px;display:grid;gap:13px}
-.field label{display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--slate);margin-bottom:5px}
-.field input,.field select{width:100%;background:#fff;border:1px solid var(--line-soft);border-radius:var(--r);padding:11px 12px;font-size:13.5px}
-.field input:focus,.field select:focus{border-color:var(--ink);outline:none}
-.totals{margin-top:18px;background:#fff;border:1px solid var(--line-soft);padding:14px}
-.trow{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:6px 0;font-size:13px;color:var(--slate)}
-.trow b{font-family:'IBM Plex Mono',monospace;color:var(--text);font-weight:500;text-align:right}
-.trow.big{border-top:1px solid var(--line-soft);margin-top:6px;padding-top:12px;font-size:15px;color:var(--text);font-weight:700}
-.trow.big b{font-size:22px;font-weight:600;letter-spacing:-.02em}
-.drawer-foot{background:#fff;border-top:1px solid var(--line-soft);flex-shrink:0}
-.drawer-foot:not(:empty){padding:16px 20px}
-.send{width:100%;background:var(--amber);color:var(--ink);border:none;border-radius:var(--r);padding:15px;font-size:14.5px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;transition:background .15s}
-.send:hover:not(:disabled){background:#ffa04a}
-.send:disabled{background:#dde2e8;color:#9aa7b5;cursor:not-allowed}
-.foot-note{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#7a879a;text-align:center;margin-top:9px;letter-spacing:.04em}
+        .brand-text span {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            display: block;
+        }
 
-/* ── comprovante ────────────────────────── */
-.receipt{background:#fff;border:1px solid var(--line-soft);border-top:4px solid var(--signal);padding:26px 22px;text-align:center;animation:rise .35s ease}
-@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.receipt-ico{width:52px;height:52px;border-radius:50%;background:#e5f8ed;color:#0f7a42;display:grid;place-items:center;margin:0 auto 16px}
-.receipt h3{font-variation-settings:'wdth' 112;text-transform:uppercase;font-size:19px;letter-spacing:-.01em}
-.receipt>p{color:var(--slate);font-size:13.5px;line-height:1.6;margin:8px auto 20px;max-width:38ch}
-.proto{background:var(--ink);color:#fff;padding:16px;border-radius:var(--r);margin-bottom:18px}
-.proto span{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:6px}
-.proto b{font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:600;color:var(--amber);letter-spacing:.02em}
-.recap{text-align:left;border:1px solid var(--line-soft);border-radius:var(--r);overflow:hidden;margin-bottom:20px}
-.recap>div{display:flex;justify-content:space-between;gap:12px;padding:10px 13px;font-size:12.5px;border-bottom:1px solid var(--line-soft)}
-.recap>div:last-child{border-bottom:none}
-.recap span{color:var(--slate)}
-.recap b{font-family:'IBM Plex Mono',monospace;font-weight:500;text-align:right}
-.ways{display:grid;gap:8px}
-.way{display:flex;align-items:center;gap:11px;padding:13px 14px;border:1px solid var(--line-soft);border-radius:var(--r);background:#fff;cursor:pointer;text-align:left;text-decoration:none;color:inherit;font-size:13.5px;font-weight:600;transition:border-color .15s,background .15s;width:100%}
-.way:hover{border-color:var(--ink);background:#fafbfc}
-.way small{display:block;font-weight:400;color:var(--slate);font-size:11.5px;margin-top:2px;line-height:1.4}
-.way-i{width:32px;height:32px;border-radius:var(--r);display:grid;place-items:center;flex-shrink:0;background:#eef1f4;color:var(--slate)}
-.way.wa .way-i{background:#e7f8ee;color:#0f8c4a}
-.restart{background:none;border:none;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--slate);text-decoration:underline;text-underline-offset:3px;cursor:pointer;margin-top:18px;width:100%}
+        /* Fast Search Input */
+        .search-container {
+            position: relative;
+            max-width: 680px;
+        }
 
-.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,180%);background:var(--ink);color:#fff;padding:13px 20px;border-radius:var(--r);font-size:13px;font-weight:600;z-index:120;transition:transform .3s cubic-bezier(.4,0,.2,1);border-left:3px solid var(--signal);box-shadow:0 12px 30px rgba(0,0,0,.25)}
-.toast.on{transform:translate(-50%,0)}
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-dim);
+            pointer-events: none;
+        }
 
-footer{background:var(--ink);color:var(--dim);padding:34px 20px;font-size:12.5px;line-height:1.7}
-.foot-in{max-width:1420px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-footer b{color:#fff}
-footer .sig{font-family:'IBM Plex Mono',monospace;font-size:11px}
+        .search-input {
+            width: 100%;
+            background: #f8fafc;
+            border: 2px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            padding: 12px 16px 12px 44px;
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            color: var(--text-main);
+            transition: all 0.15s;
+        }
 
-@media (max-width:1080px){
-  .wrap{grid-template-columns:1fr}
-  .rail{position:static;display:grid;grid-template-columns:1fr 1fr}
-  .hero-in{grid-template-columns:1fr;gap:30px}
-}
-@media (max-width:760px){
-  .bar-in{grid-template-columns:1fr auto}
-  .find{grid-column:1/-1;max-width:none;order:3}
-  .mark-s{display:none}
-  .row{grid-template-columns:64px 1fr;gap:12px}
-  .row-img{width:64px;height:56px}
-  .stock,.buy{grid-column:2}
-  .buy{justify-items:start}
-  .price{text-align:left}
-  .add{width:auto;padding:9px 22px}
-  .rail{grid-template-columns:1fr}
-  .quote-btn span:not(.n){display:none}
-}
-@media print{
-  .bar,.hero,.rail,.strip,.scrim,.drawer-foot,.ways,.restart,footer,.view-top,.chips,.rows,.toast{display:none!important}
-  .drawer{position:static;width:100%;transform:none;box-shadow:none}
-  .wrap{display:block;padding:0}
-  body{background:#fff}
-}
-@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
-</style>
+        .search-input:focus {
+            outline: none;
+            border-color: var(--agro-orange);
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(242, 104, 0, 0.12);
+        }
+
+        .search-badge-hint {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            color: var(--text-dim);
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        /* Cart Trigger */
+        .cart-trigger-btn {
+            background: var(--agro-orange);
+            color: #ffffff;
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 12px 18px;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.15s;
+        }
+
+        .cart-trigger-btn:hover {
+            background: var(--agro-orange-hover);
+        }
+
+        .cart-badge-count {
+            background: var(--bg-dark);
+            color: #ffffff;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            padding: 2px 7px;
+            border-radius: 4px;
+        }
+
+        /* Page Layout */
+        .main-wrapper {
+            max-width: 1400px;
+            margin: 28px auto 60px;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 28px;
+            align-items: start;
+        }
+
+        /* Filters Sidebar */
+        .filters-sidebar {
+            background: var(--bg-card);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            box-shadow: var(--shadow-card);
+            position: sticky;
+            top: 96px;
+        }
+
+        .sidebar-title {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--text-main);
+        }
+
+        .category-filter-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-bottom: 24px;
+        }
+
+        .category-filter-btn {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: 1px solid transparent;
+            border-radius: var(--radius-sm);
+            padding: 9px 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.15s;
+        }
+
+        .category-filter-btn:hover {
+            background: #f1f5f9;
+            color: var(--text-main);
+        }
+
+        .category-filter-btn.active {
+            background: var(--bg-dark);
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .category-filter-btn .cat-count {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: var(--text-dim);
+        }
+
+        .category-filter-btn.active .cat-count {
+            color: var(--agro-orange);
+        }
+
+        .sidebar-notice-box {
+            background: var(--agro-green-light);
+            border: 1px solid rgba(21, 128, 61, 0.25);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            font-size: 0.78rem;
+            color: #14532d;
+            line-height: 1.5;
+        }
+
+        .sidebar-notice-box strong {
+            display: block;
+            margin-bottom: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            text-transform: uppercase;
+        }
+
+        /* Products Grid */
+        .catalog-content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .catalog-content-header h2 {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .catalog-items-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .part-card-row {
+            background: var(--bg-card);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            display: grid;
+            grid-template-columns: 100px 1fr 180px 160px;
+            gap: 20px;
+            align-items: center;
+            box-shadow: var(--shadow-card);
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+
+        .part-card-row:hover {
+            border-color: #94a3b8;
+            box-shadow: 0 4px 14px rgba(18, 24, 32, 0.08);
+        }
+
+        .part-photo-box {
+            width: 100px;
+            height: 80px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            background: #f1f5f9;
+            border: 1px solid var(--border-soft);
+        }
+
+        .part-photo-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .part-main-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .part-sku-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .part-sku {
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--agro-orange);
+            letter-spacing: 0.04em;
+        }
+
+        .part-category-tag {
+            font-family: var(--font-mono);
+            font-size: 0.68rem;
+            background: #e2e8f0;
+            color: var(--text-muted);
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+
+        .part-name-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.3;
+        }
+
+        .part-specs-compact {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 2px;
+        }
+
+        .part-cross-codes {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            color: #64748b;
+            margin-top: 4px;
+            background: #f8fafc;
+            padding: 4px 8px;
+            border-radius: 3px;
+            border: 1px dashed var(--border-soft);
+        }
+
+        /* Stock Info */
+        .part-stock-col {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .stock-badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--agro-green);
+        }
+
+        .stock-badge-pill i {
+            width: 7px;
+            height: 7px;
+            background: var(--agro-green);
+            border-radius: 50%;
+        }
+
+        .stock-branch-detail {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Price & Action */
+        .part-buy-col {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .part-price-val {
+            font-family: var(--font-mono);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .part-price-val small {
+            display: block;
+            font-size: 0.65rem;
+            font-family: var(--font-body);
+            color: var(--text-dim);
+            text-align: right;
+            text-transform: uppercase;
+        }
+
+        .add-quote-btn {
+            background: var(--bg-dark);
+            color: #ffffff;
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 8px 14px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.15s;
+        }
+
+        .add-quote-btn:hover {
+            background: var(--agro-orange);
+            color: #ffffff;
+        }
+
+        .add-quote-btn.added {
+            background: var(--agro-green);
+        }
+
+        /* Drawer / Quotation Modal */
+        .drawer-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(18, 24, 32, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 150;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s;
+        }
+
+        .drawer-backdrop.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .quotation-drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: min(540px, 100%);
+            background: #ffffff;
+            z-index: 160;
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: -8px 0 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .quotation-drawer.active {
+            transform: translateX(0);
+        }
+
+        .drawer-head {
+            background: var(--bg-dark);
+            color: #ffffff;
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid var(--agro-orange);
+        }
+
+        .drawer-head h3 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .close-drawer-btn {
+            background: none;
+            border: none;
+            color: #cbd5e1;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .drawer-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .quote-items-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+            background: #f8fafc;
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+        }
+
+        .quote-items-table th {
+            background: #e2e8f0;
+            text-align: left;
+            padding: 8px 12px;
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .quote-items-table td {
+            padding: 10px 12px;
+            border-top: 1px solid var(--border-soft);
+        }
+
+        .drawer-form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .drawer-form-group label {
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .drawer-input, .drawer-select {
+            background: #ffffff;
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            padding: 10px 12px;
+            font-size: 0.88rem;
+            outline: none;
+        }
+
+        .drawer-input:focus, .drawer-select:focus {
+            border-color: var(--agro-orange);
+        }
+
+        .drawer-totals-box {
+            background: #f8fafc;
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius-sm);
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .drawer-totals-box span {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .drawer-totals-box strong {
+            font-family: var(--font-mono);
+            font-size: 1.3rem;
+            color: var(--text-main);
+        }
+
+        .drawer-footer {
+            padding: 20px 24px;
+            border-top: 1px solid var(--border-soft);
+            background: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .send-whatsapp-order-btn {
+            background: #25d366;
+            color: #052e16;
+            border: none;
+            border-radius: var(--radius-md);
+            padding: 14px;
+            font-weight: 800;
+            font-size: 0.92rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.15s;
+        }
+
+        .send-whatsapp-order-btn:hover {
+            background: #20ba59;
+        }
+
+        footer {
+            background: var(--bg-dark);
+            color: #94a3b8;
+            padding: 30px 24px;
+            border-top: 1px solid var(--border-dark);
+            font-size: 0.82rem;
+        }
+
+        .footer-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 900px) {
+            .main-wrapper { grid-template-columns: 1fr; }
+            .filters-sidebar { position: static; }
+            .part-card-row { grid-template-columns: 80px 1fr; gap: 14px; }
+            .part-stock-col, .part-buy-col { grid-column: 2; align-items: flex-start; }
+            .header-inner { grid-template-columns: 1fr auto; }
+            .search-container { grid-column: 1 / -1; max-width: none; }
+        }
+    </style>
 </head>
 <body>
 
-<div class="strip">
-  <span class="live"><i></i> PLANTÃO SAFRA 2026 · SEG A SÁB, 06H ÀS 22H</span>
-  <span>DESPACHO EM ATÉ 4H PARA SINOP · SORRISO · LUCAS DO RIO VERDE · RONDONÓPOLIS</span>
-  <span>CNPJ <b>32.840.192/0001-44</b></span>
-</div>
-
-<div class="bar">
-  <div class="bar-in">
-    <a href="#" class="mark">
-      <div class="mark-i"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.2 2.2M16.9 16.9l2.2 2.2M19.1 4.9l-2.2 2.2M7.1 16.9l-2.2 2.2"/></svg></div>
-      <div><div class="mark-t">AgroPeças MT</div><div class="mark-s">Reposição Técnica</div></div>
-    </a>
-    <div class="find">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-      <input type="search" id="q" placeholder="SKU, peça ou modelo — ex: DSC-8842, navalha, 6100J" aria-label="Buscar peças">
-      <span class="find-hint" aria-hidden="true">/</span>
+    <!-- Operational Strip -->
+    <div class="op-strip">
+        <div class="op-strip-left">
+            <span class="live-dot"><span></span> PLANTÃO SAFRA 2026/2027</span>
+            <span>Despacho em até 3 horas para o Norte e Médio-Norte de MT</span>
+        </div>
+        <div class="branch-select-wrap">
+            <span>Filial de Retirada:</span>
+            <select class="branch-select" id="branchSelector">
+                <option value="sinop">Sinop - BR 163 km 824 (Estoque Matriz)</option>
+                <option value="sorriso">Sorriso - Av. Blumenau Sul</option>
+                <option value="rondonopolis">Rondonópolis - Distrito Industrial</option>
+            </select>
+        </div>
     </div>
-    <button class="quote-btn" onclick="abrirGaveta()">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15h6M9 11h2"/></svg>
-      <span>Cotação</span><span class="n" id="cartN">0</span>
-    </button>
-  </div>
-</div>
 
-<section class="hero">
-  <div class="hero-in">
-    <div>
-      <span class="eyebrow">Catálogo técnico · 4.512 itens em linha</span>
-      <h2>Peça parada é <em>lavoura parada</em>.</h2>
-      <p>Consulta por SKU, compatibilidade por modelo e saldo real das três unidades. Monte a lista inteira, receba o protocolo e escolha por onde acompanhar a resposta.</p>
+    <!-- Header Navigation -->
+    <header>
+        <div class="header-inner">
+            <a href="#" class="brand-link">
+                <div class="brand-emblem">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                </div>
+                <div class="brand-text">
+                    <h1>AgroPeças MT</h1>
+                    <span>Distribuição Técnica & Reposição Pesada</span>
+                </div>
+            </a>
+
+            <div class="search-container">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" class="search-input" id="searchBox" placeholder="Buscar por Código Original OEM, SKU, Modelo da Máquina ou Descrição...">
+                <span class="search-badge-hint">Ex: DQ48820, JD 9770</span>
+            </div>
+
+            <button class="cart-trigger-btn" onclick="openQuotationDrawer()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                <span>Cotação</span>
+                <span class="cart-badge-count" id="cartCountBadge">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-wrapper">
+        <!-- Sidebar Filters -->
+        <aside class="filters-sidebar">
+            <h3 class="sidebar-title">Segmentos Agrícolas</h3>
+            <ul class="category-filter-list">
+                <li><button class="category-filter-btn active" onclick="filterCategory('todos')"><span>Todas as Peças</span> <span class="cat-count">4</span></button></li>
+                <li><button class="category-filter-btn" onclick="filterCategory('colheitadeira')"><span>Colheitadeiras</span> <span class="cat-count">2</span></button></li>
+                <li><button class="category-filter-btn" onclick="filterCategory('plantadeira')"><span>Plantadeiras</span> <span class="cat-count">1</span></button></li>
+                <li><button class="category-filter-btn" onclick="filterCategory('trator')"><span>Tratores & Hidráulico</span> <span class="cat-count">1</span></button></li>
+            </ul>
+
+            <div class="sidebar-notice-box">
+                <strong>📦 Logística Expressa MT</strong>
+                Pedidos faturados até as 16h são despachados no mesmo dia via frete aéreo ou linha rodoviária expressa para fazendas em todo o estado.
+            </div>
+        </aside>
+
+        <!-- Products List Section -->
+        <section>
+            <div class="catalog-content-header">
+                <h2>Peças em Pronta-Entrega (<span id="totalVisibleCount">4</span>)</h2>
+                <small style="color: var(--text-muted); font-family: var(--font-mono);">Preços com ICMS/MT incluso</small>
+            </div>
+
+            <div class="catalog-items-grid" id="partsContainer">
+                <!-- Javascript will inject parts -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Quotation Drawer -->
+    <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeQuotationDrawer()"></div>
+    <div class="quotation-drawer" id="quotationDrawer">
+        <div class="drawer-head">
+            <h3>Lista de Cotação Rápida</h3>
+            <button class="close-drawer-btn" onclick="closeQuotationDrawer()">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+            </button>
+        </div>
+
+        <div class="drawer-body">
+            <div id="drawerItemsMount">
+                <!-- Items list -->
+            </div>
+
+            <div class="drawer-form-group">
+                <label>Nome do Comprador / Fazenda</label>
+                <input type="text" class="drawer-input" id="clientName" placeholder="Ex: Fazenda Santa Maria (Sorriso/MT)">
+            </div>
+
+            <div class="drawer-form-group">
+                <label>Tipo de Entrega / Frete</label>
+                <select class="drawer-select" id="freightType">
+                    <option value="balcao">Retirada Imediata no Balcão da Filial</option>
+                    <option value="fazenda">Entrega na Porteira da Fazenda (Utilitário Agro)</option>
+                    <option value="transportadora">Transportadora Conveniada (Frete FOB)</option>
+                </select>
+            </div>
+
+            <div class="drawer-totals-box">
+                <span>Subtotal Estimado:</span>
+                <strong id="drawerTotalPrice">R$ 0,00</strong>
+            </div>
+        </div>
+
+        <div class="drawer-footer">
+            <button class="send-whatsapp-order-btn" onclick="sendQuoteToWhatsApp()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                <span>Enviar Cotação para o Vendedor WhatsApp</span>
+            </button>
+        </div>
     </div>
-    <div class="gauges">
-      <div class="gauge"><span>Itens a pronta entrega</span><b class="on">3.844</b></div>
-      <div class="gauge"><span>Prazo médio de despacho</span><b>3h48</b></div>
-      <div class="gauge"><span>Cotações respondidas hoje</span><b>127</b></div>
-    </div>
-  </div>
-</section>
 
-<div class="wrap">
-  <aside class="rail">
-    <div>
-      <h3>Aplicação</h3>
-      <ul class="rail-list" id="catFilters"></ul>
-    </div>
-    <div>
-      <h3>Disponibilidade</h3>
-      <ul class="rail-list" id="stockFilters"></ul>
-    </div>
-    <div class="rail-note">
-      <b>Não achou a peça?</b>
-      Mande a foto da plaqueta ou o número gravado. A engenharia identifica o código original e responde em até 40 minutos dentro do plantão.
-    </div>
-  </aside>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-inner">
+            <div>
+                <strong>AgroPeças Distribuidora de Peças Agrícolas Ltda</strong><br>
+                CNPJ 32.840.192/0001-44 · Inscrição Estadual 13.589.201-9 · Sinop - MT
+            </div>
+            <div>
+                Demonstração técnica de catálogo e-commerce desenvolvida por DevStudio.
+            </div>
+        </div>
+    </footer>
 
-  <section>
-    <div class="view-top">
-      <h3>Itens encontrados <span id="count">—</span></h3>
-      <div class="tools">
-        <label for="sort" style="font-size:12px;color:var(--slate)">Ordenar</label>
-        <select id="sort">
-          <option value="rel">Relevância técnica</option>
-          <option value="asc">Menor preço</option>
-          <option value="desc">Maior preço</option>
-          <option value="stock">Maior saldo</option>
-        </select>
-      </div>
-    </div>
-    <div class="chips" id="chips"></div>
-    <div class="rows" id="rows"></div>
-  </section>
-</div>
+    <script>
+        const partsDatabase = [
+            {
+                id: 1,
+                sku: "DSC-8842",
+                name: "Disco de Corte Turbo Corrugado 20 Polegadas 4.5mm",
+                category: "plantadeira",
+                catLabel: "Plantadeira",
+                specs: ["Aço Boro Alta Resistência", "Furo Central 4 furos", "Compatível John Deere / Tatu"],
+                crossCodes: "Cruzamento OEM: JD-AA43890 · Tatu-05020112 · Baldan-1290",
+                stockSinop: "48 un",
+                price: 245.00,
+                image: "https://images.unsplash.com/photo-1581092335397-9583fe92d232?w=500&auto=format&fit=crop&q=80"
+            },
+            {
+                id: 2,
+                sku: "NAV-9120",
+                name: "Seção de Navalha Dupla Serrilhada Revestida em Tungstênio",
+                category: "colheitadeira",
+                catLabel: "Colheitadeira",
+                specs: ["Tratamento Térmico Especial", "Plataforma 35 a 45 pés", "Case IH / New Holland"],
+                crossCodes: "Cruzamento OEM: CNH-8758820 · MacDon-118344 · Schumacher-Pro",
+                stockSinop: "120 un",
+                price: 18.50,
+                image: "https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?w=500&auto=format&fit=crop&q=80"
+            },
+            {
+                id: 3,
+                sku: "COR-3390",
+                name: "Correia Variadora do Rotor de Alta Tração (Kevlar)",
+                category: "colheitadeira",
+                catLabel: "Colheitadeira",
+                specs: ["Cabo de Tração em Kevlar", "Resistente a Altas Temperaturas", "John Deere Série S"],
+                crossCodes: "Cruzamento OEM: JD-H219330 · Gates-AgriPower 8820",
+                stockSinop: "12 un",
+                price: 890.00,
+                image: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=500&auto=format&fit=crop&q=80"
+            },
+            {
+                id: 4,
+                sku: "FLT-7700",
+                name: "Elemento Filtrante Hidráulico de Alta Pressão 10 Microns",
+                category: "trator",
+                catLabel: "Trator & Hidráulica",
+                specs: ["Meio Filtrante Microglass", "Pressão até 420 bar", "Tratores John Deere 6J / 7J / 8R"],
+                crossCodes: "Cruzamento OEM: JD-RE51630 · Donaldson-P170949 · Parker-9378",
+                stockSinop: "34 un",
+                price: 320.00,
+                image: "https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?w=500&auto=format&fit=crop&q=80"
+            }
+        ];
 
-<footer>
-  <div class="foot-in">
-    <div><b>AgroPeças Distribuidora MT Ltda</b><br>Rodovia BR-163, KM 820 · Sinop – Mato Grosso<br>Unidades: Sinop · Rondonópolis · Cuiabá</div>
-    <div class="sig">Demonstração funcional · DevStudio<br>Estoques e valores ilustrativos</div>
-  </div>
-</footer>
+        let quoteCart = [];
+        let currentCategory = 'todos';
 
-<div class="scrim" id="scrim" onclick="fecharGaveta()"></div>
-<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
-  <div class="drawer-top">
-    <div><h3 id="drawerTitle">Lista de cotação</h3><p id="drawerSub">RASCUNHO · NÃO ENVIADO</p></div>
-    <button class="x" onclick="fecharGaveta()" aria-label="Fechar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
-  </div>
-  <div class="drawer-body" id="drawerBody"></div>
-  <div class="drawer-foot" id="drawerFoot"></div>
-</aside>
+        function renderPartsList() {
+            const container = document.getElementById('partsContainer');
+            const searchVal = document.getElementById('searchBox').value.toLowerCase().trim();
 
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+            const filtered = partsDatabase.filter(part => {
+                const matchCategory = currentCategory === 'todos' || part.category === currentCategory;
+                const matchSearch = part.name.toLowerCase().includes(searchVal) ||
+                                    part.sku.toLowerCase().includes(searchVal) ||
+                                    part.crossCodes.toLowerCase().includes(searchVal);
+                return matchCategory && matchSearch;
+            });
 
-<script>
-/* ── dados ───────────────────────────────── */
-const CIDADES = {
-  'Sinop':             {frete:0,   prazo:'Retira hoje até 18h'},
-  'Sorriso':           {frete:180, prazo:'Entrega amanhã até 12h'},
-  'Lucas do Rio Verde':{frete:220, prazo:'Entrega amanhã até 16h'},
-  'Nova Mutum':        {frete:280, prazo:'Entrega amanhã até 18h'},
-  'Querência':         {frete:640, prazo:'Entrega em 2 dias úteis'},
-  'Rondonópolis':      {frete:390, prazo:'Entrega em 2 dias úteis'},
-  'Primavera do Leste':{frete:340, prazo:'Entrega em 2 dias úteis'},
-  'Cuiabá / VG':       {frete:290, prazo:'Entrega amanhã até 18h'}
-};
+            document.getElementById('totalVisibleCount').innerText = filtered.length;
 
-const PRODUTOS = [
-  {id:1,sku:'DSC-8842-JD',nome:'Disco de corte turbo cônico 20"',marca:'John Deere · Stara',cat:'plantadeiras',preco:385,saldo:64,un:'Sinop · Rondonópolis',compat:['DB74','PL8','Ceres 35'],
-   desc:'Aço boro tratado termicamente para solo pesado e palhada densa de soja.',
-   specs:{'Diâmetro':'20 pol (508 mm)','Espessura':'4,0 mm','Material':'Aço boro SAE 15B30','Furação':'6 × 12 mm','Garantia':'12 meses'},img:'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=400&auto=format&fit=crop&q=70'},
-  {id:2,sku:'BMP-750-CS',nome:'Bomba hidráulica de pistão axial 75cc',marca:'Case IH',cat:'hidraulica',preco:4250,saldo:3,un:'Sinop',compat:['2388','2566','7120'],
-   desc:'Vazão variável de alta pressão para colheitadeiras axiais.',
-   specs:{'Deslocamento':'75 cm³/rot','Pressão máx.':'350 bar','Rotação':'2.400 rpm','Flange':'SAE C 4 furos','Garantia':'6 meses'},img:'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=400&auto=format&fit=crop&q=70'},
-  {id:3,sku:'NVL-9920-NH',nome:'Navalha da barra de corte c/ tungstênio',marca:'New Holland · MacDon',cat:'colheitadeiras',preco:48.9,saldo:412,un:'Todas as unidades',compat:['CR8.90','TC5.30','FD75'],
-   desc:'Serrilhado duplo para corte uniforme sem embuchamento em alta velocidade.',
-   specs:{'Comprimento':'76 mm','Revestimento':'Carbeto de tungstênio','Fixação':'2 furos 8 mm','Embalagem':'Avulsa','Garantia':'3 meses'},img:'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&auto=format&fit=crop&q=70'},
-  {id:4,sku:'RLB-3208-SKF',nome:'Rolamento autocompensador de rolos blindado',marca:'SKF Heavy Duty',cat:'rolamentos',preco:189,saldo:87,un:'Sinop · Cuiabá',compat:['Rotor','Batedor','Eixo picador'],
-   desc:'Vedação reforçada contra poeira para mancais de rotor e batedor.',
-   specs:{'Furo':'40 mm','Externo':'80 mm','Largura':'23 mm','Vedação':'Dupla 2RS','Garantia':'12 meses'},img:'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400&auto=format&fit=crop&q=70'},
-  {id:5,sku:'CDS-4401-AG',nome:'Sensor de fluxo e condutor de sementes',marca:'Massey Ferguson',cat:'plantadeiras',preco:290,saldo:0,un:'Chega em 24h da fábrica',compat:['MF 500','Precision','Ceres'],
-   desc:'Monitoramento grão a grão em tempo real com cabo selado IP67.',
-   specs:{'Alimentação':'12 V DC','Proteção':'IP67','Conector':'Deutsch 3 vias','Cabo':'1,8 m','Garantia':'12 meses'},img:'https://images.unsplash.com/photo-1595246140625-573b715d11dc?w=400&auto=format&fit=crop&q=70'},
-  {id:6,sku:'COR-5510-GT',nome:'Correia de transmissão aramida alta tração',marca:'Gates PowerGrip',cat:'colheitadeiras',preco:420,saldo:24,un:'Sinop · Rondonópolis',compat:['Picador','Ventilador','Elevador'],
-   desc:'Borracha sintética com fibra de aramida para evitar patinagem no picador.',
-   specs:{'Perfil':'HC 3V','Comprimento':'2.240 mm','Reforço':'Aramida','Faixa térmica':'−30 a 110 °C','Garantia':'6 meses'},img:'https://images.unsplash.com/photo-1616401784845-180882ba9ba8?w=400&auto=format&fit=crop&q=70'},
-  {id:7,sku:'FLT-2210-DN',nome:'Filtro separador de água diesel duplo',marca:'Donaldson',cat:'motor',preco:274,saldo:9,un:'Sinop',compat:['6100J','8R','T7'],
-   desc:'Retém água e particulado antes da bomba injetora — crítico com diesel de tanque de fazenda.',
-   specs:{'Micragem':'5 µm','Vazão':'190 L/h','Rosca':'M16 × 1,5','Dreno':'Manual','Garantia':'6 meses'},img:'https://images.unsplash.com/photo-1620714223084-8fcacc6dfd8d?w=400&auto=format&fit=crop&q=70'},
-  {id:8,sku:'PNU-1840-TR',nome:'Ponteira de haste adubadora com tungstênio',marca:'Stara · Jumil',cat:'plantadeiras',preco:96.5,saldo:156,un:'Todas as unidades',compat:['Guaraní','Prima','Absoluta'],
-   desc:'Revestimento que triplica a vida útil no solo arenoso do norte de MT.',
-   specs:{'Revestimento':'Tungstênio 3 mm','Largura':'32 mm','Fixação':'Pino 10 mm','Vida útil':'≈1.800 ha','Garantia':'Desgaste natural'},img:'https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=400&auto=format&fit=crop&q=70'},
-  {id:9,sku:'CIL-6600-HD',nome:'Cilindro hidráulico dupla ação 80×40',marca:'Bosch Rexroth',cat:'hidraulica',preco:2180,saldo:6,un:'Sinop · Cuiabá',compat:['Plataforma','Direção','Levante'],
-   desc:'Haste cromada retificada com vedação reforçada para poeira de colheita.',
-   specs:{'Curso':'600 mm','Diâmetro':'80 mm','Haste':'40 mm cromada','Pressão':'210 bar','Garantia':'12 meses'},img:'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=400&auto=format&fit=crop&q=70'},
-  {id:10,sku:'ELT-7702-BS',nome:'Alternador 24V 120A linha pesada',marca:'Bosch',cat:'motor',preco:1890,saldo:2,un:'Rondonópolis',compat:['9470RX','Axial Flow','T8'],
-   desc:'Bobinado reforçado para cabines com ar-condicionado em operação contínua.',
-   specs:{'Tensão':'24 V','Corrente':'120 A','Polia':'Canal 8 PK','Regulador':'Integrado','Garantia':'12 meses'},img:'https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=400&auto=format&fit=crop&q=70'}
-];
+            if (filtered.length === 0) {
+                container.innerHTML = `<div style="text-align: center; padding: 40px; background: white; border-radius: 6px;">Nenhuma peça encontrada para os termos informados.</div>`;
+                return;
+            }
 
-const CATS = [
-  {k:'todos',rot:'Todas as peças'},
-  {k:'plantadeiras',rot:'Plantadeiras'},
-  {k:'colheitadeiras',rot:'Colheitadeiras'},
-  {k:'hidraulica',rot:'Sistemas hidráulicos'},
-  {k:'motor',rot:'Motor e elétrica'},
-  {k:'rolamentos',rot:'Rolamentos e correias'}
-];
-const DISP = [
-  {k:'all',rot:'Qualquer situação'},
-  {k:'pronta',rot:'A pronta entrega'},
-  {k:'ultimas',rot:'Últimas unidades'},
-  {k:'encomenda',rot:'Sob encomenda'}
-];
+            container.innerHTML = filtered.map(p => {
+                const inCart = quoteCart.some(item => item.id === p.id);
+                return `
+                    <div class="part-card-row">
+                        <div class="part-photo-box">
+                            <img src="${p.image}" alt="${p.name}">
+                        </div>
 
-/* ── estado ──────────────────────────────── */
-let cat='todos', disp='all', termo='', ordem='rel';
-let lista=[];        /* [{id,qty}] */
-let fichaAberta=null;
-let form={fazenda:'',cidade:'Sinop',contato:''};
-const brl=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-const el=id=>document.getElementById(id);
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+                        <div class="part-main-info">
+                            <div class="part-sku-header">
+                                <span class="part-sku">SKU: ${p.sku}</span>
+                                <span class="part-category-tag">${p.catLabel}</span>
+                            </div>
+                            <h3 class="part-name-title">${p.name}</h3>
+                            <div class="part-specs-compact">
+                                ${p.specs.map(s => `<span>• ${s}</span>`).join('')}
+                            </div>
+                            <div class="part-cross-codes">${p.crossCodes}</div>
+                        </div>
 
-/* ── filtros ─────────────────────────────── */
-function combina(p,k){
-  if(k==='pronta')    return p.saldo>5;
-  if(k==='ultimas')   return p.saldo>0 && p.saldo<=5;
-  if(k==='encomenda') return p.saldo===0;
-  return true;
-}
-function pintarFiltros(){
-  el('catFilters').innerHTML=CATS.map(c=>{
-    const n=c.k==='todos'?PRODUTOS.length:PRODUTOS.filter(p=>p.cat===c.k).length;
-    return '<li><button class="f-btn" aria-pressed="'+(cat===c.k)+'" onclick="setCat(\''+c.k+'\')">'+c.rot+'<span class="c">'+n+'</span></button></li>';
-  }).join('');
-  el('stockFilters').innerHTML=DISP.map(d=>{
-    const n=d.k==='all'?PRODUTOS.length:PRODUTOS.filter(p=>combina(p,d.k)).length;
-    return '<li><button class="f-btn" aria-pressed="'+(disp===d.k)+'" onclick="setDisp(\''+d.k+'\')">'+d.rot+'<span class="c">'+n+'</span></button></li>';
-  }).join('');
-}
-function setCat(k){cat=k;pintar()}
-function setDisp(k){disp=k;pintar()}
-function limpar(){cat='todos';disp='all';termo='';el('q').value='';pintar()}
+                        <div class="part-stock-col">
+                            <span class="stock-badge-pill"><i></i> Estoque Imediato</span>
+                            <span class="stock-branch-detail">Saldo Sinop: <strong>${p.stockSinop}</strong></span>
+                            <span class="stock-branch-detail">Despacho hoje via van expressa</span>
+                        </div>
 
-/* busca, filtro e ordenação compostos — a ordenação respeita os filtros ativos */
-function filtrados(){
-  const t=termo.toLowerCase().trim();
-  const out=PRODUTOS.filter(p=>
-    (cat==='todos'||p.cat===cat) &&
-    (disp==='all'||combina(p,disp)) &&
-    (!t || [p.nome,p.sku,p.marca,p.desc].concat(p.compat).join(' ').toLowerCase().includes(t))
-  );
-  if(ordem==='asc')   out.sort((a,b)=>a.preco-b.preco);
-  if(ordem==='desc')  out.sort((a,b)=>b.preco-a.preco);
-  if(ordem==='stock') out.sort((a,b)=>b.saldo-a.saldo);
-  return out;
-}
+                        <div class="part-buy-col">
+                            <div class="part-price-val">
+                                <small>Preço Unitário</small>
+                                R$ ${p.price.toFixed(2).replace('.', ',')}
+                            </div>
+                            <button class="add-quote-btn ${inCart ? 'added' : ''}" onclick="toggleQuoteItem(${p.id})">
+                                ${inCart ? '✓ No Orçamento' : '+ Adicionar'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
 
-/* ── catálogo ────────────────────────────── */
-function pintar(){
-  pintarFiltros();
-  const items=filtrados();
-  el('count').textContent=String(items.length).padStart(2,'0');
+        function filterCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.category-filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            renderPartsList();
+        }
 
-  const ativos=[];
-  if(cat!=='todos') ativos.push(CATS.find(c=>c.k===cat).rot);
-  if(disp!=='all')  ativos.push(DISP.find(d=>d.k===disp).rot);
-  if(termo.trim())  ativos.push('"'+esc(termo.trim())+'"');
-  el('chips').innerHTML = ativos.length
-    ? ativos.map(a=>'<span class="chip">'+a+'</span>').join('')+'<button class="chip" onclick="limpar()">Limpar tudo ✕</button>'
-    : '';
+        document.getElementById('searchBox').addEventListener('input', renderPartsList);
 
-  if(!items.length){
-    el('rows').innerHTML='<div class="empty"><b>Nenhuma peça com esses critérios</b><p>Tente o número gravado na peça, o modelo da máquina, ou volte ao catálogo inteiro.</p><button onclick="limpar()">Ver todas as peças</button></div>';
-    return;
-  }
+        function toggleQuoteItem(id) {
+            const part = partsDatabase.find(p => p.id === id);
+            const index = quoteCart.findIndex(item => item.id === id);
 
-  el('rows').innerHTML=items.map(p=>{
-    const st = p.saldo===0 ? {cls:'order',txt:'Sob encomenda'}
-             : p.saldo<=5  ? {cls:'low',  txt:'Últimas '+p.saldo+' un.'}
-             :               {cls:'ok',   txt:p.saldo+' un. em estoque'};
-    const naLista=lista.find(l=>l.id===p.id);
-    return ''+
-    '<div class="row">'+
-      '<div class="row-img"><img src="'+p.img+'" alt="" loading="lazy"></div>'+
-      '<div>'+
-        '<span class="row-sku">'+p.sku+'</span>'+
-        '<h4 class="row-name">'+p.nome+'</h4>'+
-        '<div class="row-brand">'+p.marca+' · '+p.desc+'</div>'+
-        '<div class="compat">'+p.compat.map(c=>'<span>'+c+'</span>').join('')+'</div>'+
-        '<button class="spec-toggle" onclick="verFicha('+p.id+')" aria-expanded="'+(fichaAberta===p.id)+'">'+(fichaAberta===p.id?'Ocultar ficha técnica':'Ver ficha técnica')+'</button>'+
-      '</div>'+
-      '<div class="stock">'+
-        '<span class="stock-tag '+st.cls+'"><i></i>'+st.txt+'</span>'+
-        '<span class="stock-where">'+p.un+'</span>'+
-      '</div>'+
-      '<div class="buy">'+
-        '<div class="price"><small>Unitário</small>'+brl(p.preco)+'</div>'+
-        '<div class="stepper">'+
-          '<button onclick="passo('+p.id+',-1)" aria-label="Diminuir quantidade">−</button>'+
-          '<input type="number" id="qty'+p.id+'" value="1" min="1" max="999" aria-label="Quantidade de '+esc(p.nome)+'">'+
-          '<button onclick="passo('+p.id+',1)" aria-label="Aumentar quantidade">+</button>'+
-        '</div>'+
-        '<button class="add'+(naLista?' done':'')+'" onclick="addLista('+p.id+')">'+(naLista?'Na lista ('+naLista.qty+')':'Adicionar')+'</button>'+
-      '</div>'+
-      (fichaAberta===p.id?'<dl class="specs">'+Object.keys(p.specs).map(k=>'<div><dt>'+k+'</dt><dd>'+p.specs[k]+'</dd></div>').join('')+'</dl>':'')+
-    '</div>';
-  }).join('');
-}
-function verFicha(id){fichaAberta=fichaAberta===id?null:id;pintar()}
-function passo(id,d){
-  const i=el('qty'+id);
-  i.value=Math.max(1,Math.min(999,(parseInt(i.value,10)||1)+d));
-}
+            if (index >= 0) {
+                quoteCart.splice(index, 1);
+            } else {
+                quoteCart.push({ ...part, qty: 1 });
+            }
 
-/* ── lista de cotação ────────────────────── */
-function addLista(id){
-  const qty=Math.max(1,parseInt(el('qty'+id).value,10)||1);
-  const j=lista.find(l=>l.id===id);
-  if(j) j.qty+=qty; else lista.push({id:id,qty:qty});
-  toast(PRODUTOS.find(p=>p.id===id).sku+' · '+qty+' un. na lista');
-  pintar(); badge();
-}
-function alterar(id,d){
-  const j=lista.find(l=>l.id===id); if(!j) return;
-  j.qty+=d;
-  if(j.qty<=0) lista=lista.filter(l=>l.id!==id);
-  pintarGaveta(); badge(); pintar();
-}
-function badge(){el('cartN').textContent=lista.reduce((a,l)=>a+l.qty,0)}
-function subtotal(){return lista.reduce((a,l)=>a+PRODUTOS.find(p=>p.id===l.id).preco*l.qty,0)}
+            updateCartBadge();
+            renderPartsList();
+            renderDrawerItems();
+        }
 
-function guardarForm(){
-  if(el('fazenda')) form.fazenda=el('fazenda').value;
-  if(el('cidade'))  form.cidade =el('cidade').value;
-  if(el('contato')) form.contato=el('contato').value;
-}
-function abrirGaveta(){
-  el('scrim').classList.add('on'); el('drawer').classList.add('on');
-  pintarGaveta(); document.body.style.overflow='hidden';
-}
-function fecharGaveta(){
-  guardarForm();
-  el('scrim').classList.remove('on'); el('drawer').classList.remove('on');
-  document.body.style.overflow='';
-}
+        function updateCartBadge() {
+            document.getElementById('cartCountBadge').innerText = quoteCart.length;
+        }
 
-function pintarGaveta(){
-  guardarForm();
-  el('drawerTitle').textContent='Lista de cotação';
-  el('drawerSub').textContent='RASCUNHO · NÃO ENVIADO';
+        function openQuotationDrawer() {
+            document.getElementById('drawerBackdrop').classList.add('active');
+            document.getElementById('quotationDrawer').classList.add('active');
+            renderDrawerItems();
+        }
 
-  if(!lista.length){
-    el('drawerBody').innerHTML='<div class="po"><div class="po-empty"><b>Nenhuma peça na lista</b>Adicione itens do catálogo. Você monta tudo aqui e envia de uma vez — sem mandar código por código.</div></div>';
-    el('drawerFoot').innerHTML='<button class="send" disabled>Solicitar cotação</button><p class="foot-note">A lista vira uma solicitação com protocolo</p>';
-    return;
-  }
+        function closeQuotationDrawer() {
+            document.getElementById('drawerBackdrop').classList.remove('active');
+            document.getElementById('quotationDrawer').classList.remove('active');
+        }
 
-  const sub=subtotal(), cid=form.cidade, f=CIDADES[cid];
-  el('drawerBody').innerHTML=
-    '<div class="po">'+
-      '<div class="po-head"><span>Item</span><span>Qtd</span><span>Total</span></div>'+
-      lista.map(function(l){var p=PRODUTOS.find(function(x){return x.id===l.id});return ''+
-        '<div class="po-line">'+
-          '<div><h4>'+p.nome+'</h4><span class="sk">'+p.sku+' · '+brl(p.preco)+'/un</span></div>'+
-          '<div class="po-qty">'+
-            '<button onclick="alterar('+p.id+',-1)" aria-label="Remover uma unidade">−</button>'+
-            '<b>'+l.qty+'</b>'+
-            '<button onclick="alterar('+p.id+',1)" aria-label="Adicionar uma unidade">+</button>'+
-          '</div>'+
-          '<div class="po-sum">'+brl(p.preco*l.qty)+'</div>'+
-        '</div>'}).join('')+
-    '</div>'+
+        function renderDrawerItems() {
+            const container = document.getElementById('drawerItemsMount');
+            if (quoteCart.length === 0) {
+                container.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 30px 0;">Sua lista de cotação está vazia.</p>`;
+                document.getElementById('drawerTotalPrice').innerText = "R$ 0,00";
+                return;
+            }
 
-    '<div class="fields">'+
-      '<div class="field"><label for="fazenda">Fazenda ou razão social</label>'+
-        '<input type="text" id="fazenda" value="'+esc(form.fazenda)+'" placeholder="Fazenda Boa Esperança"></div>'+
-      '<div class="field"><label for="cidade">Cidade de entrega</label>'+
-        '<select id="cidade" onchange="pintarGaveta()">'+
-          Object.keys(CIDADES).map(function(c){return '<option'+(c===cid?' selected':'')+'>'+c+'</option>'}).join('')+
-        '</select></div>'+
-      '<div class="field"><label for="contato">Telefone para retorno</label>'+
-        '<input type="tel" id="contato" value="'+esc(form.contato)+'" placeholder="(66) 90000-0000"></div>'+
-    '</div>'+
+            let total = 0;
+            container.innerHTML = `
+                <table class="quote-items-table">
+                    <thead>
+                        <tr>
+                            <th>Item / SKU</th>
+                            <th>Qtd</th>
+                            <th style="text-align: right;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${quoteCart.map(item => {
+                            const lineTotal = item.price * item.qty;
+                            total += lineTotal;
+                            return `
+                                <tr>
+                                    <td>
+                                        <strong>${item.name}</strong><br>
+                                        <small style="color: var(--agro-orange); font-family: var(--font-mono);">${item.sku}</small>
+                                    </td>
+                                    <td>${item.qty} un</td>
+                                    <td style="text-align: right; font-family: var(--font-mono); font-weight: 700;">
+                                        R$ ${lineTotal.toFixed(2).replace('.', ',')}
+                                    </td>
+                                </tr>
+                            `;
+                        }).join('')}
+                    </tbody>
+                </table>
+            `;
 
-    '<div class="totals">'+
-      '<div class="trow"><span>Subtotal das peças</span><b>'+brl(sub)+'</b></div>'+
-      '<div class="trow"><span>Frete estimado — '+cid+'</span><b>'+(f.frete?brl(f.frete):'Retira')+'</b></div>'+
-      '<div class="trow"><span>Prazo</span><b>'+f.prazo+'</b></div>'+
-      '<div class="trow big"><span>Total estimado</span><b>'+brl(sub+f.frete)+'</b></div>'+
-    '</div>';
+            document.getElementById('drawerTotalPrice').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        }
 
-  el('drawerFoot').innerHTML=
-    '<button class="send" onclick="enviarCotacao()">'+
-      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>'+
-      'Solicitar cotação</button>'+
-    '<p class="foot-note">Valores sujeitos a confirmação de saldo no faturamento</p>';
-}
+        function sendQuoteToWhatsApp() {
+            if (quoteCart.length === 0) {
+                alert("Adicione pelo menos 1 item na cotação.");
+                return;
+            }
 
-/* ── o fecho acontece aqui, não no WhatsApp ── */
-let ultimo=null;
-function enviarCotacao(){
-  guardarForm();
-  const sub=subtotal(), cid=form.cidade, f=CIDADES[cid];
-  // ponytail: a numeração real vem do ERP; aqui só demonstra o formato do protocolo
-  const proto='COT-'+new Date().getFullYear()+'-'+String(Math.floor(Math.random()*9000)+1000);
-  ultimo={
-    proto:proto,
-    fazenda:form.fazenda.trim()||'Não informada',
-    fone:form.contato.trim()||'Não informado',
-    cid:cid, sub:sub, frete:f.frete, total:sub+f.frete, prazo:f.prazo,
-    unidades:lista.reduce((a,l)=>a+l.qty,0), refs:lista.length,
-    itens:lista.map(function(l){var p=PRODUTOS.find(function(x){return x.id===l.id});
-      return l.qty+'x ['+p.sku+'] '+p.nome+' — '+brl(p.preco*l.qty)})
-  };
+            const client = document.getElementById('clientName').value.trim() || "Não informado";
+            const freight = document.getElementById('freightType').options[document.getElementById('freightType').selectedIndex].text;
+            const branch = document.getElementById('branchSelector').options[document.getElementById('branchSelector').selectedIndex].text;
 
-  el('drawerTitle').textContent='Cotação registrada';
-  el('drawerSub').textContent='PROTOCOLO EMITIDO · '+new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
-  el('drawerFoot').innerHTML='';
-  el('drawerBody').innerHTML=
-    '<div class="receipt">'+
-      '<div class="receipt-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div>'+
-      '<h3>Sua cotação entrou na fila</h3>'+
-      '<p>Um vendedor da unidade mais próxima confirma saldo e frete. Resposta em até <b>40 minutos</b> dentro do plantão.</p>'+
-      '<div class="proto"><span>Número de protocolo</span><b>'+proto+'</b></div>'+
-      '<div class="recap">'+
-        '<div><span>Fazenda</span><b>'+esc(ultimo.fazenda)+'</b></div>'+
-        '<div><span>Itens</span><b>'+ultimo.unidades+' un. em '+ultimo.refs+' refs.</b></div>'+
-        '<div><span>Entrega</span><b>'+cid+'</b></div>'+
-        '<div><span>Prazo</span><b>'+f.prazo+'</b></div>'+
-        '<div><span>Total estimado</span><b>'+brl(ultimo.total)+'</b></div>'+
-        '<div><span>Retorno em</span><b>'+esc(ultimo.fone)+'</b></div>'+
-      '</div>'+
-      '<div class="ways">'+
-        '<button class="way" onclick="copiarResumo()">'+
-          '<span class="way-i"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="13" height="13" x="9" y="9" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>'+
-          '<span>Copiar o resumo<small>Cole no e-mail, no ERP ou no grupo da fazenda</small></span></button>'+
-        '<button class="way" onclick="window.print()">'+
-          '<span class="way-i"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg></span>'+
-          '<span>Imprimir ou salvar em PDF<small>Vira anexo da ordem de compra</small></span></button>'+
-        '<a class="way" href="'+mailto()+'">'+
-          '<span class="way-i"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 5L2 7"/></svg></span>'+
-          '<span>Enviar por e-mail ao comprador<small>Abre seu e-mail com tudo preenchido</small></span></a>'+
-        '<a class="way wa" href="'+zap()+'" target="_blank" rel="noopener">'+
-          '<span class="way-i"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 2.1.55 4.06 1.6 5.8L2 22l4.4-1.7a9.9 9.9 0 0 0 5.64 1.73h.01c5.46 0 9.9-4.45 9.9-9.91C21.95 6.45 17.5 2 12.04 2m5.8 14.15c-.24.68-1.43 1.31-1.98 1.4-.51.07-1.15.1-1.86-.12a16 16 0 0 1-1.68-.62c-2.96-1.28-4.89-4.26-5.04-4.46-.15-.2-1.2-1.6-1.2-3.05s.76-2.16 1.03-2.46c.27-.3.59-.37.78-.37h.57c.18 0 .43-.07.67.51.25.6.84 2.06.91 2.2.08.16.13.34.03.54-.1.2-.15.32-.29.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.02 1.12 1 2.06 1.31 2.36 1.46.3.15.47.13.64-.08.17-.2.74-.86.94-1.16.2-.3.39-.25.66-.15.27.1 1.72.81 2.01.96.3.15.5.22.57.35.07.12.07.72-.18 1.41"/></svg></span>'+
-          '<span>Acompanhar pelo WhatsApp<small>Se preferir falar direto com o vendedor</small></span></a>'+
-      '</div>'+
-      '<button class="restart" onclick="novaLista()">Montar uma nova lista</button>'+
-    '</div>';
+            let msg = `*🚜 COTAÇÃO DE PEÇAS AGRÍCOLAS - AGROPEÇAS MT*\n`;
+            msg += `────────────────────────────\n`;
+            msg += `▪ *Cliente / Fazenda:* ${client}\n`;
+            msg += `▪ *Filial Atendimento:* ${branch}\n`;
+            msg += `▪ *Modalidade Frete:* ${freight}\n`;
+            msg += `────────────────────────────\n`;
+            msg += `*ITENS SOLICITADOS:*\n`;
 
-  lista=[]; badge(); pintar();
-}
+            let total = 0;
+            quoteCart.forEach((item, i) => {
+                const sub = item.price * item.qty;
+                total += sub;
+                msg += `${i+1}. [${item.sku}] ${item.name} - ${item.qty} un x R$ ${item.price.toFixed(2)} = R$ ${sub.toFixed(2)}\n`;
+            });
 
-function resumoTexto(){
-  const u=ultimo;
-  return 'AGROPEÇAS MT — SOLICITAÇÃO DE COTAÇÃO\n'+
-    'Protocolo: '+u.proto+'\n'+
-    'Fazenda: '+u.fazenda+'\n'+
-    'Entrega: '+u.cid+' ('+u.prazo+')\n'+
-    'Contato: '+u.fone+'\n\n'+
-    'ITENS:\n'+u.itens.join('\n')+'\n\n'+
-    'Subtotal: '+brl(u.sub)+'\n'+
-    'Frete estimado: '+(u.frete?brl(u.frete):'Retira na unidade')+'\n'+
-    'Total estimado: '+brl(u.total);
-}
-function copiarResumo(){
-  navigator.clipboard.writeText(resumoTexto())
-    .then(()=>toast('Resumo copiado'),()=>toast('Não foi possível copiar. Selecione e copie manualmente.'));
-}
-function mailto(){
-  return 'mailto:compras@agropecasmt.com.br?subject='+encodeURIComponent('Cotação '+ultimo.proto+' — '+ultimo.fazenda)+'&body='+encodeURIComponent(resumoTexto());
-}
-function zap(){
-  return 'https://wa.me/5566999999999?text='+encodeURIComponent('Olá! Acompanhando a cotação '+ultimo.proto+'.');
-}
-function novaLista(){fecharGaveta();setTimeout(pintarGaveta,320)}
+            msg += `────────────────────────────\n`;
+            msg += `💰 *TOTAL ESTIMADO:* R$ ${total.toFixed(2)}\n\n`;
+            msg += `Olá! Gostaria de confirmar a disponibilidade dos itens acima e gerar a proposta para faturamento.`;
 
-/* ── util ────────────────────────────────── */
-let tHandle;
-function toast(msg){
-  const t=el('toast'); t.textContent=msg; t.classList.add('on');
-  clearTimeout(tHandle); tHandle=setTimeout(()=>t.classList.remove('on'),2400);
-}
+            const encoded = encodeURIComponent(msg);
+            window.open(`https://wa.me/5566999999999?text=${encoded}`, '_blank');
+        }
 
-el('q').addEventListener('input',e=>{termo=e.target.value;pintar()});
-el('sort').addEventListener('change',e=>{ordem=e.target.value;pintar()});
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape') fecharGaveta();
-  if(e.key==='/'&&!/^(INPUT|SELECT|TEXTAREA)$/.test(document.activeElement.tagName)){e.preventDefault();el('q').focus()}
-});
-
-pintar(); badge();
-
-/* verificação mínima da lógica de filtro e formatação */
-console.assert(PRODUTOS.filter(p=>combina(p,'encomenda')).length===1,'esperado 1 item sob encomenda');
-console.assert(PRODUTOS.filter(p=>combina(p,'ultimas')).length===2,'esperado 2 itens com últimas unidades');
-console.assert(PRODUTOS.filter(p=>combina(p,'pronta')).length===7,'esperado 7 itens a pronta entrega');
-console.assert(brl(1234.5).replace(/ /g,' ')==='R$ 1.234,50','formatação BRL');
-</script>
+        renderPartsList();
+    </script>
 </body>
 </html>

@@ -3,744 +3,889 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KlimaCerto &amp; Solar | Dimensionamento Térmico e Energia Solar em MT</title>
-<meta name="description" content="Calculadora de carga térmica para o calor de Mato Grosso. Dimensione BTUs, veja o consumo real e agende a visita técnica com horário confirmado.">
+<title>KlimaCerto &amp; Solar | Laudo Térmico e Projeto Fotovoltaico em MT</title>
+<meta name="description" content="Laudo preliminar de carga térmica para o clima de Mato Grosso: BTU, bitola de cabo, disjuntor e comparativo da conta da Energisa com e sem geração solar.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Saira:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --night:#080d14; --deep:#0d141d; --panel:#121b26; --panel-2:#18232f;
-  --edge:#22303f; --edge-2:#2d3e50;
-  --ice:#7dd3fc; --cold:#38bdf8; --cool:#22d3ee;
-  --hot:#ff6b35; --ember:#f97316; --solar:#fbbf24;
-  --ok:#34d399;
-  --txt:#eef4fa; --mid:#93a6b8; --low:#5f7386;
-  --r:10px;
+  --paper:#fcfbf9; --paper-2:#f3f0ea; --card:#fff;
+  --navy:#0a192f; --navy-2:#12294a; --navy-3:#1e3a5f;
+  --ink:#111827; --ink-60:#4b5563; --ink-40:#7d8590;
+  --rule:#e3ded3; --rule-2:#cec7b8;
+  --copper:#a8542a; --copper-soft:#f6ece5;
+  --volt:#1f5c3d; --volt-soft:#eaf2ed;
+  --r:6px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--night);color:var(--txt);-webkit-font-smoothing:antialiased}
-h1,h2,h3,h4{font-family:'Sora',sans-serif;letter-spacing:-.02em}
-.num{font-family:'JetBrains Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+body{font-family:'IBM Plex Sans',system-ui,sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5}
+h1,h2,h3,h4{font-family:'Saira',system-ui,sans-serif;letter-spacing:-.015em;line-height:1.28;font-weight:600}
 a{color:inherit}
-button,input,select{font:inherit}
-:focus-visible{outline:2px solid var(--cool);outline-offset:3px}
+button,input,select,textarea{font:inherit}
+:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+table{border-collapse:collapse;width:100%}
 
-/* ── topo ───────────────────────────────── */
-.notice{background:#050a10;border-bottom:1px solid var(--edge);padding:8px 22px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--mid);letter-spacing:.02em}
-.notice b{color:var(--ice);font-weight:600}
-.hdr{position:sticky;top:0;z-index:50;background:rgba(8,13,20,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--edge)}
-.hdr-in{max-width:1240px;margin:0 auto;padding:14px 22px;display:flex;justify-content:space-between;align-items:center;gap:18px}
+/* ── metadados operacionais, não banner ── */
+.meta{background:var(--navy);color:#9fb3cc;font-family:'Azeret Mono',monospace;font-size:11px;padding:7px 22px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;letter-spacing:.02em}
+.meta b{color:#e8eef6;font-weight:500}
+header{position:sticky;top:0;z-index:50;background:rgba(252,251,249,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.hd{max-width:1200px;margin:0 auto;padding:13px 22px;display:flex;justify-content:space-between;align-items:center;gap:18px}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
-.brand-i{width:40px;height:40px;border-radius:11px;background:linear-gradient(150deg,var(--cold),var(--cool));color:#06131c;display:grid;place-items:center;box-shadow:0 0 24px rgba(56,189,248,.28)}
-.brand h1{font-size:17px;font-weight:700;line-height:1.1}
-.brand span{font-size:10.5px;color:var(--low);letter-spacing:.14em;text-transform:uppercase;font-weight:600}
-.hdr-nav{display:flex;gap:24px;align-items:center}
-.hdr-nav a{font-size:13.5px;color:var(--mid);text-decoration:none;font-weight:500}
-.hdr-nav a:hover{color:var(--txt)}
-.hdr-cta{background:var(--panel-2);border:1px solid var(--edge-2);color:var(--txt);border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-.hdr-cta:hover{border-color:var(--cool);color:var(--ice)}
+.brand-i{width:38px;height:38px;border-radius:var(--r);background:var(--navy);color:var(--paper);display:grid;place-items:center}
+.brand h1{font-size:17px;font-weight:700}
+.brand span{display:block;font-family:'Azeret Mono',monospace;font-size:10px;color:var(--ink-40);letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
+.hd-nav{display:flex;gap:22px;align-items:center}
+.hd-nav a{font-size:13.5px;color:var(--ink-60);text-decoration:none;font-weight:500}
+.hd-nav a:hover{color:var(--ink)}
+.hd-cta{background:var(--navy);color:var(--paper);border-radius:var(--r);padding:10px 17px;font-size:13.5px;font-weight:600;text-decoration:none}
+.hd-cta:hover{background:var(--navy-2)}
 
-/* ── abertura ───────────────────────────── */
-.top{max-width:1240px;margin:0 auto;padding:56px 22px 34px;text-align:center;position:relative}
-.top::before{content:"";position:absolute;left:50%;top:-90px;width:620px;height:300px;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(56,189,248,.16),transparent 68%);pointer-events:none}
-.pill{position:relative;display:inline-flex;align-items:center;gap:9px;border:1px solid var(--edge-2);background:var(--panel);border-radius:99px;padding:7px 15px;font-size:11.5px;color:var(--ice);letter-spacing:.08em;text-transform:uppercase;font-weight:600;margin-bottom:22px}
-.top h2{position:relative;font-size:clamp(29px,4.6vw,50px);line-height:1.06;font-weight:800;max-width:16ch;margin:0 auto}
-.top h2 .c{background:linear-gradient(96deg,var(--cold),var(--cool));-webkit-background-clip:text;background-clip:text;color:transparent}
-.top h2 .h{background:linear-gradient(96deg,var(--ember),var(--solar));-webkit-background-clip:text;background-clip:text;color:transparent}
-.top p{position:relative;color:var(--mid);font-size:15.5px;line-height:1.65;max-width:60ch;margin:20px auto 0}
+/* ── abertura ── */
+.open{max-width:1200px;margin:0 auto;padding:52px 22px 34px;display:grid;grid-template-columns:1.35fr 1fr;gap:52px;align-items:end;border-bottom:1px solid var(--rule)}
+.open h2{font-size:clamp(28px,3.8vw,44px);font-weight:600;letter-spacing:-.025em;line-height:1.14;max-width:19ch}
+.open h2 em{font-style:normal;color:var(--copper)}
+.open p{color:var(--ink-60);font-size:15.5px;margin-top:16px;max-width:52ch;line-height:1.6}
+.crumb{font-family:'Azeret Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-40);margin-bottom:14px;display:block}
+.open-facts{display:grid;border-top:1px solid var(--rule)}
+.fact{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:11px 0;border-bottom:1px solid var(--rule)}
+.fact span{font-size:12.5px;color:var(--ink-60)}
+.fact b{font-family:'Azeret Mono',monospace;font-size:15px;font-weight:500;font-variant-numeric:tabular-nums}
 
-/* ── termômetro assinatura ──────────────── */
-.therm{max-width:1240px;margin:0 auto;padding:0 22px 8px}
-.therm-in{background:var(--deep);border:1px solid var(--edge);border-radius:var(--r);padding:20px 22px}
-.therm-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:14px;flex-wrap:wrap}
-.therm-top h3{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--low);font-weight:600}
-.therm-read{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--mid)}
-.therm-read b{color:var(--txt)}
-.scale{position:relative;height:34px;border-radius:6px;background:linear-gradient(90deg,#0ea5e9 0%,#22d3ee 18%,#a3e635 40%,#fbbf24 62%,#f97316 82%,#dc2626 100%);overflow:visible}
-.scale-marks{display:flex;justify-content:space-between;margin-top:7px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--low)}
-.needle{position:absolute;top:-7px;bottom:-7px;width:3px;background:#fff;border-radius:2px;box-shadow:0 0 0 2px rgba(8,13,20,.85),0 0 16px rgba(255,255,255,.55);transition:left .45s cubic-bezier(.34,1.4,.5,1)}
-.needle::after{content:attr(data-l);position:absolute;top:-30px;left:50%;transform:translateX(-50%);white-space:nowrap;background:#fff;color:#0b121a;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:5px}
+/* ── laudo: entrada + documento ── */
+.laudo{max-width:1200px;margin:0 auto;padding:30px 22px 60px;display:grid;grid-template-columns:1fr 460px;gap:34px;align-items:start}
+.entrada{display:grid;gap:26px}
+.grupo{border-top:1px solid var(--rule);padding-top:18px}
+.grupo>h3{font-size:11px;font-family:'Azeret Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-40);font-weight:500;margin-bottom:14px;display:flex;justify-content:space-between;gap:12px}
+.grupo>h3 em{font-style:normal;color:var(--copper)}
 
-/* ── calculadora ────────────────────────── */
-.calc{max-width:1240px;margin:0 auto;padding:26px 22px 20px;display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:start}
-.card{background:var(--deep);border:1px solid var(--edge);border-radius:var(--r);padding:24px}
-.card-h{margin-bottom:20px}
-.card-h h3{font-size:17px;font-weight:700}
-.card-h p{font-size:13px;color:var(--mid);margin-top:5px;line-height:1.55}
+.presets{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.preset{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:11px 9px;cursor:pointer;text-align:left;transition:border-color .16s}
+.preset:hover{border-color:var(--rule-2)}
+.preset[aria-pressed="true"]{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.preset b{display:block;font-size:12.5px;font-weight:600}
+.preset small{display:block;font-family:'Azeret Mono',monospace;font-size:10px;color:var(--ink-40);margin-top:2px}
 
-.presets{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:24px}
-.preset{background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:11px 8px;cursor:pointer;text-align:center;transition:border-color .18s,background .18s}
-.preset:hover{border-color:var(--edge-2)}
-.preset[aria-pressed="true"]{border-color:var(--cool);background:rgba(34,211,238,.09)}
-.preset svg{color:var(--mid);margin-bottom:6px}
-.preset[aria-pressed="true"] svg{color:var(--cool)}
-.preset span{display:block;font-size:11.5px;font-weight:600;color:var(--mid)}
-.preset[aria-pressed="true"] span{color:var(--txt)}
-
-.ctrl{margin-bottom:22px}
-.ctrl-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:9px}
+.ctrl{margin-bottom:18px}
+.ctrl:last-child{margin-bottom:0}
+.ctrl-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:7px}
 .ctrl-top label{font-size:13.5px;font-weight:600}
-.ctrl-top .v{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--cool);background:var(--panel);border:1px solid var(--edge);border-radius:6px;padding:3px 10px}
-.ctrl-hint{font-size:11.5px;color:var(--low);margin-top:7px;line-height:1.5}
-input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:5px;border-radius:3px;background:var(--panel-2);outline:none}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--txt);border:4px solid var(--cool);cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.5)}
-input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--txt);border:4px solid var(--cool);cursor:pointer}
+.ctrl-top .v{font-family:'Azeret Mono',monospace;font-size:13.5px;color:var(--copper);font-variant-numeric:tabular-nums}
+.ctrl-hint{font-size:11.5px;color:var(--ink-40);margin-top:6px;line-height:1.5}
+input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:3px;border-radius:2px;background:var(--rule-2);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--card);border:3px solid var(--navy);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--card);border:3px solid var(--navy);cursor:pointer}
 
-.duo{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.opt{background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:13px;cursor:pointer;text-align:left;transition:border-color .18s,background .18s}
-.opt:hover{border-color:var(--edge-2)}
-.opt[aria-pressed="true"]{border-color:var(--ember);background:rgba(249,115,22,.09)}
-.opt h4{font-size:13.5px;font-weight:700;margin-bottom:4px}
-.opt p{font-size:11.5px;color:var(--mid);line-height:1.45}
-.opt[aria-pressed="true"] h4{color:var(--solar)}
+.escolhas{display:grid;gap:6px}
+.escolha{display:flex;gap:11px;align-items:flex-start;background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:11px 12px;cursor:pointer}
+.escolha:hover{border-color:var(--rule-2)}
+.escolha:has(input:checked){border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.escolha input{accent-color:var(--navy);margin-top:2px;flex-shrink:0}
+.escolha b{display:block;font-size:13px;font-weight:600}
+.escolha small{display:block;font-size:11.5px;color:var(--ink-60);line-height:1.45;margin-top:2px}
+.escolha .tag{margin-left:auto;font-family:'Azeret Mono',monospace;font-size:10.5px;color:var(--ink-40);white-space:nowrap;padding-left:8px}
 
-/* ── planta do ambiente (svg) ───────────── */
-.plan{margin-top:6px;background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:16px}
-.plan-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.plan-h span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--low);font-weight:600}
-.plan svg{width:100%;height:auto;display:block}
+/* ── documento ── */
+.doc{position:sticky;top:78px;background:var(--card);border:1px solid var(--rule-2);border-radius:var(--r);overflow:hidden}
+.doc-top{background:var(--navy);color:var(--paper);padding:16px 20px}
+.doc-top .k{font-family:'Azeret Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#8ea7c4}
+.doc-top h3{font-size:16px;margin-top:3px;color:#fff}
+.doc-top p{font-family:'Azeret Mono',monospace;font-size:10.5px;color:#8ea7c4;margin-top:5px}
 
-/* ── resultado ──────────────────────────── */
-.res{position:sticky;top:88px;display:grid;gap:14px}
-.readout{background:linear-gradient(165deg,var(--panel-2),var(--deep));border:1px solid var(--edge-2);border-radius:var(--r);padding:24px;text-align:center;position:relative;overflow:hidden}
-.readout::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% -10%,rgba(56,189,248,.2),transparent 62%)}
-.readout>*{position:relative}
-.readout .lbl{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);font-weight:600}
-.btu{font-family:'JetBrains Mono',monospace;font-size:clamp(48px,8vw,68px);font-weight:700;line-height:1;letter-spacing:-.03em;margin:10px 0 2px;background:linear-gradient(160deg,#fff,var(--ice));-webkit-background-clip:text;background-clip:text;color:transparent}
-.btu-un{font-size:12.5px;color:var(--mid);letter-spacing:.06em}
-.model{margin-top:16px;padding-top:16px;border-top:1px solid var(--edge);font-size:13px;color:var(--ice);font-weight:600}
+.doc-sec{border-bottom:1px solid var(--rule);padding:16px 20px}
+.doc-sec:last-of-type{border-bottom:none}
+.doc-sec h4{font-family:'Azeret Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-40);font-weight:500;margin-bottom:11px}
+.headline{display:flex;align-items:baseline;gap:9px;margin-bottom:6px}
+.headline b{font-family:'Azeret Mono',monospace;font-size:38px;font-weight:700;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.headline span{font-size:12.5px;color:var(--ink-60)}
+.doc-sec>p{font-size:12.5px;color:var(--ink-60);line-height:1.55}
 
-.split{background:var(--deep);border:1px solid var(--edge);border-radius:var(--r);padding:18px}
-.split h4{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--low);font-weight:600;margin-bottom:13px}
-.bar{display:flex;height:12px;border-radius:6px;overflow:hidden;background:var(--panel);margin-bottom:12px}
-.bar i{display:block;transition:width .4s ease}
-.legend{display:grid;gap:7px}
-.legend div{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--mid)}
-.legend i{width:9px;height:9px;border-radius:2px;flex-shrink:0}
-.legend b{margin-left:auto;font-family:'JetBrains Mono',monospace;color:var(--txt);font-weight:500}
+.linha{display:flex;justify-content:space-between;gap:14px;padding:6px 0;font-size:12.5px;color:var(--ink-60);border-bottom:1px dotted var(--rule)}
+.linha:last-child{border-bottom:none}
+.linha b{font-family:'Azeret Mono',monospace;color:var(--ink);font-weight:500;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.linha.som{border-bottom:none;border-top:1px solid var(--rule-2);margin-top:5px;padding-top:9px;font-weight:600;color:var(--ink)}
+.linha.som b{font-size:14px}
 
-.stats{background:var(--deep);border:1px solid var(--edge);border-radius:var(--r);overflow:hidden}
-.stat{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid var(--edge);font-size:13px;color:var(--mid)}
-.stat:last-child{border-bottom:none}
-.stat b{font-family:'JetBrains Mono',monospace;color:var(--txt);font-weight:500;text-align:right}
-.stat b.good{color:var(--ok)}
-.stat b.solar{color:var(--solar)}
-.stat small{display:block;font-family:'Inter',sans-serif;font-size:10.5px;color:var(--low);margin-top:2px}
+.parcela{display:grid;grid-template-columns:auto 1fr auto;gap:9px;align-items:center;padding:5px 0;font-size:12px;color:var(--ink-60)}
+.parcela i{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.parcela b{font-family:'Azeret Mono',monospace;color:var(--ink);font-weight:500;font-variant-numeric:tabular-nums}
+.pilha{display:flex;height:9px;border-radius:2px;overflow:hidden;background:var(--paper-2);margin-bottom:10px}
+.pilha i{display:block;transition:width .3s ease}
 
-.book-cta{width:100%;background:linear-gradient(100deg,var(--cold),var(--cool));color:#04121a;border:none;border-radius:var(--r);padding:17px;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:filter .18s,transform .18s}
-.book-cta:hover{filter:brightness(1.1);transform:translateY(-1px)}
+.eletrica{background:var(--copper-soft);border-left:2px solid var(--copper);padding:12px 14px;margin-top:12px}
+.eletrica p{font-size:11.5px;color:#6b3a1d;line-height:1.55}
+.eletrica b{font-weight:600}
 
-/* ── agendamento ────────────────────────── */
-.sched{max-width:1240px;margin:34px auto 0;padding:0 22px}
-.sched-card{background:var(--deep);border:1px solid var(--edge);border-radius:var(--r);overflow:hidden}
-.sched-head{padding:24px;border-bottom:1px solid var(--edge);display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
-.sched-head h3{font-size:21px;font-weight:700}
-.sched-head p{color:var(--mid);font-size:13.5px;margin-top:6px;max-width:52ch;line-height:1.6}
-.sched-carry{background:var(--panel);border:1px solid var(--edge-2);border-radius:8px;padding:11px 15px;font-size:12px;color:var(--mid);white-space:nowrap}
-.sched-carry b{display:block;font-family:'JetBrains Mono',monospace;font-size:17px;color:var(--ice);margin-top:3px}
-.sched-body{padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:26px}
-.step-lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--low);font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:9px}
-.step-lbl i{width:19px;height:19px;border-radius:50%;background:var(--panel-2);border:1px solid var(--edge-2);color:var(--ice);display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-size:10px;font-style:normal}
+.conta{font-size:12.5px}
+.conta th{font-family:'Azeret Mono',monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-40);font-weight:500;text-align:right;padding:0 0 7px;border-bottom:1px solid var(--rule-2)}
+.conta th:first-child{text-align:left}
+.conta td{padding:7px 0;border-bottom:1px dotted var(--rule);color:var(--ink-60);text-align:right;font-family:'Azeret Mono',monospace;font-variant-numeric:tabular-nums}
+.conta td:first-child{text-align:left;font-family:'IBM Plex Sans',sans-serif}
+.conta tr.tot td{border-bottom:none;border-top:1px solid var(--rule-2);padding-top:9px;font-weight:700;color:var(--ink);font-size:13.5px}
+.conta td.economia{color:var(--volt)}
+.conta-nota{font-size:11px;color:var(--ink-40);line-height:1.55;margin-top:10px}
 
-.days{display:grid;grid-template-columns:repeat(auto-fit,minmax(72px,1fr));gap:7px;margin-bottom:24px}
-.day{background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:10px 4px;cursor:pointer;text-align:center;transition:border-color .18s,background .18s}
-.day:hover:not(:disabled){border-color:var(--edge-2)}
-.day[aria-pressed="true"]{border-color:var(--cool);background:rgba(34,211,238,.1)}
-.day:disabled{opacity:.32;cursor:not-allowed}
-.day .dw{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--low);font-weight:600}
-.day .dd{font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:700;margin:3px 0 1px}
-.day .dm{font-size:10px;color:var(--low)}
-.day[aria-pressed="true"] .dw,.day[aria-pressed="true"] .dm{color:var(--ice)}
+.doc-cta{padding:16px 20px;background:var(--paper-2);border-top:1px solid var(--rule-2)}
+.btn-agendar{width:100%;background:var(--navy);color:var(--paper);border:none;border-radius:var(--r);padding:14px;font-family:'Saira',sans-serif;font-size:14.5px;font-weight:600;cursor:pointer}
+.btn-agendar:hover{background:var(--navy-2)}
+.doc-cta p{font-family:'Azeret Mono',monospace;font-size:10px;color:var(--ink-40);text-align:center;margin-top:8px;line-height:1.5}
 
-.slots{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:7px}
-.slot{background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:11px 6px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--txt);transition:border-color .18s,background .18s}
-.slot:hover:not(:disabled){border-color:var(--edge-2)}
-.slot[aria-pressed="true"]{border-color:var(--cool);background:rgba(34,211,238,.1);color:var(--ice)}
-.slot:disabled{opacity:.3;cursor:not-allowed;text-decoration:line-through}
-.slot small{display:block;font-family:'Inter',sans-serif;font-size:10px;color:var(--low);margin-top:3px;text-decoration:none}
+/* ── agendamento ── */
+.agenda{max-width:1200px;margin:0 auto 60px;padding:0 22px}
+.ag-card{background:var(--card);border:1px solid var(--rule-2);border-radius:var(--r);overflow:hidden}
+.ag-head{padding:24px;border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:flex-end;gap:22px;flex-wrap:wrap}
+.ag-head h3{font-size:21px}
+.ag-head p{color:var(--ink-60);font-size:13.5px;margin-top:7px;max-width:56ch;line-height:1.6}
+.ag-carry{font-family:'Azeret Mono',monospace;font-size:11px;color:var(--ink-40);text-align:right;white-space:nowrap}
+.ag-carry b{display:block;font-size:17px;color:var(--ink);margin-top:3px}
+.ag-body{display:grid;grid-template-columns:1fr 1fr}
+.ag-col{padding:22px 24px}
+.ag-col+.ag-col{border-left:1px solid var(--rule)}
+.passo{font-family:'Azeret Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-40);margin-bottom:12px;display:block}
 
-.form-grid{display:grid;gap:13px}
-.fld label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-bottom:6px}
-.fld input,.fld select,.fld textarea{width:100%;background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:12px 13px;color:var(--txt);font-size:14px}
-.fld input::placeholder,.fld textarea::placeholder{color:var(--low)}
-.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--cool);outline:none}
-.fld textarea{resize:vertical;min-height:74px;font-family:'Inter',sans-serif}
-.confirm-btn{width:100%;background:var(--ok);color:#04211a;border:none;border-radius:var(--r);padding:16px;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px;transition:filter .18s}
-.confirm-btn:hover:not(:disabled){filter:brightness(1.08)}
-.confirm-btn:disabled{background:var(--panel-2);color:var(--low);cursor:not-allowed}
-.req{font-size:11.5px;color:var(--low);text-align:center;margin-top:9px;min-height:16px}
+.dias{display:grid;grid-template-columns:repeat(auto-fit,minmax(64px,1fr));gap:6px;margin-bottom:22px}
+.dia{background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);padding:9px 4px;cursor:pointer;text-align:center}
+.dia:hover{border-color:var(--rule-2)}
+.dia[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:var(--paper)}
+.dia .w{display:block;font-family:'Azeret Mono',monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-40)}
+.dia .n{display:block;font-family:'Azeret Mono',monospace;font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
+.dia .m{display:block;font-family:'Azeret Mono',monospace;font-size:9.5px;color:var(--ink-40)}
+.dia[aria-pressed="true"] .w,.dia[aria-pressed="true"] .m{color:#8ea7c4}
 
-/* ── confirmação ────────────────────────── */
-.done{padding:38px 24px;text-align:center;animation:rise .4s ease}
-@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.done-ico{width:60px;height:60px;border-radius:50%;background:rgba(52,211,153,.13);border:1px solid rgba(52,211,153,.35);color:var(--ok);display:grid;place-items:center;margin:0 auto 18px}
-.done h3{font-size:24px;font-weight:800}
-.done>p{color:var(--mid);font-size:14px;line-height:1.6;max-width:46ch;margin:10px auto 24px}
-.ticket{max-width:520px;margin:0 auto 24px;background:var(--panel);border:1px solid var(--edge-2);border-radius:var(--r);overflow:hidden;text-align:left}
-.ticket-top{background:linear-gradient(100deg,var(--cold),var(--cool));color:#04121a;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;gap:14px}
-.ticket-top span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;opacity:.8}
-.ticket-top b{font-family:'JetBrains Mono',monospace;font-size:18px;display:block;margin-top:2px}
-.ticket-when{text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700}
-.ticket-row{display:flex;justify-content:space-between;gap:14px;padding:12px 20px;border-bottom:1px solid var(--edge);font-size:13px;color:var(--mid)}
-.ticket-row:last-child{border-bottom:none}
-.ticket-row b{color:var(--txt);font-family:'JetBrains Mono',monospace;font-weight:500;text-align:right}
-.opts{max-width:520px;margin:0 auto;display:grid;gap:9px}
-.optbtn{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--edge);border-radius:9px;padding:14px 16px;cursor:pointer;text-align:left;text-decoration:none;color:var(--txt);font-size:13.5px;font-weight:600;transition:border-color .18s,background .18s}
-.optbtn:hover{border-color:var(--edge-2);background:var(--panel-2)}
-.optbtn small{display:block;font-weight:400;color:var(--mid);font-size:11.5px;margin-top:2px;line-height:1.4}
-.optbtn i{width:34px;height:34px;border-radius:8px;background:var(--panel-2);color:var(--ice);display:grid;place-items:center;flex-shrink:0}
-.optbtn.wa i{background:rgba(52,211,153,.12);color:var(--ok)}
-.again{background:none;border:none;color:var(--low);font-size:12.5px;text-decoration:underline;text-underline-offset:4px;cursor:pointer;margin-top:22px}
+.janelas{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:6px}
+.janela{background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);padding:10px 6px;cursor:pointer;font-family:'Azeret Mono',monospace;font-size:12.5px;color:var(--ink)}
+.janela:hover:not(:disabled){border-color:var(--rule-2)}
+.janela[aria-pressed="true"]{background:var(--copper);border-color:var(--copper);color:#fff}
+.janela:disabled{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+.janela small{display:block;font-family:'IBM Plex Sans',sans-serif;font-size:10px;color:var(--ink-40);margin-top:2px;text-decoration:none}
+.janela[aria-pressed="true"] small{color:#f3ddd0}
 
-/* ── especificações ─────────────────────── */
-.specs{max-width:1240px;margin:44px auto 0;padding:0 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
-.spec{background:var(--deep);border:1px solid var(--edge);border-radius:var(--r);padding:20px}
-.spec i{width:36px;height:36px;border-radius:9px;background:var(--panel-2);color:var(--ice);display:grid;place-items:center;margin-bottom:13px}
-.spec h4{font-size:14.5px;font-weight:700;margin-bottom:6px}
-.spec p{font-size:12.5px;color:var(--mid);line-height:1.6}
+.campos{display:grid;gap:12px}
+.cp label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-60);margin-bottom:5px}
+.cp input,.cp select,.cp textarea{width:100%;background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);padding:11px 12px;font-size:13.5px;color:var(--ink)}
+.cp input:focus,.cp select:focus,.cp textarea:focus{border-color:var(--navy);background:var(--card);outline:none}
+.cp textarea{resize:vertical;min-height:70px;font-family:'IBM Plex Sans',sans-serif}
+.btn-confirmar{width:100%;background:var(--volt);color:#fff;border:none;border-radius:var(--r);padding:14px;font-family:'Saira',sans-serif;font-size:14.5px;font-weight:600;cursor:pointer;margin-top:4px}
+.btn-confirmar:hover:not(:disabled){background:#17472f}
+.btn-confirmar:disabled{background:var(--paper-2);color:var(--ink-40);cursor:not-allowed}
+.aviso{font-size:11.5px;color:var(--ink-40);text-align:center;min-height:16px;line-height:1.5}
 
-footer{margin-top:56px;border-top:1px solid var(--edge);padding:30px 22px;background:#050a10}
-.f-in{max-width:1240px;margin:0 auto;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:12.5px;color:var(--low);line-height:1.7}
-footer b{color:var(--mid)}
+/* ── confirmação ── */
+.ok{padding:36px 24px;text-align:center}
+.ok-i{width:52px;height:52px;border-radius:50%;background:var(--volt-soft);color:var(--volt);display:grid;place-items:center;margin:0 auto 16px}
+.ok h3{font-size:22px}
+.ok>p{color:var(--ink-60);font-size:14px;max-width:46ch;margin:10px auto 24px;line-height:1.6}
+.os-card{max-width:520px;margin:0 auto 22px;border:1px solid var(--rule-2);border-radius:var(--r);overflow:hidden;text-align:left}
+.os-top{background:var(--navy);color:var(--paper);padding:15px 20px;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.os-top .k{font-family:'Azeret Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8ea7c4}
+.os-top b{font-family:'Azeret Mono',monospace;font-size:18px;display:block;margin-top:2px}
+.os-when{font-family:'Azeret Mono',monospace;font-size:13px;font-weight:700;text-align:right;line-height:1.35}
+.os-row{display:flex;justify-content:space-between;gap:14px;padding:11px 20px;border-bottom:1px solid var(--rule);font-size:12.5px;color:var(--ink-60)}
+.os-row:last-child{border-bottom:none}
+.os-row b{font-family:'Azeret Mono',monospace;color:var(--ink);font-weight:500;text-align:right;font-variant-numeric:tabular-nums}
+.canais{max-width:520px;margin:0 auto;display:grid;gap:8px}
+.canal{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:13px 15px;cursor:pointer;text-decoration:none;color:var(--ink);font-size:13.5px;font-weight:600;text-align:left;width:100%}
+.canal:hover{border-color:var(--navy)}
+.canal small{display:block;font-weight:400;color:var(--ink-60);font-size:11.5px;margin-top:2px;line-height:1.45}
+.canal i{width:32px;height:32px;border-radius:var(--r);background:var(--paper-2);color:var(--ink-60);display:grid;place-items:center;flex-shrink:0}
+.canal.wa i{background:var(--volt-soft);color:var(--volt)}
+.refazer{background:none;border:none;color:var(--ink-40);font-family:'Azeret Mono',monospace;font-size:11px;text-decoration:underline;text-underline-offset:4px;cursor:pointer;margin-top:20px}
 
-.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,180%);background:var(--panel-2);border:1px solid var(--edge-2);border-left:3px solid var(--ok);color:var(--txt);padding:13px 20px;border-radius:9px;font-size:13px;font-weight:600;z-index:120;transition:transform .3s cubic-bezier(.4,0,.2,1)}
+/* ── escopo ── */
+.padrao{max-width:1200px;margin:0 auto 60px;padding:0 22px}
+.padrao h3{font-size:20px;margin-bottom:6px}
+.padrao>p{color:var(--ink-60);font-size:14px;max-width:62ch;margin-bottom:20px}
+.padrao table{font-size:13px}
+.padrao th{font-family:'Azeret Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-40);font-weight:500;text-align:left;padding:0 14px 8px 0;border-bottom:1px solid var(--rule-2)}
+.padrao td{padding:12px 14px 12px 0;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink-60);line-height:1.55}
+.padrao td:first-child{color:var(--ink);font-weight:600;white-space:nowrap;width:1%}
+.padrao td.n{font-family:'Azeret Mono',monospace;white-space:nowrap;color:var(--ink)}
+
+footer{border-top:1px solid var(--rule);padding:28px 22px;background:var(--paper-2)}
+.ft{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-40);line-height:1.7}
+footer b{color:var(--ink-60)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,180%);background:var(--navy);color:var(--paper);padding:12px 20px;border-radius:var(--r);font-size:13px;font-weight:600;z-index:120;transition:transform .28s ease}
 .toast.on{transform:translate(-50%,0)}
 
-@media (max-width:900px){
-  .calc{grid-template-columns:1fr}
-  .res{position:static}
-  .sched-body{grid-template-columns:1fr;gap:22px}
-  .hdr-nav a{display:none}
+@media (max-width:960px){
+  .laudo{grid-template-columns:1fr}
+  .doc{position:static}
+  .open{grid-template-columns:1fr;gap:30px}
+  .ag-body{grid-template-columns:1fr}
+  .ag-col+.ag-col{border-left:none;border-top:1px solid var(--rule)}
+  .hd-nav{display:none}
   .presets{grid-template-columns:repeat(2,1fr)}
 }
+@media (max-width:560px){
+  .padrao table,.padrao tbody,.padrao tr,.padrao td{display:block}
+  .padrao thead{display:none}
+  .padrao td{border-bottom:none;padding:2px 0}
+  .padrao tr{border-bottom:1px solid var(--rule);padding:12px 0}
+  .padrao td:first-child{width:auto}
+}
 @media print{
-  .hdr,.notice,.top,.therm,.calc,.specs,.opts,.again,footer,.toast{display:none!important}
-  body{background:#fff;color:#000}
-  .sched-card,.ticket{border-color:#ccc}
-  .ticket-top{background:#eee;color:#000}
+  header,.meta,.open,.entrada,.agenda,.padrao,.doc-cta,.canais,.refazer,footer,.toast{display:none!important}
+  .laudo{display:block;padding:0}
+  .doc{position:static;border:none}
+  .doc-top{background:#eee;color:#000}
+  .doc-top .k,.doc-top p{color:#555}
+  body{background:#fff}
 }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
 </style>
 </head>
 <body>
 
-<div class="notice">
-  <span>Engenharia térmica e fotovoltaica · <b>CREA-MT 048921/D</b></span>
-  <span>Cuiabá · Várzea Grande · Sinop · Rondonópolis</span>
+<div class="meta">
+  <span>CREA-MT <b>048921/D</b> · ART recolhida por obra</span>
+  <span>CUIABÁ · VÁRZEA GRANDE · SINOP · RONDONÓPOLIS</span>
+  <span>TARIFA DE REFERÊNCIA: <b>ENERGISA MT B1 RESIDENCIAL</b></span>
 </div>
 
-<header class="hdr">
-  <div class="hdr-in">
+<header>
+  <div class="hd">
     <a href="#" class="brand">
-      <div class="brand-i"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-      <div><h1>KlimaCerto &amp; Solar</h1><span>Engenharia Térmica MT</span></div>
+      <span class="brand-i"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+      <div><h1>KlimaCerto &amp; Solar</h1><span>Engenharia térmica MT</span></div>
     </a>
-    <nav class="hdr-nav">
-      <a href="#simulador">Simulador</a>
+    <nav class="hd-nav">
+      <a href="#laudo">Laudo preliminar</a>
       <a href="#agendar">Agendar visita</a>
-      <a href="#padrao">Padrão de instalação</a>
+      <a href="#padrao">Escopo do serviço</a>
     </nav>
-    <a href="#agendar" class="hdr-cta">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-      Agendar visita
-    </a>
+    <a href="#agendar" class="hd-cta">Agendar visita</a>
   </div>
 </header>
 
-<section class="top">
-  <span class="pill">
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg>
-    Carga térmica calculada item a item
-  </span>
-  <h2>O aparelho certo para <span class="h">40 graus</span>, não para o catálogo.</h2>
-  <p>Ar-condicionado subdimensionado nunca desliga: consome até 65% a mais e mata o compressor antes da hora. Ajuste os dados do seu ambiente e veja de onde vem cada BTU de calor.</p>
-</section>
-
-<section class="therm" aria-hidden="true">
-  <div class="therm-in">
-    <div class="therm-top">
-      <h3>Carga térmica do ambiente</h3>
-      <div class="therm-read">Total calculado: <b><span id="thermTotal">16.000</span> BTU/h</b> · classe <b id="thermClass">média</b></div>
-    </div>
-    <div class="scale"><div class="needle" id="needle" data-l="16.000" style="left:26%"></div></div>
-    <div class="scale-marks"><span>7.000</span><span>12.000</span><span>18.000</span><span>24.000</span><span>36.000</span><span>60.000</span></div>
+<section class="open">
+  <div>
+    <span class="crumb">Laudo térmico preliminar · NBR 5858 / NBR 5410</span>
+    <h2>o aparelho errado não esfria, <em>e ainda derruba o disjuntor</em></h2>
+    <p>Boa parte das reclamações que atendemos em Cuiabá não é do aparelho: é do circuito. Split de 18.000 ligado em fio de 1,5 mm² dividido com a tomada do quarto. Preencha abaixo e o laudo devolve as três coisas que o instalador precisa saber antes de furar a parede.</p>
+  </div>
+  <div class="open-facts">
+    <div class="fact"><span>Máxima registrada em Cuiabá</span><b>43,8 °C</b></div>
+    <div class="fact"><span>Obras que chegam com circuito subdimensionado</span><b>1 em 3</b></div>
+    <div class="fact"><span>Prazo de homologação na Energisa</span><b>até 34 dias</b></div>
   </div>
 </section>
 
-<section class="calc" id="simulador">
-  <div class="card">
-    <div class="card-h">
-      <h3>Parâmetros do ambiente</h3>
-      <p>Comece por um tipo de ambiente e ajuste o que for diferente na sua casa ou empresa.</p>
+<section class="laudo" id="laudo">
+  <div class="entrada">
+
+    <div class="grupo">
+      <h3><span>1 · Tipo de ambiente</span> <em>escolha o mais parecido</em></h3>
+      <div class="presets" id="presets" role="group" aria-label="Tipo de ambiente"></div>
     </div>
 
-    <div class="presets" id="presets" role="group" aria-label="Tipo de ambiente"></div>
-
-    <div class="ctrl">
-      <div class="ctrl-top"><label for="area">Área do ambiente</label><span class="v" id="areaV">20 m²</span></div>
-      <input type="range" id="area" min="6" max="90" value="20" step="1">
-      <p class="ctrl-hint">Multiplique comprimento por largura. Ambientes conjugados sem porta contam como um só.</p>
-    </div>
-
-    <div class="ctrl">
-      <div class="ctrl-top"><label for="pd">Pé-direito</label><span class="v" id="pdV">2,7 m</span></div>
-      <input type="range" id="pd" min="240" max="450" value="270" step="10">
-      <p class="ctrl-hint">Forro alto guarda mais ar quente — em Cuiabá isso pesa no cálculo.</p>
-    </div>
-
-    <div class="ctrl">
-      <div class="ctrl-top"><label for="gente">Pessoas no ambiente</label><span class="v" id="genteV">2 pessoas</span></div>
-      <input type="range" id="gente" min="1" max="30" value="2" step="1">
-    </div>
-
-    <div class="ctrl">
-      <div class="ctrl-top"><label for="equip">Equipamentos ligados</label><span class="v" id="equipV">2 aparelhos</span></div>
-      <input type="range" id="equip" min="0" max="20" value="2" step="1">
-      <p class="ctrl-hint">TV, computador, forno, geladeira, estufa. Cada um vira calor dentro da sala.</p>
-    </div>
-
-    <div class="ctrl">
-      <span class="step-lbl" style="margin-bottom:9px"><i>☀</i> Insolação da parede externa</span>
-      <div class="duo" id="sol" role="group" aria-label="Insolação"></div>
-    </div>
-
-    <div class="plan">
-      <div class="plan-h"><span>Planta esquemática</span><span class="num" id="planDim" style="color:var(--mid)">4,5 × 4,5 m</span></div>
-      <svg viewBox="0 0 320 130" role="img" aria-label="Planta esquemática do ambiente com posição do sol">
-        <defs>
-          <linearGradient id="sunwall" x1="0" x2="1">
-            <stop offset="0" stop-color="#f97316" stop-opacity=".85"/><stop offset="1" stop-color="#f97316" stop-opacity="0"/>
-          </linearGradient>
-        </defs>
-        <rect x="60" y="18" width="200" height="94" rx="4" fill="#18232f" stroke="#2d3e50" stroke-width="1.5"/>
-        <rect id="wallSun" x="60" y="18" width="26" height="94" fill="url(#sunwall)"/>
-        <line id="wallEdge" x1="60" y1="18" x2="60" y2="112" stroke="#f97316" stroke-width="3"/>
-        <g id="sunGroup" transform="translate(28,65)">
-          <circle r="11" fill="#fbbf24"/>
-          <g stroke="#fbbf24" stroke-width="1.6" stroke-linecap="round">
-            <path d="M0-18v-5M0 18v5M-18 0h-5M18 0h5M-13-13l-3.5-3.5M13 13l3.5 3.5M13-13l3.5-3.5M-13 13l-3.5 3.5"/>
-          </g>
-        </g>
-        <rect x="236" y="30" width="18" height="26" rx="3" fill="#0d141d" stroke="#38bdf8" stroke-width="1.5"/>
-        <path d="M240 60v8M245 60v10M250 60v8" stroke="#38bdf8" stroke-width="1.4" stroke-linecap="round" opacity=".65"/>
-        <text x="245" y="86" text-anchor="middle" fill="#5f7386" font-family="JetBrains Mono, monospace" font-size="8">split</text>
-        <g id="people" fill="#93a6b8"></g>
-      </svg>
-    </div>
-  </div>
-
-  <div class="res">
-    <div class="readout">
-      <div class="lbl">Capacidade recomendada</div>
-      <div class="btu" id="btu">12.000</div>
-      <div class="btu-un">BTU/h · fluido R-32</div>
-      <div class="model" id="model">Split Hi-Wall Inverter · 220V monofásico</div>
-    </div>
-
-    <div class="split">
-      <h4>De onde vem o calor</h4>
-      <div class="bar">
-        <i id="barBase" style="background:var(--cold)"></i>
-        <i id="barSol"  style="background:var(--ember)"></i>
-        <i id="barGente" style="background:var(--solar)"></i>
-        <i id="barEquip" style="background:var(--cool)"></i>
+    <div class="grupo">
+      <h3><span>2 · Dimensões</span></h3>
+      <div class="ctrl">
+        <div class="ctrl-top"><label for="area">Área do piso</label><span class="v" id="areaV">26 m²</span></div>
+        <input type="range" id="area" min="6" max="120" value="26" step="1">
+        <p class="ctrl-hint">Comprimento × largura. Ambientes conjugados sem porta entram como um só.</p>
       </div>
-      <div class="legend">
-        <div><i style="background:var(--cold)"></i>Volume do ambiente<b id="lgBase">—</b></div>
-        <div><i style="background:var(--ember)"></i>Insolação<b id="lgSol">—</b></div>
-        <div><i style="background:var(--solar)"></i>Pessoas<b id="lgGente">—</b></div>
-        <div><i style="background:var(--cool)"></i>Equipamentos<b id="lgEquip">—</b></div>
+      <div class="ctrl">
+        <div class="ctrl-top"><label for="pd">Pé-direito</label><span class="v" id="pdV">2,80 m</span></div>
+        <input type="range" id="pd" min="240" max="500" value="280" step="10">
       </div>
     </div>
 
-    <div class="stats">
-      <div class="stat"><span>Consumo estimado<small>uso de 8h/dia com modulação inverter</small></span><b id="kwh">—</b></div>
-      <div class="stat"><span>Custo na conta de luz<small>tarifa residencial de referência</small></span><b id="custo">—</b></div>
-      <div class="stat"><span>Economia vs. convencional<small>mesmo ambiente, mesma temperatura</small></span><b class="good" id="econ">—</b></div>
-      <div class="stat"><span>Solar para zerar esse consumo<small>módulos de 550 Wp em MT</small></span><b class="solar" id="solar">—</b></div>
+    <div class="grupo">
+      <h3><span>3 · Cobertura</span> <em>é o que mais pesa em MT</em></h3>
+      <div class="escolhas" id="cobertura" role="group" aria-label="Tipo de cobertura"></div>
     </div>
 
-    <button class="book-cta" onclick="irAgendar()">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-      Agendar visita com este dimensionamento
-    </button>
+    <div class="grupo">
+      <h3><span>4 · Insolação da parede externa</span></h3>
+      <div class="escolhas" id="sol" role="group" aria-label="Insolação"></div>
+    </div>
+
+    <div class="grupo">
+      <h3><span>5 · Ocupação e cargas internas</span></h3>
+      <div class="ctrl">
+        <div class="ctrl-top"><label for="gente">Pessoas ao mesmo tempo</label><span class="v" id="genteV">4 pessoas</span></div>
+        <input type="range" id="gente" min="1" max="40" value="4" step="1">
+      </div>
+      <div class="ctrl">
+        <div class="ctrl-top"><label for="equip">Equipamentos ligados</label><span class="v" id="equipV">3 aparelhos</span></div>
+        <input type="range" id="equip" min="0" max="30" value="3" step="1">
+        <p class="ctrl-hint">TV, computador, forno, geladeira, estufa, vitrine refrigerada. Tudo que esquenta conta.</p>
+      </div>
+      <div class="ctrl">
+        <div class="ctrl-top"><label for="horas">Horas de uso por dia</label><span class="v" id="horasV">8 h</span></div>
+        <input type="range" id="horas" min="2" max="24" value="8" step="1">
+        <p class="ctrl-hint">É isto que define a conta de luz, não a potência do aparelho.</p>
+      </div>
+    </div>
+
+    <div class="grupo">
+      <h3><span>6 · Padrão de entrada do imóvel</span></h3>
+      <div class="escolhas" id="rede" role="group" aria-label="Padrão de entrada"></div>
+    </div>
+
   </div>
+
+  <aside class="doc">
+    <div class="doc-top">
+      <span class="k">Laudo preliminar</span>
+      <h3>Dimensionamento térmico e elétrico</h3>
+      <p id="docRef">LP-0000</p>
+    </div>
+
+    <div class="doc-sec">
+      <h4>1. Carga térmica calculada</h4>
+      <div class="pilha">
+        <i id="pVol" style="background:var(--navy)"></i>
+        <i id="pTeto" style="background:var(--copper)"></i>
+        <i id="pSol" style="background:#c98b52"></i>
+        <i id="pGente" style="background:var(--navy-3)"></i>
+        <i id="pEquip" style="background:#93a3b3"></i>
+      </div>
+      <div class="parcela"><i style="background:var(--navy)"></i><span>Volume de ar do ambiente</span><b id="lVol">—</b></div>
+      <div class="parcela"><i style="background:var(--copper)"></i><span>Ganho pela cobertura</span><b id="lTeto">—</b></div>
+      <div class="parcela"><i style="background:#c98b52"></i><span>Insolação na parede</span><b id="lSol">—</b></div>
+      <div class="parcela"><i style="background:var(--navy-3)"></i><span>Pessoas</span><b id="lGente">—</b></div>
+      <div class="parcela"><i style="background:#93a3b3"></i><span>Equipamentos</span><b id="lEquip">—</b></div>
+      <div class="linha som"><span>Carga total</span><b id="lTotal">—</b></div>
+    </div>
+
+    <div class="doc-sec">
+      <h4>2. Equipamento indicado</h4>
+      <div class="headline"><b id="btu">—</b><span>BTU/h</span></div>
+      <p id="modelo">—</p>
+      <div class="linha" style="margin-top:10px"><span>Folga sobre a carga calculada</span><b id="folga">—</b></div>
+      <div class="linha"><span>Tecnologia</span><b>Inverter · fluido R-32</b></div>
+      <div class="linha"><span>Ruído da condensadora</span><b id="ruido">—</b></div>
+    </div>
+
+    <div class="doc-sec">
+      <h4>3. Circuito elétrico exigido</h4>
+      <div class="linha"><span>Potência absorvida</span><b id="watts">—</b></div>
+      <div class="linha"><span>Corrente de projeto (220 V)</span><b id="amp">—</b></div>
+      <div class="linha"><span>Disjuntor curva C</span><b id="disj">—</b></div>
+      <div class="linha"><span>Condutor de cobre (método B1)</span><b id="cabo">—</b></div>
+      <div class="linha"><span>Condutor de proteção</span><b id="terra">—</b></div>
+      <div class="eletrica"><p id="alertaEletrico">—</p></div>
+    </div>
+
+    <div class="doc-sec">
+      <h4>4. Conta de luz · Energisa MT B1</h4>
+      <table class="conta">
+        <thead><tr><th>Composição</th><th>Sem solar</th><th>Com solar</th></tr></thead>
+        <tbody id="contaBody"></tbody>
+      </table>
+      <p class="conta-nota" id="contaNota">—</p>
+    </div>
+
+    <div class="doc-sec">
+      <h4>5. Geração solar para cobrir este consumo</h4>
+      <div class="linha"><span>Consumo do ar-condicionado</span><b id="kwhMes">—</b></div>
+      <div class="linha"><span>Potência de geração</span><b id="kwp">—</b></div>
+      <div class="linha"><span>Módulos de 550 Wp</span><b id="modulos">—</b></div>
+      <div class="linha"><span>Área ocupada no telhado</span><b id="areaFv">—</b></div>
+      <div class="linha"><span>Fixação para esta cobertura</span><b id="fixacao">—</b></div>
+      <div class="linha som"><span>Retorno do investimento</span><b id="payback">—</b></div>
+    </div>
+
+    <div class="doc-cta">
+      <button class="btn-agendar" onclick="irAgendar()">Agendar visita com este laudo</button>
+      <p>O TÉCNICO CONFERE PAREDE, QUADRO E PONTO DE DRENO · VISITA E ORÇAMENTO SEM CUSTO</p>
+    </div>
+  </aside>
 </section>
 
-<section class="sched" id="agendar">
-  <div class="sched-card" id="schedCard">
-    <div class="sched-head">
+<section class="agenda" id="agendar">
+  <div class="ag-card" id="agCard">
+    <div class="ag-head">
       <div>
-        <h3>Escolha o dia e o horário da visita</h3>
-        <p>O técnico chega com o dimensionamento já em mãos, confere a parede, a rede elétrica e o ponto de dreno. A visita e o orçamento não são cobrados.</p>
+        <h3>Escolha o dia e a janela da visita</h3>
+        <p>Janelas de duas horas, porque trânsito de Cuiabá não cabe em horário cravado. Remarcação ou cancelamento sem custo até 24 h antes, pelo número da ordem.</p>
       </div>
-      <div class="sched-carry">Dimensionamento anexado<b id="carry">12.000 BTU/h</b></div>
+      <div class="ag-carry">LAUDO ANEXADO<b id="carry">—</b></div>
     </div>
 
-    <div class="sched-body">
-      <div>
-        <span class="step-lbl"><i>1</i> Dia da visita</span>
-        <div class="days" id="days" role="group" aria-label="Dias disponíveis"></div>
-        <span class="step-lbl"><i>2</i> Janela de horário</span>
-        <div class="slots" id="slots" role="group" aria-label="Horários disponíveis"></div>
+    <div class="ag-body">
+      <div class="ag-col">
+        <span class="passo">1 · Dia</span>
+        <div class="dias" id="dias" role="group" aria-label="Dias disponíveis"></div>
+        <span class="passo">2 · Janela</span>
+        <div class="janelas" id="janelas" role="group" aria-label="Janelas de horário"></div>
       </div>
-
-      <div>
-        <span class="step-lbl"><i>3</i> Seus dados</span>
-        <div class="form-grid">
-          <div class="fld"><label for="nome">Nome</label><input type="text" id="nome" placeholder="Como podemos te chamar"></div>
-          <div class="fld"><label for="fone">Telefone</label><input type="tel" id="fone" placeholder="(65) 90000-0000"></div>
-          <div class="fld"><label for="cidade">Cidade</label>
+      <div class="ag-col">
+        <span class="passo">3 · Onde e com quem</span>
+        <div class="campos">
+          <div class="cp"><label for="nome">Nome</label><input type="text" id="nome" placeholder="Quem recebe o técnico"></div>
+          <div class="cp"><label for="fone">Telefone</label><input type="tel" id="fone" placeholder="(65) 90000-0000"></div>
+          <div class="cp"><label for="cidade">Cidade</label>
             <select id="cidade"><option>Cuiabá</option><option>Várzea Grande</option><option>Sinop</option><option>Rondonópolis</option><option>Primavera do Leste</option></select>
           </div>
-          <div class="fld"><label for="obs">Algo que o técnico precisa saber</label><textarea id="obs" placeholder="Ex: apartamento no 8º andar, já tem infraestrutura de dreno, quero orçar solar junto"></textarea></div>
-          <button class="confirm-btn" id="confirmBtn" onclick="confirmar()" disabled>Confirmar visita técnica</button>
-          <p class="req" id="req">Escolha o dia e o horário para liberar a confirmação.</p>
+          <div class="cp"><label for="obs">O que o técnico precisa saber antes de subir</label><textarea id="obs" placeholder="Ex: apartamento no 8º sem elevador de serviço, quadro fica na área externa, já existe infraestrutura de dreno"></textarea></div>
+          <button class="btn-confirmar" id="btnConfirmar" onclick="confirmar()" disabled>Confirmar visita técnica</button>
+          <p class="aviso" id="aviso">Escolha o dia e a janela para liberar a confirmação.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="specs" id="padrao">
-  <div class="spec">
-    <i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg></i>
-    <h4>Tubulação de cobre, sempre</h4>
-    <p>Isolamento térmico individual em cada linha e teste de estanqueidade com nitrogênio antes de carregar o gás. Nada de mangueira flexível.</p>
-  </div>
-  <div class="spec">
-    <i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></i>
-    <h4>Vácuo medido, não cronometrado</h4>
-    <p>Vacuômetro digital até menos de 500 microns. É o que tira a umidade que oxida o compressor por dentro — a falha nº 1 em instalação mal feita.</p>
-  </div>
-  <div class="spec">
-    <i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg></i>
-    <h4>Solar homologado na Energisa</h4>
-    <p>Projeto, ART e todo o trâmite de acesso junto à concessionária. Você recebe o parecer aprovado antes de a obra começar.</p>
-  </div>
+<section class="padrao" id="padrao">
+  <h3>O que está incluso e o que não está</h3>
+  <p>Orçamento de climatização costuma esconder o que fica de fora. Este é o escopo por escrito, do jeito que vai no contrato.</p>
+  <table>
+    <thead><tr><th>Item</th><th>O que fazemos</th><th>Prazo / garantia</th></tr></thead>
+    <tbody>
+      <tr><td>Tubulação</td><td>Cobre com isolamento térmico individual por linha. Teste de estanqueidade com nitrogênio a 300 psi por 30 minutos antes de liberar o gás.</td><td class="n">5 anos</td></tr>
+      <tr><td>Vácuo</td><td>Vacuômetro digital até abaixo de 500 microns, com registro fotográfico do display. É o que impede a oxidação interna do compressor.</td><td class="n">Laudo anexo</td></tr>
+      <tr><td>Circuito elétrico</td><td>Ramal exclusivo do quadro até a condensadora, disjuntor curva C e DR de 30 mA conforme NBR 5410. Não puxamos de tomada existente.</td><td class="n">2 anos</td></tr>
+      <tr><td>Não incluso</td><td>Quebra e recomposição de alvenaria, forro de gesso, pintura e adequação do padrão de entrada quando o quadro não tem espaço livre.</td><td class="n">Orçado à parte</td></tr>
+      <tr><td>Homologação solar</td><td>Projeto, ART e trâmite de acesso na Energisa. Você recebe o parecer aprovado antes de a obra começar.</td><td class="n">Até 34 dias úteis</td></tr>
+    </tbody>
+  </table>
 </section>
 
 <footer>
-  <div class="f-in">
+  <div class="ft">
     <div><b>KlimaCerto Climatização &amp; Energia Solar MT Ltda</b><br>CREA-MT 048921/D · Av. Fernando Corrêa da Costa, Cuiabá – MT</div>
-    <div>Demonstração técnica · DevStudio<br>Cálculos ilustrativos, ajustados em vistoria</div>
+    <div>Demonstração técnica · DevStudio<br>Laudo preliminar sem valor contratual<br>Valores confirmados em vistoria presencial</div>
   </div>
 </footer>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-/* ── constantes de cálculo (os botões de calibração) ───────────────
-   ponytail: são estimativas de projeto — ajustadas na vistoria. */
-const BTU_M3_SOL   = 300;   /* BTU/h por m³ com parede exposta ao sol da tarde */
-const BTU_M3_SOMBRA= 230;   /* BTU/h por m³ protegido */
-const BTU_PESSOA   = 600;   /* a partir da 2ª pessoa */
-const BTU_EQUIP    = 600;
-const TARIFA       = 0.98;  /* R$/kWh residencial de referência */
-const HORAS_DIA    = 8, DIAS = 30;
-const DUTY_INV     = 0.55, DUTY_CONV = 0.75;  /* fração do tempo em carga plena */
-const W_POR_BTU_INV = 0.082, W_POR_BTU_CONV = 0.115;
-const HSP_MT       = 5.2;   /* horas de sol pleno médias em MT */
-const PERDAS_FV    = 0.80;
-const CAPACIDADES  = [7000,9000,12000,18000,22000,24000,30000,36000,48000,60000];
+/* ════ constantes de projeto ═══════════════════════════════════════
+   ponytail: são os botões de calibração. Tarifa e HSP mudam todo ano;
+   os fatores térmicos são ajustados em vistoria. */
+const BTU_M3          = 230;    /* BTU/h por m³ de ar, base sem ganhos externos */
+const BTU_PESSOA      = 600;    /* a partir da 2ª pessoa */
+const BTU_EQUIP       = 600;
+const CAPACIDADES     = [7000,9000,12000,18000,22000,24000,30000,36000,48000,60000];
 
-const PRESETS=[
-  {k:'quarto',   rot:'Quarto',    area:14,pd:270,gente:2, equip:2, sol:'sombra',
-   svg:'<path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"/>'},
-  {k:'sala',     rot:'Sala',      area:26,pd:280,gente:4, equip:3, sol:'sol',
-   svg:'<path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3M2 11a2 2 0 0 1 4 0v4h12v-4a2 2 0 0 1 4 0v6H2z"/>'},
-  {k:'escritorio',rot:'Escritório',area:34,pd:290,gente:8, equip:9, sol:'sol',
-   svg:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/>'},
-  {k:'loja',     rot:'Loja',      area:55,pd:340,gente:12,equip:6, sol:'sol',
-   svg:'<path d="M3 9h18l-1.5 11h-15zM3 9l2-5h14l2 5M9 13v4M15 13v4"/>'}
+/* Energisa MT — B1 residencial, referência sem bandeira tarifária */
+const TE              = 0.3312; /* R$/kWh — energia */
+const TUSD            = 0.4187; /* R$/kWh — uso do sistema de distribuição */
+const TRIBUTOS        = 0.2350; /* fração somada de ICMS + PIS + COFINS */
+const CIP             = 27.40;  /* iluminação pública, faixa residencial urbana */
+const FIO_B_2026      = 0.60;   /* Lei 14.300: fração da TUSD cobrada sobre o injetado */
+
+/* fotovoltaico em MT */
+const HSP             = 5.2;    /* horas de sol pleno médias */
+const PERDAS_FV       = 0.80;
+const CUSTO_WP        = 3.90;   /* R$/Wp instalado, sistema pequeno */
+
+/* elétrica — NBR 5410, método B1, 2 condutores carregados, cobre */
+const CABOS       = [[2.5,24],[4,32],[6,41],[10,57],[16,76],[25,101]];
+const DISJUNTORES = [10,16,20,25,32,40,50,63,70];
+
+const AMBIENTES=[
+  {k:'quarto', rot:'Quarto',     sub:'14 m²', area:14,pd:270,gente:2, equip:2, horas:9,  cob:'forro', sol:'sombra'},
+  {k:'sala',   rot:'Sala',       sub:'26 m²', area:26,pd:280,gente:4, equip:3, horas:8,  cob:'laje',  sol:'tarde'},
+  {k:'escrit', rot:'Escritório', sub:'34 m²', area:34,pd:290,gente:8, equip:9, horas:9,  cob:'forro', sol:'tarde'},
+  {k:'loja',   rot:'Loja',       sub:'55 m²', area:55,pd:340,gente:12,equip:6, horas:11, cob:'sandu', sol:'tarde'}
 ];
+
+const COBERTURAS=[
+  {k:'sandu',rot:'Telha sanduíche ou termoacústica',f:1.00,tag:'+0%',
+   sub:'Miolo isolante entre duas chapas. É a melhor situação térmica que existe em galpão e loja.',
+   fix:'Perfil sobre a onda da telha, sem furar o isolante'},
+  {k:'forro',rot:'Telha de barro com forro',f:1.12,tag:'+12%',
+   sub:'A câmara de ar entre a telha e o forro segura boa parte do calor antes de chegar embaixo.',
+   fix:'Gancho de fixação com substituição pontual de telha'},
+  {k:'gesso',rot:'Telha metálica simples com gesso',f:1.22,tag:'+22%',
+   sub:'A chapa esquenta rápido e irradia direto no forro. Comum em ampliação e área de serviço.',
+   fix:'Perfil parafusado na terça, com vedação de borracha'},
+  {k:'laje', rot:'Laje exposta ao sol',f:1.35,tag:'+35%',
+   sub:'Sem telhado por cima. A laje acumula calor o dia inteiro e devolve à noite — o pior caso em MT.',
+   fix:'Estrutura triangular com lastro, sem furar a impermeabilização'}
+];
+
 const SOL=[
-  {k:'sol',   h:'Sol da tarde',        p:'Parede de fachada oeste ou norte, pegando o pior do calor.'},
-  {k:'sombra',h:'Sombra ou sol da manhã',p:'Parede protegida, varanda coberta ou face sul.'}
+  {k:'tarde', rot:'Fachada oeste ou norte',f:1.30,tag:'+30%',
+   sub:'Pega o sol das 14h às 18h, que é quando Cuiabá castiga. Piora bastante sem sombra na parede.'},
+  {k:'manha', rot:'Fachada leste',f:1.12,tag:'+12%',
+   sub:'Sol de manhã. O ambiente já entra na tarde com a parede aquecida, mas sem radiação direta.'},
+  {k:'sombra',rot:'Sombra ou face sul',f:1.00,tag:'+0%',
+   sub:'Varanda coberta, parede geminada ou face sul. Sem incidência direta em nenhum horário.'}
+];
+
+const REDES=[
+  {k:'mono',rot:'Monofásico 220 V',   disp:30, sub:'Dois fios vindo do poste. Padrão de casa antiga e apartamento pequeno.'},
+  {k:'bi',  rot:'Bifásico 220 V',     disp:50, sub:'Três fios. O mais comum em residência de porte médio.'},
+  {k:'tri', rot:'Trifásico 220/380 V',disp:100,sub:'Quatro fios. Comércio, chácara com poço e casa grande.'}
 ];
 
 /* ── estado ─────────────────────────────── */
-let st={preset:'sala',area:26,pd:280,gente:4,equip:3,sol:'sol'};
-let calc={};
-let dia=null, hora=null;
+let st={amb:'sala',area:26,pd:280,gente:4,equip:3,horas:8,cob:'laje',sol:'tarde',rede:'mono'};
+let R={};
+let dia=null, janela=null, dias=[];
 const el=id=>document.getElementById(id);
 const nf=n=>n.toLocaleString('pt-BR');
-const brl=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
+const brl=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const REF='LP-'+String(Math.floor(Math.random()*9000)+1000);
 
-/* ── cálculo térmico ────────────────────── */
+/* ── o cálculo ──────────────────────────── */
 function calcular(){
+  const cob=COBERTURAS.find(c=>c.k===st.cob), sol=SOL.find(s=>s.k===st.sol), rede=REDES.find(r=>r.k===st.rede);
   const vol=st.area*(st.pd/100);
-  const base  = Math.round(vol*BTU_M3_SOMBRA);
-  const solEx = st.sol==='sol' ? Math.round(vol*(BTU_M3_SOL-BTU_M3_SOMBRA)) : 0;
+
+  const base  = Math.round(vol*BTU_M3);
+  const teto  = Math.round(base*(cob.f-1));
+  const insol = Math.round(base*(sol.f-1));
   const gente = Math.max(0,st.gente-1)*BTU_PESSOA;
   const equip = st.equip*BTU_EQUIP;
-  const total = base+solEx+gente+equip;
+  const total = base+teto+insol+gente+equip;
 
-  const cap = CAPACIDADES.find(c=>c>=total) || CAPACIDADES[CAPACIDADES.length-1];
-  const wInv  = cap*W_POR_BTU_INV;
-  const wConv = cap*W_POR_BTU_CONV;
-  const kwhInv  = wInv *HORAS_DIA*DIAS*DUTY_INV /1000;
-  const kwhConv = wConv*HORAS_DIA*DIAS*DUTY_CONV/1000;
-  const paineis = Math.ceil(kwhInv/(0.55*HSP_MT*DIAS*PERDAS_FV));
+  /* Acima de 60.000 BTU/h não existe split único: divide-se em mais de uma
+     máquina, cada uma com o seu circuito. É o que a obra faz de verdade. */
+  const MAIOR = CAPACIDADES[CAPACIDADES.length-1];
+  const unidades = Math.max(1,Math.ceil(total/MAIOR));
+  const cap = CAPACIDADES.find(c=>c>=total/unidades) || MAIOR;
+  const instalado = cap*unidades;
 
-  calc={vol,base,solEx,gente,equip,total,cap,kwhInv,kwhConv,
-        custo:kwhInv*TARIFA, econAno:(kwhConv-kwhInv)*TARIFA*12, paineis};
-  return calc;
+  /* elétrica por máquina: cada evaporadora leva o seu ramal exclusivo */
+  const watts = Math.round(cap*0.082);
+  const amp   = watts/(220*0.98);
+  const disj  = DISJUNTORES.find(d=>d>=amp*1.25) || DISJUNTORES[DISJUNTORES.length-1];
+  const cabo  = CABOS.find(c=>c[1]>=disj) || CABOS[CABOS.length-1];
+  const wattsTotal = watts*unidades;
+  const ampTotal   = amp*unidades;
+
+  /* consumo: inverter modula, não roda em carga plena o tempo todo */
+  const kwh = wattsTotal*st.horas*30*0.55/1000;
+
+  /* conta Energisa: TE + TUSD com tributos por dentro, mais CIP fixa */
+  const tarifa   = (TE+TUSD)/(1-TRIBUTOS);
+  const semSolar = {te:kwh*TE/(1-TRIBUTOS), tusd:kwh*TUSD/(1-TRIBUTOS), cip:CIP};
+  semSolar.total = semSolar.te+semSolar.tusd+semSolar.cip;
+
+  /* com solar: paga o mínimo de disponibilidade, a CIP e o Fio B sobre o injetado */
+  const faturado = Math.min(kwh,rede.disp);
+  const injetado = Math.max(0,kwh-rede.disp);
+  const comSolar = {
+    te:   faturado*TE/(1-TRIBUTOS),
+    tusd: faturado*TUSD/(1-TRIBUTOS) + injetado*TUSD*FIO_B_2026/(1-TRIBUTOS),
+    cip:  CIP
+  };
+  comSolar.total = comSolar.te+comSolar.tusd+comSolar.cip;
+
+  const kwp     = kwh/(HSP*30*PERDAS_FV);
+  const modulos = Math.max(1,Math.ceil(kwp*1000/550));
+  const invest  = modulos*550*CUSTO_WP;
+  const economiaMes = semSolar.total-comSolar.total;
+  const payback = economiaMes>0 ? invest/economiaMes/12 : null;
+
+  R={vol,base,teto,insol,gente,equip,total,cap,unidades,instalado,
+     watts,amp,disj,cabo,wattsTotal,ampTotal,
+     kwh,tarifa,semSolar,comSolar,kwp,modulos,invest,economiaMes,payback,cob,sol,rede};
+  return R;
 }
 
-function classeBTU(c){
-  if(c<=9000)  return 'leve';
-  if(c<=18000) return 'média';
-  if(c<=24000) return 'alta';
-  return 'comercial';
+function modeloTexto(c,un){
+  var base;
+  if(c<=12000)      base='Split hi-wall inverter, evaporadora de parede. Alimentação monofásica 220 V.';
+  else if(c<=24000) base='Split hi-wall inverter com circuito exclusivo. Confira se o quadro tem espaço para mais um disjuntor.';
+  else if(c<=36000) base='Piso-teto inverter. Acima de 30.000 BTU a evaporadora de parede perde alcance no ambiente.';
+  else              base='Cassete ou piso-teto inverter. Nesta faixa é comum precisar de aumento de carga junto à Energisa.';
+  if(un>1) base=un+' máquinas de '+nf(c)+' BTU/h distribuídas pelo ambiente. '+base+
+    ' Uma máquina só nesta carga não existe no mercado, e mesmo que existisse deixaria canto sem alcance.';
+  return base;
 }
-function modeloTexto(c){
-  if(c<=12000) return 'Split Hi-Wall Inverter · 220 V monofásico';
-  if(c<=24000) return 'Split Hi-Wall Inverter · circuito dedicado 20 A';
-  if(c<=36000) return 'Piso-teto Inverter · circuito dedicado 32 A';
-  return 'Cassete ou piso-teto Inverter · avaliar entrada trifásica';
+function ruidoTexto(c){
+  if(c<=12000) return '48 a 52 dB(A)';
+  if(c<=24000) return '54 a 58 dB(A)';
+  return '60 a 65 dB(A)';
 }
 
-/* ── pintura da interface ───────────────── */
+/* ── pintura ────────────────────────────── */
 function pintar(){
-  const c=calcular();
+  const r=calcular();
 
   el('areaV').textContent  = st.area+' m²';
   el('pdV').textContent    = (st.pd/100).toFixed(2).replace('.',',')+' m';
   el('genteV').textContent = st.gente+(st.gente>1?' pessoas':' pessoa');
   el('equipV').textContent = st.equip+(st.equip===1?' aparelho':' aparelhos');
-  const lado=Math.sqrt(st.area);
-  el('planDim').textContent=lado.toFixed(1).replace('.',',')+' × '+lado.toFixed(1).replace('.',',')+' m';
+  el('horasV').textContent = st.horas+' h';
+  el('docRef').textContent = REF+' · '+new Date().toLocaleDateString('pt-BR')+' · SEM VALOR CONTRATUAL';
 
-  el('btu').textContent   = nf(c.cap);
-  el('model').textContent = modeloTexto(c.cap);
-  el('carry').textContent = nf(c.cap)+' BTU/h';
+  const pc=v=>(v/r.total*100).toFixed(1)+'%';
+  el('pVol').style.width  =pc(r.base);  el('lVol').textContent  =nf(r.base)+' BTU/h';
+  el('pTeto').style.width =pc(r.teto);  el('lTeto').textContent =r.teto ?'+ '+nf(r.teto)+' BTU/h':'sem ganho';
+  el('pSol').style.width  =pc(r.insol); el('lSol').textContent  =r.insol?'+ '+nf(r.insol)+' BTU/h':'sem ganho';
+  el('pGente').style.width=pc(r.gente); el('lGente').textContent=r.gente?'+ '+nf(r.gente)+' BTU/h':'—';
+  el('pEquip').style.width=pc(r.equip); el('lEquip').textContent=r.equip?'+ '+nf(r.equip)+' BTU/h':'—';
+  el('lTotal').textContent=nf(r.total)+' BTU/h';
 
-  /* termômetro: posição logarítmica entre 7k e 60k */
-  const p=Math.max(0,Math.min(1,(Math.log(c.total)-Math.log(7000))/(Math.log(60000)-Math.log(7000))));
-  const n=el('needle');
-  n.style.left=(p*100).toFixed(1)+'%';
-  n.dataset.l=nf(c.total);
-  el('thermTotal').textContent=nf(c.total);
-  el('thermClass').textContent=classeBTU(c.cap);
+  el('btu').textContent = r.unidades>1 ? r.unidades+' × '+nf(r.cap) : nf(r.cap);
+  el('modelo').textContent=modeloTexto(r.cap,r.unidades);
+  el('folga').textContent='+ '+((r.instalado/r.total-1)*100).toFixed(0)+'%'+(r.unidades>1?' sobre o total instalado':'');
+  el('ruido').textContent=ruidoTexto(r.cap);
+  el('carry').textContent=(r.unidades>1?r.unidades+' × ':'')+nf(r.cap)+' BTU/h';
 
-  /* composição da carga */
-  const pc=v=>(v/c.total*100).toFixed(1)+'%';
-  el('barBase').style.width =pc(c.base);
-  el('barSol').style.width  =pc(c.solEx);
-  el('barGente').style.width=pc(c.gente);
-  el('barEquip').style.width=pc(c.equip);
-  el('lgBase').textContent =nf(c.base)+' BTU';
-  el('lgSol').textContent  =c.solEx?nf(c.solEx)+' BTU':'sem exposição';
-  el('lgGente').textContent=nf(c.gente)+' BTU';
-  el('lgEquip').textContent=nf(c.equip)+' BTU';
+  el('watts').textContent=nf(r.watts)+' W'+(r.unidades>1?' por máquina · '+nf(r.wattsTotal)+' W no total':'');
+  el('amp').textContent=r.amp.toFixed(1).replace('.',',')+' A'+(r.unidades>1?' por ramal · '+r.ampTotal.toFixed(1).replace('.',',')+' A de demanda':'');
+  el('disj').textContent=r.disj+' A · curva C'+(r.unidades>1?' (um por máquina)':'');
+  el('cabo').textContent=String(r.cabo[0]).replace('.',',')+' mm² · '+r.cabo[1]+' A';
+  el('terra').textContent=String(Math.min(r.cabo[0],16)).replace('.',',')+' mm² verde-amarelo';
+  el('alertaEletrico').innerHTML = r.cabo[0]>2.5
+    ? 'Este circuito <b>não passa em 2,5 mm²</b>. Precisa de ramal exclusivo em '+String(r.cabo[0]).replace('.',',')+' mm² do quadro até a condensadora, com disjuntor de '+r.disj+' A e DR de 30 mA. Puxar de tomada existente derruba o disjuntor no primeiro dia quente.'
+    : 'Ramal exclusivo de 2,5 mm² com disjuntor de '+r.disj+' A e DR de 30 mA. Mesmo sendo a bitola mínima da norma para circuito de força, o ramal precisa ser só do ar — sem dividir com tomada ou iluminação.';
+  if(r.unidades>1) el('alertaEletrico').innerHTML+=' <b>São '+r.unidades+' ramais independentes</b>, um para cada máquina, somando '+r.ampTotal.toFixed(1).replace('.',',')+' A de demanda. Verifique se o padrão de entrada comporta esse acréscimo antes de fechar a obra.';
 
-  el('kwh').textContent  =Math.round(c.kwhInv)+' kWh/mês';
-  el('custo').textContent=brl(c.custo)+'/mês';
-  el('econ').textContent =brl(c.econAno)+'/ano';
-  el('solar').textContent=c.paineis+(c.paineis===1?' módulo':' módulos');
+  const s=r.semSolar, c=r.comSolar;
+  el('contaBody').innerHTML=
+    '<tr><td>Energia consumida (TE)</td><td>'+brl(s.te)+'</td><td>'+brl(c.te)+'</td></tr>'+
+    '<tr><td>Distribuição (TUSD)</td><td>'+brl(s.tusd)+'</td><td>'+brl(c.tusd)+'</td></tr>'+
+    '<tr><td>Iluminação pública (CIP)</td><td>'+brl(s.cip)+'</td><td>'+brl(c.cip)+'</td></tr>'+
+    '<tr class="tot"><td>Total do mês</td><td>'+brl(s.total)+'</td><td class="economia">'+brl(c.total)+'</td></tr>';
+  el('contaNota').innerHTML='Consumo de '+Math.round(r.kwh)+' kWh/mês só deste aparelho, a '+brl(r.tarifa)+'/kWh já com tributos. '+
+    'Com solar você continua pagando o <b>custo de disponibilidade de '+r.rede.disp+' kWh</b> ('+r.rede.rot.toLowerCase()+'), a CIP e o Fio B de '+
+    Math.round(FIO_B_2026*100)+'% sobre o que injeta na rede — regra da Lei 14.300, que sobe até 2029. A conta nunca zera.';
 
-  /* planta: parede de sol e bonequinhos */
-  const solOn=st.sol==='sol';
-  el('wallSun').setAttribute('opacity',solOn?'1':'0');
-  el('wallEdge').setAttribute('stroke',solOn?'#f97316':'#2d3e50');
-  el('sunGroup').setAttribute('opacity',solOn?'1':'.25');
-  const q=Math.min(st.gente,10);
-  let g='';
-  for(let i=0;i<q;i++){
-    const x=100+(i%5)*30, y=48+Math.floor(i/5)*34;
-    g+='<g transform="translate('+x+','+y+')"><circle cy="-6" r="4.2"/><path d="M0 -1v10M-5 3h10" stroke="#93a6b8" stroke-width="2" stroke-linecap="round" fill="none"/></g>';
-  }
-  el('people').innerHTML=g;
+  el('kwhMes').textContent=Math.round(r.kwh)+' kWh/mês';
+  el('kwp').textContent=r.kwp.toFixed(2).replace('.',',')+' kWp';
+  el('modulos').textContent=r.modulos+(r.modulos===1?' módulo':' módulos');
+  el('areaFv').textContent=(r.modulos*2.6).toFixed(1).replace('.',',')+' m²';
+  el('fixacao').textContent=r.cob.fix;
+  el('payback').textContent = r.payback ? r.payback.toFixed(1).replace('.',',')+' anos' : 'não se paga';
+
+  pintarEscolhas();
 }
 
 /* ── controles ──────────────────────────── */
 function pintarPresets(){
-  el('presets').innerHTML=PRESETS.map(p=>
-    '<button class="preset" aria-pressed="'+(st.preset===p.k)+'" onclick="usarPreset(\''+p.k+'\')">'+
-    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">'+p.svg+'</svg>'+
-    '<span>'+p.rot+'</span></button>').join('');
+  el('presets').innerHTML=AMBIENTES.map(a=>
+    '<button class="preset" aria-pressed="'+(st.amb===a.k)+'" onclick="usarAmbiente(\''+a.k+'\')">'+
+    '<b>'+a.rot+'</b><small>'+a.sub+'</small></button>').join('');
 }
-function usarPreset(k){
-  const p=PRESETS.find(x=>x.k===k);
-  st={preset:k,area:p.area,pd:p.pd,gente:p.gente,equip:p.equip,sol:p.sol};
-  el('area').value=p.area; el('pd').value=p.pd; el('gente').value=p.gente; el('equip').value=p.equip;
-  pintarPresets(); pintarSol(); pintar();
+function usarAmbiente(k){
+  const a=AMBIENTES.find(x=>x.k===k);
+  st={amb:k,area:a.area,pd:a.pd,gente:a.gente,equip:a.equip,horas:a.horas,cob:a.cob,sol:a.sol,rede:st.rede};
+  ['area','pd','gente','equip','horas'].forEach(id=>el(id).value=st[id]);
+  pintarPresets(); pintar();
 }
-function pintarSol(){
-  el('sol').innerHTML=SOL.map(s=>
-    '<button class="opt" aria-pressed="'+(st.sol===s.k)+'" onclick="setSol(\''+s.k+'\')">'+
-    '<h4>'+s.h+'</h4><p>'+s.p+'</p></button>').join('');
+function radios(alvo,lista,campo){
+  el(alvo).innerHTML=lista.map(o=>
+    '<label class="escolha"><input type="radio" name="'+campo+'" value="'+o.k+'"'+(st[campo]===o.k?' checked':'')+
+    ' onchange="setCampo(\''+campo+'\',this.value)">'+
+    '<span><b>'+o.rot+'</b><small>'+o.sub+'</small></span>'+
+    '<span class="tag">'+(o.tag?o.tag+' carga':'mín. '+o.disp+' kWh')+'</span></label>').join('');
 }
-function setSol(k){st.sol=k;st.preset=null;pintarPresets();pintarSol();pintar()}
+function pintarEscolhas(){
+  radios('cobertura',COBERTURAS,'cob');
+  radios('sol',SOL,'sol');
+  radios('rede',REDES,'rede');
+}
+function setCampo(campo,valor){st[campo]=valor;st.amb=null;pintarPresets();pintar()}
 
-['area','pd','gente','equip'].forEach(id=>{
-  el(id).addEventListener('input',e=>{
-    st[id]=parseInt(e.target.value,10); st.preset=null; pintarPresets(); pintar();
-  });
+['area','pd','gente','equip','horas'].forEach(id=>{
+  el(id).addEventListener('input',e=>{st[id]=parseInt(e.target.value,10);st.amb=null;pintarPresets();pintar()});
 });
 
 /* ── agenda ─────────────────────────────── */
 const DS=['dom','seg','ter','qua','qui','sex','sáb'];
 const MS=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
 const JANELAS=[
-  {h:'07:30',f:'09:30',rot:'manhã cedo'},
+  {h:'07:30',f:'09:30',rot:'antes do calor'},
   {h:'09:30',f:'11:30',rot:'meio da manhã'},
   {h:'13:30',f:'15:30',rot:'início da tarde'},
   {h:'15:30',f:'17:30',rot:'fim da tarde'}
 ];
-let dias=[];
 function montarDias(){
   dias=[]; const d=new Date(); d.setHours(0,0,0,0);
   while(dias.length<6){
     d.setDate(d.getDate()+1);
-    if(d.getDay()===0) continue;                    /* não atende domingo */
-    const sab=d.getDay()===6;
-    dias.push({data:new Date(d),sab:sab,vagas:sab?1:JANELAS.length});
+    if(d.getDay()===0) continue;
+    dias.push({data:new Date(d),sab:d.getDay()===6});
   }
-  el('days').innerHTML=dias.map((x,i)=>
-    '<button class="day" aria-pressed="'+(dia===i)+'" onclick="setDia('+i+')">'+
-    '<span class="dw">'+DS[x.data.getDay()]+'</span>'+
-    '<span class="dd">'+String(x.data.getDate()).padStart(2,'0')+'</span>'+
-    '<span class="dm">'+MS[x.data.getMonth()]+'</span></button>').join('');
+  el('dias').innerHTML=dias.map((x,i)=>
+    '<button class="dia" aria-pressed="'+(dia===i)+'" onclick="setDia('+i+')">'+
+    '<span class="w">'+DS[x.data.getDay()]+'</span>'+
+    '<span class="n">'+String(x.data.getDate()).padStart(2,'0')+'</span>'+
+    '<span class="m">'+MS[x.data.getMonth()]+'</span></button>').join('');
 }
-function setDia(i){dia=i;hora=null;montarDias();montarSlots();validar()}
-function montarSlots(){
-  if(dia===null){
-    el('slots').innerHTML='<p style="font-size:12.5px;color:var(--low);grid-column:1/-1">Escolha um dia para ver as janelas livres.</p>';
-    return;
-  }
+function montarJanelas(){
+  if(dia===null){el('janelas').innerHTML='<p style="grid-column:1/-1;font-size:12.5px;color:var(--ink-40)">Escolha um dia para ver as janelas livres.</p>';return}
   const d=dias[dia];
-  el('slots').innerHTML=JANELAS.map((j,i)=>{
-    const livre = d.sab ? i===0 : true;             /* sábado só de manhã cedo */
-    return '<button class="slot" '+(livre?'':'disabled')+' aria-pressed="'+(hora===i)+'" onclick="setHora('+i+')">'+
+  el('janelas').innerHTML=JANELAS.map((j,i)=>{
+    const livre = d.sab ? i<2 : true;   /* no sábado a equipe só roda de manhã */
+    return '<button class="janela" '+(livre?'':'disabled')+' aria-pressed="'+(janela===i)+'" onclick="setJanela('+i+')">'+
       j.h+'–'+j.f+'<small>'+(livre?j.rot:'sem equipe')+'</small></button>';
   }).join('');
 }
-function setHora(i){hora=i;montarSlots();validar()}
-function validar(){
-  const ok=dia!==null&&hora!==null;
-  el('confirmBtn').disabled=!ok;
-  el('req').textContent = ok
-    ? 'Visita para '+quandoTexto()+'. Você recebe o comprovante aqui na tela.'
-    : (dia===null?'Escolha o dia e o horário para liberar a confirmação.':'Falta escolher a janela de horário.');
-}
-function quandoTexto(){
-  const d=dias[dia].data, j=JANELAS[hora];
+function setDia(i){dia=i;janela=null;montarDias();montarJanelas();validar()}
+function setJanela(i){janela=i;montarJanelas();validar()}
+function quando(){
+  const d=dias[dia].data,j=JANELAS[janela];
   return DS[d.getDay()]+', '+String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+' entre '+j.h+' e '+j.f;
+}
+function validar(){
+  const ok=dia!==null&&janela!==null;
+  el('btnConfirmar').disabled=!ok;
+  el('aviso').textContent = ok ? 'Visita para '+quando()+'.'
+    : dia===null ? 'Escolha o dia e a janela para liberar a confirmação.' : 'Falta escolher a janela de horário.';
 }
 function irAgendar(){
   el('agendar').scrollIntoView({behavior:'smooth',block:'start'});
-  if(dia===null){setTimeout(()=>el('days').querySelector('.day').focus(),420)}
+  if(dia===null) setTimeout(()=>el('dias').querySelector('.dia').focus(),400);
 }
 
-/* ── confirmação: o fecho fica na página ── */
+/* ── confirmação ────────────────────────── */
 let ordem=null;
 function confirmar(){
-  const c=calc, d=dias[dia].data, j=JANELAS[hora];
-  // ponytail: numeração real vem do sistema de ordens de serviço
+  const r=calcular(), d=dias[dia].data, j=JANELAS[janela];
+  // ponytail: a numeração real vem do sistema de ordens de serviço
   const os='VT-'+String(new Date().getFullYear()).slice(2)+'-'+String(Math.floor(Math.random()*9000)+1000);
-  const inicio=new Date(d); inicio.setHours(+j.h.slice(0,2),+j.h.slice(3),0,0);
-  const fim=new Date(d);    fim.setHours(+j.f.slice(0,2),+j.f.slice(3),0,0);
+  const ini=new Date(d); ini.setHours(+j.h.slice(0,2),+j.h.slice(3),0,0);
+  const fim=new Date(d); fim.setHours(+j.f.slice(0,2),+j.f.slice(3),0,0);
 
-  ordem={os:os,quando:quandoTexto(),inicio:inicio,fim:fim,
+  ordem={os:os,quando:quando(),ini:ini,fim:fim,ref:REF,
     nome:(el('nome').value||'').trim()||'Não informado',
     fone:(el('fone').value||'').trim()||'Não informado',
-    cidade:el('cidade').value,
-    obs:(el('obs').value||'').trim(),
-    cap:c.cap,kwh:Math.round(c.kwhInv),custo:c.custo,paineis:c.paineis,
-    area:st.area,pd:(st.pd/100).toFixed(2).replace('.',','),gente:st.gente,
-    sol:st.sol==='sol'?'sol da tarde':'sombra / sol da manhã'};
+    cidade:el('cidade').value, obs:(el('obs').value||'').trim(), r:r};
 
-  el('schedCard').innerHTML=
-    '<div class="done">'+
-      '<div class="done-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div>'+
+  el('agCard').innerHTML=
+    '<div class="ok">'+
+      '<div class="ok-i"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div>'+
       '<h3>Visita confirmada</h3>'+
-      '<p>A equipe recebeu seu dimensionamento junto com o endereço. Se precisar remarcar, use o número da ordem abaixo.</p>'+
-      '<div class="ticket">'+
-        '<div class="ticket-top"><div><span>Ordem de visita</span><b>'+os+'</b></div>'+
-          '<div class="ticket-when">'+j.h+' – '+j.f+'<br>'+String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'</div></div>'+
-        '<div class="ticket-row"><span>Cliente</span><b>'+esc(ordem.nome)+'</b></div>'+
-        '<div class="ticket-row"><span>Contato</span><b>'+esc(ordem.fone)+'</b></div>'+
-        '<div class="ticket-row"><span>Cidade</span><b>'+ordem.cidade+'</b></div>'+
-        '<div class="ticket-row"><span>Ambiente</span><b>'+st.area+' m² · pé-direito '+ordem.pd+' m</b></div>'+
-        '<div class="ticket-row"><span>Insolação</span><b>'+ordem.sol+'</b></div>'+
-        '<div class="ticket-row"><span>Capacidade indicada</span><b>'+nf(c.cap)+' BTU/h inverter</b></div>'+
-        '<div class="ticket-row"><span>Consumo previsto</span><b>'+Math.round(c.kwhInv)+' kWh · '+brl(c.custo)+'/mês</b></div>'+
+      '<p>O técnico recebe o laudo '+REF+' junto com o endereço. Remarcação ou cancelamento sem custo até 24 h antes, pelo número da ordem.</p>'+
+      '<div class="os-card">'+
+        '<div class="os-top"><div><span class="k">Ordem de visita</span><b>'+os+'</b></div>'+
+          '<div class="os-when">'+j.h+'–'+j.f+'<br>'+String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'</div></div>'+
+        '<div class="os-row"><span>Cliente</span><b>'+esc(ordem.nome)+'</b></div>'+
+        '<div class="os-row"><span>Contato</span><b>'+esc(ordem.fone)+'</b></div>'+
+        '<div class="os-row"><span>Cidade</span><b>'+ordem.cidade+'</b></div>'+
+        '<div class="os-row"><span>Ambiente</span><b>'+st.area+' m² · pé-direito '+(st.pd/100).toFixed(2).replace('.',',')+' m</b></div>'+
+        '<div class="os-row"><span>Cobertura</span><b>'+r.cob.rot+'</b></div>'+
+        '<div class="os-row"><span>Capacidade indicada</span><b>'+(r.unidades>1?r.unidades+' × ':'')+nf(r.cap)+' BTU/h</b></div>'+
+        '<div class="os-row"><span>Circuito exigido</span><b>'+String(r.cabo[0]).replace('.',',')+' mm² · disj. '+r.disj+' A</b></div>'+
+        '<div class="os-row"><span>Conta prevista</span><b>'+brl(r.semSolar.total)+'/mês</b></div>'+
       '</div>'+
-      '<div class="opts">'+
-        '<button class="optbtn" onclick="baixarIcs()">'+
-          '<i><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"/></svg></i>'+
-          '<span>Salvar na minha agenda<small>Baixa um convite que abre no Google, Outlook ou iPhone</small></span></button>'+
-        '<button class="optbtn" onclick="copiarResumo()">'+
-          '<i><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="13" height="13" x="9" y="9" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></i>'+
-          '<span>Copiar o dimensionamento<small>O laudo em texto, para mandar a quem decide a compra</small></span></button>'+
-        '<button class="optbtn" onclick="window.print()">'+
-          '<i><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg></i>'+
-          '<span>Imprimir o comprovante<small>Ou salvar em PDF pelo próprio navegador</small></span></button>'+
-        '<a class="optbtn wa" href="'+zap()+'" target="_blank" rel="noopener">'+
-          '<i><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 2.1.55 4.06 1.6 5.8L2 22l4.4-1.7a9.9 9.9 0 0 0 5.64 1.73c5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m5.8 14.15c-.24.68-1.43 1.31-1.98 1.4-.51.07-1.15.1-1.86-.12a16 16 0 0 1-1.68-.62c-2.96-1.28-4.89-4.26-5.04-4.46-.15-.2-1.2-1.6-1.2-3.05s.76-2.16 1.03-2.46c.27-.3.59-.37.78-.37h.57c.18 0 .43-.07.67.51.25.6.84 2.06.91 2.2.08.16.13.34.03.54-.1.2-.15.32-.29.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.02 1.12 1 2.06 1.31 2.36 1.46.3.15.47.13.64-.08.17-.2.74-.86.94-1.16.2-.3.39-.25.66-.15.27.1 1.72.81 2.01.96.3.15.5.22.57.35.07.12.07.72-.18 1.41"/></svg></i>'+
-          '<span>Falar com o técnico antes<small>Se quiser adiantar alguma dúvida pelo WhatsApp</small></span></a>'+
+      '<div class="canais">'+
+        '<button class="canal" onclick="baixarIcs()"><i>'+ico('cal')+'</i>'+
+          '<span>Salvar na agenda<small>Convite que abre no Google, Outlook ou iPhone</small></span></button>'+
+        '<button class="canal" onclick="copiar()"><i>'+ico('copy')+'</i>'+
+          '<span>Copiar o laudo em texto<small>Manda pro eletricista conferir o quadro antes</small></span></button>'+
+        '<button class="canal" onclick="window.print()"><i>'+ico('print')+'</i>'+
+          '<span>Imprimir o laudo<small>Sai com carga térmica, circuito e conta de luz</small></span></button>'+
+        '<a class="canal wa" href="'+zap()+'" target="_blank" rel="noopener"><i>'+ico('wa')+'</i>'+
+          '<span>Falar com o técnico antes<small>Se quiser adiantar alguma dúvida da obra</small></span></a>'+
       '</div>'+
-      '<button class="again" onclick="location.reload()">Simular outro ambiente</button>'+
+      '<button class="refazer" onclick="location.reload()">Refazer o laudo para outro ambiente</button>'+
     '</div>';
-  el('schedCard').scrollIntoView({behavior:'smooth',block:'center'});
+  el('agCard').scrollIntoView({behavior:'smooth',block:'center'});
 }
 
-function resumoTexto(){
-  const o=ordem;
-  return 'KLIMACERTO & SOLAR — VISITA TÉCNICA '+o.os+'\n'+
-    'Quando: '+o.quando+'\n'+
+function ico(k){
+  const p={
+    cal:'<rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+    copy:'<rect width="13" height="13" x="9" y="9" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+    print:'<path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/>',
+    wa:'<path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.9-1.4A10 10 0 1 0 12 2z"/><path d="M8.5 8.5c0 3.5 3.5 7 7 7"/>'
+  }[k];
+  return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">'+p+'</svg>';
+}
+
+function laudoTexto(){
+  const o=ordem, r=o.r;
+  return 'KLIMACERTO & SOLAR — LAUDO PRELIMINAR '+o.ref+'\n'+
+    'Visita '+o.os+' · '+o.quando+'\n'+
     'Cliente: '+o.nome+' · '+o.fone+' · '+o.cidade+'\n\n'+
-    'DIMENSIONAMENTO\n'+
-    'Ambiente: '+o.area+' m², pé-direito '+o.pd+' m\n'+
-    'Ocupação: '+o.gente+' pessoa(s) · insolação: '+o.sol+'\n'+
-    'Capacidade indicada: '+nf(o.cap)+' BTU/h inverter\n'+
-    'Consumo previsto: '+o.kwh+' kWh/mês ('+brl(o.custo)+')\n'+
-    'Solar equivalente: '+o.paineis+' módulo(s) de 550 Wp'+
-    (o.obs?'\n\nObservação: '+o.obs:'');
+    'AMBIENTE\n'+
+    'Área: '+st.area+' m² · pé-direito '+(st.pd/100).toFixed(2).replace('.',',')+' m\n'+
+    'Cobertura: '+r.cob.rot+'\n'+
+    'Insolação: '+r.sol.rot+'\n'+
+    'Ocupação: '+st.gente+' pessoa(s) · '+st.equip+' equipamento(s) · '+st.horas+' h/dia\n\n'+
+    'CARGA TÉRMICA\n'+
+    'Volume de ar: '+nf(r.base)+' BTU/h\n'+
+    'Cobertura: + '+nf(r.teto)+' BTU/h\n'+
+    'Insolação: + '+nf(r.insol)+' BTU/h\n'+
+    'Pessoas: + '+nf(r.gente)+' BTU/h\n'+
+    'Equipamentos: + '+nf(r.equip)+' BTU/h\n'+
+    'TOTAL: '+nf(r.total)+' BTU/h\n\n'+
+    'EQUIPAMENTO INDICADO\n'+(r.unidades>1?r.unidades+' máquinas de ':'')+nf(r.cap)+' BTU/h inverter R-32'+
+    (r.unidades>1?' (total instalado '+nf(r.instalado)+' BTU/h)':'')+'\n\n'+
+    'CIRCUITO ELÉTRICO (NBR 5410, método B1)\n'+
+    'Potência absorvida: '+nf(r.watts)+' W por máquina\n'+
+    'Corrente de projeto: '+r.amp.toFixed(1).replace('.',',')+' A em 220 V\n'+
+    'Disjuntor: '+r.disj+' A curva C\n'+
+    'Condutor: '+String(r.cabo[0]).replace('.',',')+' mm² de cobre\n'+
+    'Ramais exclusivos: '+r.unidades+' (um por máquina), com DR de 30 mA\n'+
+    (r.unidades>1?'Demanda somada no quadro: '+r.ampTotal.toFixed(1).replace('.',',')+' A\n':'')+'\n'+
+    'CONTA DE LUZ (Energisa MT B1)\n'+
+    'Consumo: '+Math.round(r.kwh)+' kWh/mês\n'+
+    'Sem solar: '+brl(r.semSolar.total)+'/mês\n'+
+    'Com solar: '+brl(r.comSolar.total)+'/mês (disponibilidade + CIP + Fio B)\n'+
+    'Geração necessária: '+r.modulos+' módulo(s) de 550 Wp · '+r.kwp.toFixed(2).replace('.',',')+' kWp\n'+
+    (r.payback?'Retorno: '+r.payback.toFixed(1).replace('.',',')+' anos\n':'')+
+    (o.obs?'\nObservação do cliente: '+o.obs+'\n':'')+
+    '\nLaudo preliminar sem valor contratual. Valores confirmados em vistoria.';
 }
-function copiarResumo(){
-  navigator.clipboard.writeText(resumoTexto())
-    .then(()=>toast('Dimensionamento copiado'),()=>toast('Não foi possível copiar aqui'));
+function copiar(){
+  navigator.clipboard.writeText(laudoTexto()).then(()=>toast('Laudo copiado'),()=>toast('Não foi possível copiar aqui'));
 }
-function ics(d){return d.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z'}
+function z(d){return d.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z'}
 function baixarIcs(){
   const o=ordem;
-  const corpo=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//KlimaCerto MT//Visita Tecnica//PT',
-    'BEGIN:VEVENT','UID:'+o.os+'@klimacerto.com.br','DTSTAMP:'+ics(new Date()),
-    'DTSTART:'+ics(o.inicio),'DTEND:'+ics(o.fim),
-    'SUMMARY:Visita técnica KlimaCerto ('+o.os+')',
-    'LOCATION:'+o.cidade+' - MT',
-    'DESCRIPTION:'+resumoTexto().replace(/\n/g,'\\n'),
+  const corpo=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//KlimaCerto MT//Visita//PT','BEGIN:VEVENT',
+    'UID:'+o.os+'@klimacerto.com.br','DTSTAMP:'+z(new Date()),'DTSTART:'+z(o.ini),'DTEND:'+z(o.fim),
+    'SUMMARY:Visita técnica KlimaCerto ('+o.os+')','LOCATION:'+o.cidade+' - MT',
+    'DESCRIPTION:'+laudoTexto().replace(/\n/g,'\\n'),
+    'BEGIN:VALARM','TRIGGER:-PT3H','ACTION:DISPLAY','DESCRIPTION:Visita KlimaCerto em 3 horas','END:VALARM',
     'END:VEVENT','END:VCALENDAR'].join('\r\n');
   const url=URL.createObjectURL(new Blob([corpo],{type:'text/calendar'}));
-  const a=document.createElement('a');
-  a.href=url; a.download='visita-'+o.os+'.ics'; a.click();
+  const a=document.createElement('a'); a.href=url; a.download='visita-'+o.os+'.ics'; a.click();
   URL.revokeObjectURL(url);
-  toast('Convite baixado — abra para adicionar na agenda');
+  toast('Convite baixado — com lembrete 3 h antes');
 }
 function zap(){
-  return 'https://wa.me/5565999999999?text='+encodeURIComponent('Olá! Sobre a visita '+ordem.os+' ('+ordem.quando+').');
+  return 'https://wa.me/5565999999999?text='+encodeURIComponent('Olá! Sobre a visita '+ordem.os+' ('+ordem.quando+'), laudo '+ordem.ref+'.');
 }
 
 let tH;
 function toast(m){const t=el('toast');t.textContent=m;t.classList.add('on');clearTimeout(tH);tH=setTimeout(()=>t.classList.remove('on'),2600)}
 
 /* ── início ─────────────────────────────── */
-pintarPresets(); pintarSol(); pintar(); montarDias(); montarSlots(); validar();
+pintarPresets(); pintar(); montarDias(); montarJanelas(); validar();
 
-/* verificação mínima: carga sobe com sol e a capacidade é comercial */
+/* ── verificações de engenharia ─────────── */
 (function(){
-  const antes=JSON.stringify(st);
-  st.sol='sombra'; const a=calcular().total;
-  st.sol='sol';    const b=calcular().total;
-  console.assert(b>a,'insolação deve aumentar a carga térmica');
-  console.assert(CAPACIDADES.indexOf(calcular().cap)>=0,'capacidade precisa ser comercial');
-  st=JSON.parse(antes); calcular();
+  const salvo=JSON.stringify(st);
+
+  st.cob='sandu'; const leve=calcular().total;
+  st.cob='laje';  const pesado=calcular().total;
+  console.assert(pesado>leve,'laje exposta tem de puxar mais carga que telha sanduíche');
+  st.cob='laje';
+
+  st.sol='sombra'; const s0=calcular().total;
+  st.sol='tarde';  const s1=calcular().total;
+  console.assert(s1>s0,'fachada oeste tem de puxar mais carga que sombra');
+
+  /* o condutor sempre tem de suportar o disjuntor — senão o cabo derrete antes de desarmar */
+  [8,14,26,55,90,120].forEach(a=>{
+    st.area=a; const r=calcular();
+    console.assert(r.cabo[1]>=r.disj,'condutor tem de suportar o disjuntor em '+a+' m²');
+    console.assert(r.instalado>=r.total,'o total instalado tem de cobrir a carga em '+a+' m²');
+    console.assert(r.cabo[0]>=2.5,'circuito de força não desce de 2,5 mm² (NBR 5410)');
+    console.assert(r.cap<=60000,'não existe split acima de 60.000 BTU/h em '+a+' m²');
+    console.assert(r.unidades>=1 && r.unidades===Math.ceil(r.total/60000) || r.unidades===1,
+      'quantidade de máquinas tem de acompanhar a carga em '+a+' m²');
+  });
+
+  /* ambiente grande tem de gerar mais de uma máquina, não uma impossível */
+  st.area=120; st.cob='laje'; st.sol='tarde';
+  const grande=calcular();
+  console.assert(grande.unidades>1,'120 m² de laje ao sol não cabe em uma máquina só');
+  console.assert(grande.wattsTotal===grande.watts*grande.unidades,'a potência total tem de somar as máquinas');
+
+  /* com solar a conta nunca zera: disponibilidade + CIP + Fio B */
+  st.area=26; const r=calcular();
+  console.assert(r.comSolar.total>CIP,'conta com solar tem de ficar acima da CIP');
+  console.assert(r.comSolar.total<r.semSolar.total,'solar precisa reduzir a conta');
+
+  st=JSON.parse(salvo); calcular();
 })();
 </script>
 </body>

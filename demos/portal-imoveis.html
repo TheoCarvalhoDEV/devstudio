@@ -1,642 +1,637 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TerraForte Imóveis | Fazendas, Chácaras e Alto Padrão em Mato Grosso</title>
-<meta name="description" content="Vitrine de fazendas produtivas, chácaras no Lago do Manso e casas de alto padrão em MT. Dossiê técnico completo e simulação de permuta em sacas.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --ink:#0f1211; --ink-2:#1a201e; --ink-3:#2a322f;
-  --bone:#efece4; --bone-2:#e4e0d5; --card:#fff;
-  --line:#d9d4c7; --line-2:#c3bcab;
-  --txt:#161a19; --mid:#5d635f; --low:#8b918c;
-  --mark:#1a56db; --mark-soft:#e8eefc;
-  --field:#4d7c3f; --clay:#a8501f;
-  --r:6px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bone);color:var(--txt);-webkit-font-smoothing:antialiased;line-height:1.55}
-h1,h2,h3,h4{font-family:'Syne',system-ui,sans-serif;letter-spacing:-.02em;line-height:1.1}
-.mono{font-family:'Space Mono',ui-monospace,monospace}
-a{color:inherit}
-button,input,select{font:inherit}
-:focus-visible{outline:2px solid var(--mark);outline-offset:2px}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TerraForte Imóveis | Fazendas Produtivas, Manso e Alto Padrão MT</title>
+    <meta name="description" content="Consultoria imobiliária especializada na intermediação de fazendas de grãos e pecuária, chácaras náuticas no Lago do Manso e casas em condomínio fechado em Mato Grosso.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #0a0e14;
+            --bg-surface: #111722;
+            --bg-card: #192231;
+            --border-subtle: #2b3a4f;
+            --border-hover: #455a78;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --brand-green: #22c55e;
+            --brand-gold: #eab308;
+            --radius-md: 6px;
+            --radius-lg: 12px;
+            --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
 
-/* ── topo ───────────────────────────────── */
-.creci{background:var(--ink);color:#9aa39f;font-family:'Space Mono',monospace;font-size:11px;padding:8px 22px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;letter-spacing:.02em}
-.creci b{color:var(--bone)}
-header{position:sticky;top:0;z-index:60;background:rgba(239,236,228,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.hd{max-width:1300px;margin:0 auto;padding:14px 22px;display:flex;justify-content:space-between;align-items:center;gap:18px}
-.mark-l{display:flex;align-items:center;gap:12px;text-decoration:none}
-.mark-i{width:40px;height:40px;border-radius:var(--r);background:var(--ink);color:var(--bone);display:grid;place-items:center}
-.mark-l h1{font-size:19px;font-weight:800}
-.mark-l span{display:block;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-top:2px}
-.saved{display:flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:10px 15px;font-size:13px;font-weight:600;cursor:pointer}
-.saved:hover{border-color:var(--ink)}
-.saved b{font-family:'Space Mono',monospace;background:var(--ink);color:var(--bone);min-width:20px;height:20px;border-radius:3px;display:grid;place-items:center;font-size:11px;padding:0 5px}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
 
-/* ── abertura com curvas de nível ───────── */
-.hero{position:relative;background:var(--ink);color:var(--bone);overflow:hidden}
-.hero svg.contours{position:absolute;inset:0;width:100%;height:100%;opacity:.16}
-.hero-in{position:relative;max-width:1300px;margin:0 auto;padding:60px 22px 46px}
-.hero-eye{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#8fb0ff;display:block;margin-bottom:18px}
-.hero h2{font-size:clamp(30px,4.6vw,52px);font-weight:800;max-width:19ch}
-.hero h2 em{font-style:normal;color:#8fb0ff}
-.hero p{color:#b3bab6;font-size:15.5px;max-width:56ch;margin-top:18px;line-height:1.65}
-.hero-stats{display:flex;gap:38px;margin-top:34px;flex-wrap:wrap}
-.hs b{display:block;font-family:'Space Mono',monospace;font-size:24px;font-weight:700;color:var(--bone)}
-.hs span{font-size:11.5px;color:#8b938f;letter-spacing:.04em}
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.5;
+        }
 
-/* ── filtros ────────────────────────────── */
-.filters{max-width:1300px;margin:-26px auto 0;padding:0 22px;position:relative;z-index:5}
-.filters-in{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;grid-template-columns:repeat(4,1fr) auto;gap:14px;align-items:end;box-shadow:0 10px 28px rgba(15,18,17,.1)}
-.fl label{display:block;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-bottom:6px}
-.fl select{width:100%;background:var(--bone);border:1px solid var(--line);border-radius:var(--r);padding:11px 12px;font-size:13.5px;color:var(--txt);cursor:pointer}
-.fl select:focus{border-color:var(--ink);outline:none}
-.fl-clear{background:none;border:1px solid var(--line);border-radius:var(--r);padding:11px 16px;font-size:13px;font-weight:600;color:var(--mid);cursor:pointer;white-space:nowrap}
-.fl-clear:hover{border-color:var(--ink);color:var(--txt)}
+        h1, h2, h3, h4 {
+            font-family: 'Cinzel', Georgia, serif;
+            letter-spacing: 0.02em;
+        }
 
-/* ── lista ──────────────────────────────── */
-.list{max-width:1300px;margin:34px auto 0;padding:0 22px 70px}
-.list-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding-bottom:14px;border-bottom:1px solid var(--line-2);margin-bottom:22px}
-.list-top h3{font-size:17px;font-weight:700}
-.list-top h3 span{font-family:'Space Mono',monospace;color:var(--mark)}
-.list-top select{background:none;border:none;font-size:13px;color:var(--mid);cursor:pointer;font-weight:600}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
-.prop{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s,transform .2s,box-shadow .2s}
-.prop:hover{border-color:var(--ink);transform:translateY(-3px);box-shadow:0 14px 32px rgba(15,18,17,.12)}
-.prop-img{position:relative;height:200px;background:var(--bone-2);overflow:hidden}
-.prop-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
-.prop:hover .prop-img img{transform:scale(1.04)}
-.prop-ref{position:absolute;left:12px;top:12px;background:rgba(15,18,17,.86);color:var(--bone);font-family:'Space Mono',monospace;font-size:10.5px;padding:4px 8px;border-radius:3px;letter-spacing:.04em}
-.prop-kind{position:absolute;right:12px;top:12px;background:var(--bone);color:var(--ink);font-size:10.5px;font-weight:700;padding:4px 9px;border-radius:3px;letter-spacing:.04em;text-transform:uppercase}
-.prop-fav{position:absolute;right:12px;bottom:12px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.92);border:none;cursor:pointer;display:grid;place-items:center;color:var(--mid);backdrop-filter:blur(6px)}
-.prop-fav:hover{color:var(--clay)}
-.prop-fav[aria-pressed="true"]{color:var(--clay)}
-.prop-b{padding:18px;display:flex;flex-direction:column;flex:1}
-.prop-loc{display:flex;align-items:center;gap:6px;font-family:'Space Mono',monospace;font-size:11px;color:var(--mid);letter-spacing:.02em;margin-bottom:9px}
-.prop h4{font-size:17px;font-weight:700;line-height:1.25;margin-bottom:12px}
-.prop-specs{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-bottom:16px}
-.prop-specs div{background:var(--card);padding:9px 11px}
-.prop-specs dt{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--low)}
-.prop-specs dd{font-size:13px;font-weight:600;margin-top:2px}
-.prop-f{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;padding-top:14px;border-top:1px solid var(--line)}
-.prop-price small{display:block;font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--low)}
-.prop-price b{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;letter-spacing:-.02em}
-.prop-price i{display:block;font-style:normal;font-size:11.5px;color:var(--mid);margin-top:2px}
-.open-dossier{background:var(--ink);color:var(--bone);border:none;border-radius:var(--r);padding:11px 17px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
-.open-dossier:hover{background:var(--mark)}
-.none{grid-column:1/-1;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:60px 24px;text-align:center}
-.none b{display:block;font-family:'Syne',sans-serif;font-size:19px;font-weight:700;margin-bottom:8px}
-.none p{color:var(--mid);font-size:14px;margin-bottom:20px}
-.none button{background:var(--ink);color:var(--bone);border:none;border-radius:var(--r);padding:12px 22px;font-weight:700;font-size:13.5px;cursor:pointer}
+        /* Top Operational Bar */
+        .top-creci-bar {
+            background: #06090e;
+            color: #94a3b8;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.72rem;
+            padding: 8px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-subtle);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
 
-/* ── dossiê ─────────────────────────────── */
-.scrim{position:fixed;inset:0;background:rgba(15,18,17,.66);opacity:0;pointer-events:none;transition:opacity .25s;z-index:80}
-.scrim.on{opacity:1;pointer-events:auto}
-.dossier{position:fixed;top:0;right:0;bottom:0;width:min(620px,100%);background:var(--bone);z-index:90;transform:translateX(101%);transition:transform .32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;box-shadow:-10px 0 44px rgba(0,0,0,.28)}
-.dossier.on{transform:none}
-.dos-top{background:var(--ink);color:var(--bone);padding:16px 22px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-shrink:0}
-.dos-top .k{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#8b938f}
-.dos-top h3{font-size:16px;font-weight:700;margin-top:3px}
-.dos-x{width:34px;height:34px;border-radius:var(--r);background:var(--ink-2);border:1px solid var(--ink-3);color:var(--bone);cursor:pointer;display:grid;place-items:center;flex-shrink:0}
-.dos-x:hover{background:var(--ink-3)}
-.dos-body{flex:1;overflow-y:auto}
-.dos-hero{height:210px;background:var(--bone-2);position:relative}
-.dos-hero img{width:100%;height:100%;object-fit:cover}
-.dos-coord{position:absolute;left:0;bottom:0;background:rgba(15,18,17,.86);color:var(--bone);font-family:'Space Mono',monospace;font-size:10.5px;padding:6px 12px;letter-spacing:.04em}
-.dos-in{padding:22px}
-.dos-title{font-size:23px;font-weight:800;line-height:1.15;margin-bottom:8px}
-.dos-sub{font-family:'Space Mono',monospace;font-size:11.5px;color:var(--mid);margin-bottom:20px}
+        .top-creci-bar strong {
+            color: #f1f5f9;
+        }
 
-.plot{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:20px}
-.plot-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.plot-h span{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--low)}
-.plot svg{width:100%;height:auto;display:block}
+        /* Header */
+        header {
+            background: rgba(17, 23, 34, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-subtle);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 16px 24px;
+        }
 
-.dblock{margin-bottom:22px}
-.dblock h5{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);padding-bottom:8px;border-bottom:1px solid var(--line-2);margin-bottom:12px}
-.dtable{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden}
-.dtable div{background:var(--card);padding:11px 13px}
-.dtable dt{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--low)}
-.dtable dd{font-size:13.5px;font-weight:600;margin-top:3px}
-.dtags{display:flex;gap:6px;flex-wrap:wrap}
-.dtag{font-size:11.5px;font-weight:600;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:5px 11px}
-.dtag.f{background:#eef5ea;border-color:#cfe0c6;color:var(--field)}
-.dnote{font-size:13.5px;color:var(--mid);line-height:1.7}
+        .header-wrap {
+            max-width: 1360px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-/* ── simulador ──────────────────────────── */
-.sim{background:var(--ink);color:var(--bone);border-radius:var(--r);padding:20px;margin-bottom:22px}
-.sim h5{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8b938f;margin-bottom:4px}
-.sim>p{font-size:12.5px;color:#a5aca8;margin-bottom:18px;line-height:1.55}
-.sim-ctrl{margin-bottom:16px}
-.sim-ctrl .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px;font-size:13px}
-.sim-ctrl .top b{font-family:'Space Mono',monospace;color:#8fb0ff;font-weight:700}
-.sim input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:4px;border-radius:2px;background:var(--ink-3);outline:none}
-.sim input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--bone);border:4px solid var(--mark);cursor:pointer}
-.sim input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--bone);border:4px solid var(--mark);cursor:pointer}
-.sim-out{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--ink-3);border:1px solid var(--ink-3);border-radius:4px;overflow:hidden;margin-top:20px}
-.sim-out div{background:var(--ink-2);padding:13px 14px}
-.sim-out dt{font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#8b938f}
-.sim-out dd{font-family:'Space Mono',monospace;font-size:17px;font-weight:700;margin-top:4px}
-.sim-out dd.mk{color:#8fb0ff}
-.sim-out dd.sk{color:#c9d97e}
-.sim-note{font-size:11px;color:#7d847f;margin-top:12px;line-height:1.55}
+        .brand-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+        }
 
-.dos-foot{border-top:1px solid var(--line);background:var(--card);padding:16px 22px;flex-shrink:0}
-.ask{width:100%;background:var(--mark);color:#fff;border:none;border-radius:var(--r);padding:15px;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px}
-.ask:hover{background:#1544ac}
-.ask-note{font-family:'Space Mono',monospace;font-size:10px;color:var(--low);text-align:center;margin-top:9px;letter-spacing:.02em}
+        .brand-emblem {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #15803d, #22c55e);
+            border-radius: var(--radius-md);
+            display: grid;
+            place-items: center;
+            color: white;
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.3);
+        }
 
-/* ── protocolo ──────────────────────────── */
-.rec{padding:30px 22px;text-align:center;animation:up .35s ease}
-@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.rec-i{width:56px;height:56px;border-radius:50%;background:var(--mark-soft);color:var(--mark);display:grid;place-items:center;margin:0 auto 16px}
-.rec h3{font-size:22px;font-weight:800}
-.rec>p{color:var(--mid);font-size:14px;line-height:1.6;max-width:42ch;margin:10px auto 22px}
-.rec-proto{background:var(--ink);color:var(--bone);border-radius:var(--r);padding:16px;margin-bottom:20px}
-.rec-proto span{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#8b938f;display:block;margin-bottom:5px}
-.rec-proto b{font-family:'Space Mono',monospace;font-size:24px;font-weight:700;color:#8fb0ff}
-.rec-list{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:22px}
-.rec-list>div{display:flex;justify-content:space-between;gap:14px;padding:11px 15px;border-bottom:1px solid var(--line);font-size:13px;color:var(--mid)}
-.rec-list>div:last-child{border-bottom:none}
-.rec-list b{color:var(--txt);font-family:'Space Mono',monospace;font-weight:700;text-align:right}
-.ways{display:grid;gap:9px;text-align:left}
-.way{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;cursor:pointer;text-decoration:none;color:var(--txt);font-size:13.5px;font-weight:600;transition:border-color .18s}
-.way:hover{border-color:var(--ink)}
-.way small{display:block;font-weight:400;color:var(--mid);font-size:12px;margin-top:2px;line-height:1.45}
-.way i{width:34px;height:34px;border-radius:var(--r);background:var(--bone);color:var(--mid);display:grid;place-items:center;flex-shrink:0}
-.way.wa i{background:#eaf6ee;color:#2c7a5b}
-.again{background:none;border:none;color:var(--low);font-family:'Space Mono',monospace;font-size:11px;text-decoration:underline;text-underline-offset:4px;cursor:pointer;margin-top:20px}
+        .brand-name h1 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            line-height: 1;
+        }
 
-.fields{display:grid;gap:12px;margin-bottom:20px;text-align:left}
-.fld label{display:block;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-bottom:5px}
-.fld input,.fld select{width:100%;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 13px;font-size:13.5px}
-.fld input:focus,.fld select:focus{border-color:var(--ink);outline:none}
+        .brand-name span {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--brand-green);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 600;
+            display: block;
+            margin-top: 3px;
+        }
 
-footer{background:var(--ink);color:#8b938f;padding:34px 22px;font-size:12.5px;line-height:1.75}
-.ft{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-footer b{color:var(--bone)}
-.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,180%);background:var(--ink);color:var(--bone);padding:13px 21px;border-radius:var(--r);font-size:13px;font-weight:600;z-index:120;transition:transform .3s cubic-bezier(.4,0,.2,1)}
-.toast.on{transform:translate(-50%,0)}
+        .btn-direct-contact {
+            background: #25d366;
+            color: #052e16;
+            text-decoration: none;
+            padding: 10px 18px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
 
-@media (max-width:900px){
-  .filters-in{grid-template-columns:1fr 1fr}
-  .hero-stats{gap:24px}
-}
-@media (max-width:560px){
-  .filters-in{grid-template-columns:1fr}
-  .dtable,.sim-out{grid-template-columns:1fr}
-  .prop-f{flex-direction:column;align-items:stretch}
-  .open-dossier{width:100%}
-}
-@media print{
-  header,.creci,.hero,.filters,.list,.dos-foot,.ways,.again,footer,.toast,.scrim{display:none!important}
-  .dossier{position:static;width:100%;transform:none;box-shadow:none}
-  body{background:#fff}
-}
-@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
-</style>
+        .btn-direct-contact:hover {
+            background: #20ba59;
+            transform: translateY(-1px);
+        }
+
+        /* Hero Portal */
+        .hero-portal {
+            background: linear-gradient(180deg, #111722 0%, #0a0e14 100%);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 48px 24px 36px;
+        }
+
+        .hero-inner {
+            max-width: 1360px;
+            margin: 0 auto;
+        }
+
+        .hero-title-group {
+            text-align: center;
+            max-width: 820px;
+            margin: 0 auto 36px;
+        }
+
+        .hero-title-group h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .hero-title-group h2 span {
+            color: var(--brand-green);
+        }
+
+        .hero-title-group p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Filter Box */
+        .filter-panel {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) 150px;
+            gap: 16px;
+            align-items: end;
+            box-shadow: var(--shadow-card);
+        }
+
+        .filter-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .filter-field label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #cbd5e1;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .filter-select {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            color: white;
+            padding: 12px 14px;
+            border-radius: var(--radius-md);
+            font-size: 0.88rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .filter-select:focus {
+            border-color: var(--brand-green);
+        }
+
+        .filter-btn-apply {
+            background: var(--brand-green);
+            color: #052e16;
+            border: none;
+            padding: 13px;
+            border-radius: var(--radius-md);
+            font-weight: 800;
+            font-size: 0.88rem;
+            cursor: pointer;
+            height: 46px;
+            transition: all 0.2s;
+        }
+
+        .filter-btn-apply:hover {
+            background: #16a34a;
+        }
+
+        /* Listings Grid */
+        .listings-section {
+            max-width: 1360px;
+            margin: 48px auto 70px;
+            padding: 0 24px;
+        }
+
+        .listings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .listings-header h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 28px;
+        }
+
+        .property-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-card);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .property-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--brand-green);
+        }
+
+        .property-image-box {
+            height: 230px;
+            background: var(--bg-card);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .property-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .property-card:hover .property-image-box img {
+            transform: scale(1.05);
+        }
+
+        .property-badge-type {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(10, 14, 20, 0.88);
+            backdrop-filter: blur(4px);
+            color: #4ade80;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px solid rgba(74, 222, 128, 0.3);
+        }
+
+        .property-ref-badge {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(10, 14, 20, 0.88);
+            color: #cbd5e1;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.72rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        .property-body {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .property-location-tag {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .property-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.35;
+            margin-bottom: 14px;
+        }
+
+        .property-specs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .spec-item {
+            background: var(--bg-card);
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 0.78rem;
+            color: #cbd5e1;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .property-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .property-price-tag {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .btn-broker-contact {
+            background: #15803d;
+            color: #ffffff;
+            border: none;
+            padding: 9px 15px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-broker-contact:hover {
+            background: #16a34a;
+        }
+
+        footer {
+            background: #06090e;
+            border-top: 1px solid var(--border-subtle);
+            padding: 36px 24px;
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--text-dim);
+        }
+
+        @media (max-width: 860px) {
+            .filter-panel { grid-template-columns: 1fr; }
+            .hero-title-group h2 { font-size: 1.8rem; }
+        }
+    </style>
 </head>
 <body>
 
-<div class="creci">
-  <span>CONSULTORIA PATRIMONIAL E RURAL · CRECI-MT <b>9.412-J</b></span>
-  <span>SINOP · SORRISO · LAGO DO MANSO · CUIABÁ</span>
-</div>
-
-<header>
-  <div class="hd">
-    <a href="#" class="mark-l">
-      <span class="mark-i"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M3 20V8l9-5 9 5v12"/><path d="M3 20h18M9 20v-6h6v6"/></svg></span>
-      <div><h1>TerraForte</h1><span>Imóveis rurais &amp; alto padrão</span></div>
-    </a>
-    <button class="saved" onclick="verSalvos()">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-      Salvos <b id="savedN">0</b>
-    </button>
-  </div>
-</header>
-
-<section class="hero">
-  <svg class="contours" viewBox="0 0 1200 420" preserveAspectRatio="none" aria-hidden="true">
-    <g fill="none" stroke="#8fb0ff" stroke-width="1">
-      <path d="M-40 340C160 300 260 380 430 350s250-110 430-96 300 84 420 60"/>
-      <path d="M-40 300C160 260 270 336 440 306s240-108 420-94 300 82 420 58"/>
-      <path d="M-40 260C160 220 280 292 450 262s230-106 410-92 300 80 420 56"/>
-      <path d="M-40 216C160 176 290 246 460 216s220-102 400-88 300 78 420 54"/>
-      <path d="M-40 170C160 130 300 198 470 168s210-98 390-84 300 76 420 52"/>
-      <path d="M-40 122C160 82 310 148 480 118s200-94 380-80 300 74 420 50"/>
-      <path d="M-40 72C160 32 320 96 490 66s190-90 370-76 300 72 420 48"/>
-    </g>
-  </svg>
-  <div class="hero-in">
-    <span class="hero-eye">Vitrine técnica · 42 imóveis em carteira</span>
-    <h2>Terra boa não se compra por <em>foto bonita</em>.</h2>
-    <p>Cada imóvel aqui vem com dossiê: matrícula, aptidão de solo, disponibilidade de água, benfeitorias e distância do asfalto. E um simulador que converte o negócio em sacas de soja, do jeito que se fecha no interior.</p>
-    <div class="hero-stats">
-      <div class="hs"><b>42</b><span>imóveis com dossiê completo</span></div>
-      <div class="hs"><b>18.400 ha</b><span>de área em carteira</span></div>
-      <div class="hs"><b>0,8 s</b><span>carregamento no 4G rural</span></div>
+    <!-- Top Bar -->
+    <div class="top-creci-bar">
+        <span>📍 Consultoria Fundiária Especializada em Fazendas Produtivas & Alto Padrão MT</span>
+        <span>CRECI-MT <strong>9.412-J</strong> · Plantão de Vendas: <strong>(65) 99999-9999</strong></span>
     </div>
-  </div>
-</section>
 
-<div class="filters">
-  <div class="filters-in">
-    <div class="fl"><label for="fTipo">Tipo</label>
-      <select id="fTipo"><option value="todos">Todos os tipos</option><option value="fazenda">Fazenda produtiva</option><option value="chacara">Chácara náutica</option><option value="condominio">Casa em condomínio</option><option value="area">Área para investimento</option></select>
-    </div>
-    <div class="fl"><label for="fReg">Região</label>
-      <select id="fReg"><option value="todos">Todas as regiões</option><option value="norte">Sinop · Sorriso · Norte</option><option value="manso">Lago do Manso · Chapada</option><option value="cuiaba">Cuiabá · Várzea Grande</option><option value="sul">Rondonópolis · Sul de MT</option></select>
-    </div>
-    <div class="fl"><label for="fFaixa">Faixa de valor</label>
-      <select id="fFaixa"><option value="todos">Qualquer valor</option><option value="0-2">Até R$ 2 mi</option><option value="2-5">R$ 2 mi a R$ 5 mi</option><option value="5-20">R$ 5 mi a R$ 20 mi</option><option value="20-999">Acima de R$ 20 mi</option></select>
-    </div>
-    <div class="fl"><label for="fAgua">Água</label>
-      <select id="fAgua"><option value="todos">Indiferente</option><option value="rio">Rio ou córrego</option><option value="lago">Frente para o lago</option><option value="poco">Poço artesiano</option></select>
-    </div>
-    <button class="fl-clear" onclick="limpar()">Limpar filtros</button>
-  </div>
-</div>
+    <!-- Header -->
+    <header>
+        <div class="header-wrap">
+            <a href="#" class="brand-link">
+                <div class="brand-emblem">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                </div>
+                <div class="brand-name">
+                    <h1>TerraForte</h1>
+                    <span>Imóveis Rurais & Alto Padrão MT</span>
+                </div>
+            </a>
 
-<section class="list">
-  <div class="list-top">
-    <h3>Imóveis disponíveis <span id="qtd">—</span></h3>
-    <select id="ord" aria-label="Ordenar">
-      <option value="rel">Ordenar por relevância</option>
-      <option value="menor">Menor valor</option>
-      <option value="maior">Maior valor</option>
-      <option value="area">Maior área</option>
-    </select>
-  </div>
-  <div class="grid" id="grid"></div>
-</section>
+            <a href="#oportunidades" class="btn-direct-contact">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                <span>Falar com o Consultor</span>
+            </a>
+        </div>
+    </header>
 
-<footer>
-  <div class="ft">
-    <div><b>TerraForte Imobiliária e Gestão Rural MT</b><br>CRECI-MT 9.412-J · Av. Historiador Rubens de Mendonça, Cuiabá – MT</div>
-    <div>Demonstração funcional · DevStudio<br>Imóveis, matrículas e valores ilustrativos</div>
-  </div>
-</footer>
+    <!-- Hero Portal -->
+    <section class="hero-portal">
+        <div class="hero-inner">
+            <div class="hero-title-group">
+                <h2>Patrimônio Imobiliário de Alta Rentabilidade no <span>Coração de MT</span></h2>
+                <p>Fazendas de grãos e pecuária intensiva com documentação 100% auditada (GEO/CAR), chácaras com píer privativo no Lago do Manso e mansões exclusivas em Cuiabá.</p>
+            </div>
 
-<div class="scrim" id="scrim" onclick="fecharDossie()"></div>
-<aside class="dossier" id="dossier" role="dialog" aria-modal="true" aria-labelledby="dosTitle">
-  <div class="dos-top">
-    <div><span class="k" id="dosRef">—</span><h3 id="dosTitle">Dossiê do imóvel</h3></div>
-    <button class="dos-x" onclick="fecharDossie()" aria-label="Fechar"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
-  </div>
-  <div class="dos-body" id="dosBody"></div>
-  <div class="dos-foot" id="dosFoot"></div>
-</aside>
+            <div class="filter-panel">
+                <div class="filter-field">
+                    <label>Tipo de Propriedade</label>
+                    <select class="filter-select" id="propTypeFilter">
+                        <option value="todos">Todos os Segmentos</option>
+                        <option value="fazenda">Fazendas & Áreas Produtivas</option>
+                        <option value="chacara">Chácaras Náuticas (Lago do Manso)</option>
+                        <option value="condominio">Casas em Condomínio Fechado</option>
+                    </select>
+                </div>
 
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+                <div class="filter-field">
+                    <label>Polo / Região</label>
+                    <select class="filter-select" id="propRegionFilter">
+                        <option value="todos">Todas as Regiões</option>
+                        <option value="norte">Sinop / Sorriso / Nova Mutum</option>
+                        <option value="manso">Lago do Manso / Chapada</option>
+                        <option value="cuiaba">Cuiabá / Várzea Grande</option>
+                    </select>
+                </div>
 
-<script>
-/* ── carteira ───────────────────────────── */
-const SACA = 125;   /* ponytail: preço da saca de soja — o botão de calibração do simulador */
-const JUROS_AA = 0.115;
+                <button class="filter-btn-apply" onclick="filterProperties()">
+                    Filtrar Imóveis
+                </button>
+            </div>
+        </div>
+    </section>
 
-const IMOVEIS=[
-  {id:1,ref:'FAZ-8920',tipo:'fazenda',kind:'Fazenda produtiva',reg:'norte',agua:'rio',
-   titulo:'Fazenda de soja e milho com 1.200 hectares em dupla aptidão',
-   loc:'Sinop / Sorriso — MT', coord:'11°51\'S 55°30\'W · Zona 21S',
-   preco:42000000, area:1200, areaUn:'ha',
-   img:'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=900&auto=format&fit=crop&q=75',
-   plot:'M30 20 L250 32 L266 100 L214 148 L52 138 Z',
-   ficha:{'Matrícula':'12.884 · CRI Sorriso','Área total':'1.200 ha','Área aberta':'850 ha em soja','Solo':'Argila 35% a 45%','Altitude':'380 m','Distância do asfalto':'8 km de estrada cascalhada'},
-   tags:['Sede reformada','Barracão 1.200 m²','Silo de 40 mil sacas','Energia trifásica'],
-   tagsF:['Dupla safra consolidada','Georreferenciada','CAR e ITR em dia'],
-   nota:'Fazenda em operação há 14 safras, com histórico de produtividade documentado por talhão. A área remanescente de reserva legal está averbada e não conflita com a área de plantio.'},
+    <!-- Listings Section -->
+    <main class="listings-section" id="oportunidades">
+        <div class="listings-header">
+            <h3>Oportunidades Cadastradas (<span id="visiblePropsCount">4</span>)</h3>
+        </div>
 
-  {id:2,ref:'MAN-3310',tipo:'chacara',kind:'Chácara náutica',reg:'manso',agua:'lago',
-   titulo:'Chácara pé na água com rampa náutica privativa no Manso',
-   loc:'Lago do Manso / Chapada — MT', coord:'14°52\'S 55°47\'W · Zona 21S',
-   preco:1850000, area:5000, areaUn:'m²',
-   img:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=900&auto=format&fit=crop&q=75',
-   plot:'M40 26 L262 20 L270 92 L180 146 L44 132 Z',
-   ficha:{'Matrícula':'8.221 · CRI Chapada','Área do terreno':'5.000 m²','Área construída':'340 m²','Frente para a água':'62 m','Altitude':'320 m','Acesso':'Asfalto até a portaria'},
-   tags:['4 suítes climatizadas','Deck e rampa para lancha','Piscina com borda','Poço artesiano'],
-   tagsF:['Escritura definitiva','Condomínio com segurança 24h'],
-   nota:'Uma das poucas frentes de água com rampa própria licenciada. O deck e a rampa estão dentro da faixa autorizada pelo órgão ambiental, com documentação anexa ao dossiê.'},
+        <div class="properties-grid" id="propertiesMount">
+            <!-- Dynamic properties -->
+        </div>
+    </main>
 
-  {id:3,ref:'CND-7740',tipo:'condominio',kind:'Casa em condomínio',reg:'cuiaba',agua:'poco',
-   titulo:'Mansão térrea contemporânea no Florais dos Lagos',
-   loc:'Cuiabá — MT', coord:'15°33\'S 56°04\'W · Zona 21S',
-   preco:3400000, area:380, areaUn:'m²',
-   img:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&auto=format&fit=crop&q=75',
-   plot:'M56 30 L246 30 L246 140 L56 140 Z',
-   ficha:{'Matrícula':'44.907 · CRI Cuiabá','Terreno':'720 m²','Área construída':'380 m²','Ano de entrega':'2023','Vagas':'4 cobertas','Posição':'Face sul, sem sol da tarde'},
-   tags:['4 suítes master','Piscina com cascata','Automação completa','Gerador próprio'],
-   tagsF:['Averbada e habite-se emitido','IPTU quitado'],
-   nota:'Projeto assinado com pé-direito duplo no living e brise que corta o sol da tarde — detalhe que muda a conta de energia em Cuiabá. Estrutura já preparada para painéis solares.'},
+    <!-- Footer -->
+    <footer>
+        <p><strong>TerraForte Imobiliária & Gestão Patrimonial Rural Ltda</strong> — CRECI-MT 9.412-J · Av. Historiador Rubens de Mendonça, 1.750 · Cuiabá - MT</p>
+        <p style="margin-top: 6px;">Demonstração funcional de portal imobiliário desenvolvida por DevStudio.</p>
+    </footer>
 
-  {id:4,ref:'FAZ-4100',tipo:'fazenda',kind:'Pecuária intensiva',reg:'sul',agua:'poco',
-   titulo:'Área para confinamento e pecuária intensiva com 600 hectares',
-   loc:'Rondonópolis / Campo Verde — MT', coord:'16°28\'S 54°38\'W · Zona 21S',
-   preco:18500000, area:600, areaUn:'ha',
-   img:'https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=900&auto=format&fit=crop&q=75',
-   plot:'M34 34 L258 26 L262 118 L120 150 L38 120 Z',
-   ficha:{'Matrícula':'6.510 · CRI Rondonópolis','Área total':'600 ha','Pastagem formada':'520 ha','Capacidade':'3.200 cabeças','Poço':'40.000 L/h','Distância do asfalto':'2 km'},
-   tags:['Curral anti-estresse','Balança rodoviária','Casa de funcionário','Silo trincheira'],
-   tagsF:['Licença ambiental vigente','Georreferenciada'],
-   nota:'Estrutura de confinamento pronta para operar, com curral de manejo racional e área de silagem dimensionada para o ciclo completo. O poço abastece o confinamento inteiro sem apoio de açude.'},
+    <script>
+        const propertiesData = [
+            {
+                id: 1,
+                ref: "FAZ-8920",
+                title: "Fazenda de Soja e Milho 1.200 Hectares (Dupla Aptidão)",
+                region: "norte",
+                location: "Sinop / Sorriso - MT",
+                type: "fazenda",
+                typeBadge: "Fazenda Produtiva",
+                specs: [
+                    "850 ha Agricultáveis",
+                    "Argila 38% a 45%",
+                    "GEO / CAR Aprovados",
+                    "Sede + Barracão 1.200m²"
+                ],
+                price: "R$ 42.000.000",
+                image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&auto=format&fit=crop&q=80"
+            },
+            {
+                id: 2,
+                ref: "MAN-3310",
+                title: "Chácara Náutica Pé na Água com Rampa e Deck Privativo",
+                region: "manso",
+                location: "Lago do Manso / Chapada dos Guimarães - MT",
+                type: "chacara",
+                typeBadge: "Chácara Náutica",
+                specs: [
+                    "5.000 m² Terreno",
+                    "4 Suítes Climatizadas",
+                    "Deck p/ Lancha",
+                    "Heliponto Gramado"
+                ],
+                price: "R$ 1.850.000",
+                image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&auto=format&fit=crop&q=80"
+            },
+            {
+                id: 3,
+                ref: "CND-7740",
+                title: "Mansão Térrea Contemporânea no Florais dos Lagos",
+                region: "cuiaba",
+                location: "Cuiabá - MT",
+                type: "condominio",
+                typeBadge: "Condomínio Fechado",
+                specs: [
+                    "380 m² Área Construída",
+                    "4 Suítes Master",
+                    "Energia Solar 1.200 kWh",
+                    "Piscina com Cascata"
+                ],
+                price: "R$ 3.400.000",
+                image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&auto=format&fit=crop&q=80"
+            },
+            {
+                id: 4,
+                ref: "FAZ-4100",
+                title: "Área Pecuária Intensiva e Confinamento Estruturado",
+                region: "norte",
+                location: "Rondonópolis / Campo Verde - MT",
+                type: "fazenda",
+                typeBadge: "Pecuária Intensiva",
+                specs: [
+                    "600 Hectares Formados",
+                    "Poço 40.000 L/h",
+                    "Curral Anti-estresse",
+                    "Capacidade 2.000 Bois"
+                ],
+                price: "R$ 18.500.000",
+                image: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=800&auto=format&fit=crop&q=80"
+            }
+        ];
 
-  {id:5,ref:'ARE-2205',tipo:'area',kind:'Área para investimento',reg:'norte',agua:'rio',
-   titulo:'Área bruta de 320 hectares em vetor de expansão de Lucas do Rio Verde',
-   loc:'Lucas do Rio Verde — MT', coord:'13°03\'S 55°54\'W · Zona 21S',
-   preco:9600000, area:320, areaUn:'ha',
-   img:'https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=900&auto=format&fit=crop&q=75',
-   plot:'M46 22 L254 38 L240 132 L60 142 Z',
-   ficha:{'Matrícula':'19.033 · CRI Lucas do Rio Verde','Área total':'320 ha','Uso atual':'Pastagem degradada','Solo':'Latossolo vermelho','Frente para rodovia':'1,4 km na BR-163','Zoneamento':'Expansão urbana em estudo'},
-   tags:['Frente para a BR-163','Topografia plana','Córrego perene no fundo'],
-   tagsF:['Documentação limpa','Sem litígio'],
-   nota:'Compra posicional: a área faz frente para a rodovia no sentido de crescimento da cidade. Serve tanto para conversão em lavoura quanto para segurar até o loteamento avançar.'},
+        function renderProperties(list) {
+            const container = document.getElementById('propertiesMount');
+            document.getElementById('visiblePropsCount').innerText = list.length;
 
-  {id:6,ref:'MAN-5580',tipo:'chacara',kind:'Chácara náutica',reg:'manso',agua:'lago',
-   titulo:'Chácara de 2 hectares com casa de pescador e ancoradouro',
-   loc:'Lago do Manso — MT', coord:'14°49\'S 55°44\'W · Zona 21S',
-   preco:960000, area:20000, areaUn:'m²',
-   img:'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=900&auto=format&fit=crop&q=75',
-   plot:'M52 28 L244 40 L232 124 L64 134 Z',
-   ficha:{'Matrícula':'9.744 · CRI Chapada','Área do terreno':'20.000 m²','Área construída':'110 m²','Frente para a água':'38 m','Energia':'Rede rural monofásica','Acesso':'6 km de estrada de chão'},
-   tags:['2 quartos','Ancoradouro flutuante','Área de churrasco coberta'],
-   tagsF:['Escritura definitiva'],
-   nota:'Entrada acessível no Manso para quem quer o pé na água sem o custo de uma casa grande. A estrada de chão é mantida pela associação de moradores e passa bem no período chuvoso.'}
-];
+            if (list.length === 0) {
+                container.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 40px; color: var(--text-muted);">Nenhum imóvel encontrado para o filtro selecionado.</div>`;
+                return;
+            }
 
-/* ── estado ─────────────────────────────── */
-let tipo='todos', reg='todos', faixa='todos', agua='todos', ord='rel';
-let salvos=[], atual=null;
-let entrada=30, prazo=10;
-const el=id=>document.getElementById(id);
-const brl=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
-const nf=n=>n.toLocaleString('pt-BR');
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+            container.innerHTML = list.map(p => `
+                <article class="property-card">
+                    <div class="property-image-box">
+                        <img src="${p.image}" alt="${p.title}">
+                        <span class="property-badge-type">${p.typeBadge}</span>
+                        <span class="property-ref-badge">Ref: ${p.ref}</span>
+                    </div>
 
-/* ── lista ──────────────────────────────── */
-function filtrar(){
-  let out=IMOVEIS.filter(p=>{
-    if(tipo!=='todos'&&p.tipo!==tipo) return false;
-    if(reg!=='todos'&&p.reg!==reg) return false;
-    if(agua!=='todos'&&p.agua!==agua) return false;
-    if(faixa!=='todos'){
-      const [a,b]=faixa.split('-').map(Number);
-      const mi=p.preco/1e6;
-      if(mi<a||mi>=b) return false;
-    }
-    return true;
-  });
-  if(ord==='menor') out.sort((a,b)=>a.preco-b.preco);
-  if(ord==='maior') out.sort((a,b)=>b.preco-a.preco);
-  if(ord==='area')  out.sort((a,b)=>(b.areaUn==='ha'?b.area:b.area/10000)-(a.areaUn==='ha'?a.area:a.area/10000));
-  return out;
-}
-function porArea(p){
-  return p.areaUn==='ha' ? brl(p.preco/p.area)+'/ha' : brl(p.preco/p.area)+'/m²';
-}
-function pintar(){
-  const itens=filtrar();
-  el('qtd').textContent=String(itens.length).padStart(2,'0');
-  if(!itens.length){
-    el('grid').innerHTML='<div class="none"><b>Nenhum imóvel com esses filtros</b><p>A carteira muda toda semana. Solte um dos filtros ou fale com o corretor sobre o que você procura.</p><button onclick="limpar()">Ver a carteira inteira</button></div>';
-    return;
-  }
-  el('grid').innerHTML=itens.map(p=>{
-    const fav=salvos.indexOf(p.id)>=0;
-    const especs=Object.keys(p.ficha).slice(1,5);
-    return '<article class="prop">'+
-      '<div class="prop-img"><img src="'+p.img+'" alt="" loading="lazy">'+
-        '<span class="prop-ref">'+p.ref+'</span><span class="prop-kind">'+p.kind+'</span>'+
-        '<button class="prop-fav" aria-pressed="'+fav+'" onclick="salvar('+p.id+')" aria-label="Salvar imóvel '+p.ref+'">'+
-        '<svg width="17" height="17" viewBox="0 0 24 24" fill="'+(fav?'currentColor':'none')+'" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></button>'+
-      '</div>'+
-      '<div class="prop-b">'+
-        '<div class="prop-loc"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>'+p.loc+'</div>'+
-        '<h4>'+p.titulo+'</h4>'+
-        '<dl class="prop-specs">'+especs.map(k=>'<div><dt>'+k+'</dt><dd>'+p.ficha[k]+'</dd></div>').join('')+'</dl>'+
-        '<div class="prop-f">'+
-          '<div class="prop-price"><small>Valor de venda</small><b>'+brl(p.preco)+'</b><i>'+porArea(p)+'</i></div>'+
-          '<button class="open-dossier" onclick="abrirDossie('+p.id+')">Ver dossiê</button>'+
-        '</div>'+
-      '</div></article>';
-  }).join('');
-}
-function limpar(){
-  tipo=reg=faixa=agua='todos';
-  el('fTipo').value='todos'; el('fReg').value='todos'; el('fFaixa').value='todos'; el('fAgua').value='todos';
-  pintar();
-}
-function salvar(id){
-  const i=salvos.indexOf(id);
-  if(i<0){salvos.push(id);toast('Imóvel salvo na sua lista')}
-  else{salvos.splice(i,1);toast('Removido dos salvos')}
-  el('savedN').textContent=salvos.length;
-  pintar();
-}
-function verSalvos(){
-  if(!salvos.length){toast('Você ainda não salvou nenhum imóvel');return}
-  const refs=IMOVEIS.filter(p=>salvos.indexOf(p.id)>=0).map(p=>p.ref).join(', ');
-  toast('Salvos: '+refs);
-}
+                    <div class="property-body">
+                        <div class="property-location-tag">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <span>${p.location}</span>
+                        </div>
 
-/* ── dossiê ─────────────────────────────── */
-function abrirDossie(id){
-  atual=IMOVEIS.find(p=>p.id===id);
-  entrada=30; prazo=10;
-  el('scrim').classList.add('on'); el('dossier').classList.add('on');
-  document.body.style.overflow='hidden';
-  pintarDossie();
-  el('dossier').querySelector('.dos-x').focus();
-}
-function fecharDossie(){
-  el('scrim').classList.remove('on'); el('dossier').classList.remove('on');
-  document.body.style.overflow='';
-}
-function parcela(pv,i,n){return i===0?pv/n:pv*i/(1-Math.pow(1+i,-n))}
-function simular(){
-  const p=atual;
-  const ent=p.preco*entrada/100;
-  const fin=p.preco-ent;
-  const im=Math.pow(1+JUROS_AA,1/12)-1;
-  const n=prazo*12;
-  const pm=parcela(fin,im,n);
-  return {ent:ent,fin:fin,pm:pm,n:n,
-    sacasTotal:Math.round(p.preco/SACA),
-    sacasMes:Math.round(pm/SACA),
-    total:ent+pm*n};
-}
-function pintarDossie(){
-  const p=atual;
-  el('dosRef').textContent=p.ref+' · '+p.kind;
-  el('dosTitle').textContent='Dossiê do imóvel';
-  el('dosBody').innerHTML=
-    '<div class="dos-hero"><img src="'+p.img+'" alt="'+esc(p.titulo)+'"><span class="dos-coord">'+p.coord+'</span></div>'+
-    '<div class="dos-in">'+
-      '<h4 class="dos-title">'+p.titulo+'</h4>'+
-      '<p class="dos-sub">'+p.loc+' · '+porArea(p)+'</p>'+
+                        <h4 class="property-title">${p.title}</h4>
 
-      '<div class="plot"><div class="plot-h"><span>Croqui do perímetro</span><span>'+nf(p.area)+' '+p.areaUn+'</span></div>'+
-        '<svg viewBox="0 0 300 170" role="img" aria-label="Croqui do perímetro do imóvel">'+
-          '<defs><pattern id="hatch" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">'+
-          '<line x1="0" y1="0" x2="0" y2="7" stroke="#c3bcab" stroke-width="1"/></pattern></defs>'+
-          '<path d="'+p.plot+'" fill="url(#hatch)" stroke="#1a56db" stroke-width="2"/>'+
-          '<g stroke="#c3bcab" stroke-width=".6" stroke-dasharray="3 4">'+
-            '<line x1="0" y1="42" x2="300" y2="42"/><line x1="0" y1="85" x2="300" y2="85"/><line x1="0" y1="128" x2="300" y2="128"/>'+
-            '<line x1="75" y1="0" x2="75" y2="170"/><line x1="150" y1="0" x2="150" y2="170"/><line x1="225" y1="0" x2="225" y2="170"/></g>'+
-          '<g transform="translate(276,26)"><path d="M0-14 5 6 0 1-5 6Z" fill="#0f1211"/>'+
-            '<text y="20" text-anchor="middle" font-family="Space Mono, monospace" font-size="9" fill="#5d635f">N</text></g>'+
-          '<text x="12" y="164" font-family="Space Mono, monospace" font-size="9" fill="#8b918c">'+p.coord+'</text>'+
-        '</svg></div>'+
+                        <div class="property-specs-grid">
+                            ${p.specs.map(s => `<div class="spec-item">• ${s}</div>`).join('')}
+                        </div>
 
-      '<div class="dblock"><h5>Ficha técnica</h5>'+
-        '<dl class="dtable">'+Object.keys(p.ficha).map(k=>'<div><dt>'+k+'</dt><dd>'+p.ficha[k]+'</dd></div>').join('')+'</dl></div>'+
+                        <div class="property-card-footer">
+                            <div>
+                                <small style="display:block; font-size: 0.68rem; color: var(--text-dim); font-family: 'IBM Plex Mono'; text-transform: uppercase;">Valor Pedido</small>
+                                <span class="property-price-tag">${p.price}</span>
+                            </div>
 
-      '<div class="dblock"><h5>Benfeitorias</h5><div class="dtags">'+
-        p.tags.map(t=>'<span class="dtag">'+t+'</span>').join('')+'</div></div>'+
+                            <button class="btn-broker-contact" onclick="contactBrokerWhatsApp('${p.ref}', '${p.title}')">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                                <span>Solicitar Dossiê</span>
+                            </button>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+        }
 
-      '<div class="dblock"><h5>Situação documental</h5><div class="dtags">'+
-        p.tagsF.map(t=>'<span class="dtag f">✓ '+t+'</span>').join('')+'</div></div>'+
+        function filterProperties() {
+            const type = document.getElementById('propTypeFilter').value;
+            const region = document.getElementById('propRegionFilter').value;
 
-      '<div class="dblock"><h5>Leitura do corretor</h5><p class="dnote">'+p.nota+'</p></div>'+
+            const filtered = propertiesData.filter(p => {
+                const matchType = type === 'todos' || p.type === type;
+                const matchRegion = region === 'todos' || p.region === region;
+                return matchType && matchRegion;
+            });
 
-      '<div class="sim">'+
-        '<h5>Simulação de negócio</h5>'+
-        '<p>Financiamento pela Tabela Price a '+(JUROS_AA*100).toFixed(1).replace('.',',')+'% ao ano, com a conversão em sacas de soja a '+brl(SACA)+' — como se negocia no interior.</p>'+
-        '<div class="sim-ctrl"><div class="top"><span>Entrada</span><b>'+entrada+'% · '+brl(s.ent)+'</b></div>'+
-          '<input type="range" min="10" max="70" step="5" value="'+entrada+'" oninput="entrada=+this.value;pintarDossie()" aria-label="Percentual de entrada"></div>'+
-        '<div class="sim-ctrl"><div class="top"><span>Prazo</span><b>'+prazo+' anos · '+s.n+'x</b></div>'+
-          '<input type="range" min="3" max="20" step="1" value="'+prazo+'" oninput="prazo=+this.value;pintarDossie()" aria-label="Prazo em anos"></div>'+
-        '<dl class="sim-out">'+
-          '<div><dt>Parcela mensal</dt><dd class="mk">'+brl(s.pm)+'</dd></div>'+
-          '<div><dt>Equivalente em sacas</dt><dd class="sk">'+nf(s.sacasMes)+' sc/mês</dd></div>'+
-          '<div><dt>Valor financiado</dt><dd>'+brl(s.fin)+'</dd></div>'+
-          '<div><dt>Imóvel em sacas</dt><dd>'+nf(s.sacasTotal)+' sc</dd></div>'+
-        '</dl>'+
-        '<p class="sim-note">Simulação para orientar a conversa. Condições reais dependem de análise de crédito e da instituição financeira.</p>'+
-      '</div>'+
-    '</div>';
+            renderProperties(filtered);
+        }
 
-  el('dosFoot').innerHTML=
-    '<button class="ask" onclick="pedirDossie()">'+
-      '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>'+
-      'Solicitar o dossiê completo</button>'+
-    '<p class="ask-note">MATRÍCULA · CAR · FOTOS AÉREAS · HISTÓRICO DE PRODUTIVIDADE</p>';
-}
+        function contactBrokerWhatsApp(ref, title) {
+            let msg = `*🏡 INTERESSE EM IMÓVEL - TERRAFORTE MT*\n`;
+            msg += `────────────────────────────\n`;
+            msg += `▪ *Código do Imóvel:* ${ref}\n`;
+            msg += `▪ *Título:* ${title}\n`;
+            msg += `────────────────────────────\n`;
+            msg += `Olá! Gostaria de receber o dossiê fundiário completo deste imóvel, fotos adicionais e condições de parcelamento em safra.`;
 
-/* ── pedido do dossiê: fecho na página ──── */
-let pedido=null;
-function pedirDossie(){
-  const p=atual;
-  el('dosFoot').innerHTML='';
-  el('dosBody').innerHTML=
-    '<div class="rec">'+
-      '<div class="rec-i"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15h6M9 11h2"/></svg></div>'+
-      '<h3>Para onde mandamos o dossiê?</h3>'+
-      '<p>O material tem cerca de 12 MB, com matrícula digitalizada e fotos aéreas. Escolha o canal que abre melhor pra você.</p>'+
-      '<div class="fields">'+
-        '<div class="fld"><label for="pNome">Nome</label><input type="text" id="pNome" placeholder="Como devemos te chamar"></div>'+
-        '<div class="fld"><label for="pFone">Telefone</label><input type="tel" id="pFone" placeholder="(65) 90000-0000"></div>'+
-        '<div class="fld"><label for="pMail">E-mail</label><input type="email" id="pMail" placeholder="para receber o PDF completo"></div>'+
-        '<div class="fld"><label for="pPerfil">Seu interesse</label><select id="pPerfil">'+
-          '<option>Compra para uso próprio</option><option>Compra como investimento</option><option>Permuta por outro imóvel</option><option>Ainda estou pesquisando</option></select></div>'+
-      '</div>'+
-      '<button class="ask" onclick="emitir()">Confirmar solicitação</button>'+
-      '<button class="again" onclick="pintarDossie()">Voltar ao dossiê</button>'+
-    '</div>';
-}
-function emitir(){
-  const p=atual;
-  // ponytail: protocolo real vem do CRM da imobiliária
-  const prot='TF-'+new Date().getFullYear()+'-'+String(Math.floor(Math.random()*9000)+1000);
-  pedido={prot:prot,ref:p.ref,titulo:p.titulo,loc:p.loc,preco:p.preco,
-    nome:(el('pNome').value||'').trim()||'Não informado',
-    fone:(el('pFone').value||'').trim()||'Não informado',
-    mail:(el('pMail').value||'').trim()||'Não informado',
-    perfil:el('pPerfil').value,
-    ent:s.ent,pm:s.pm,n:s.n,sacas:s.sacasMes};
+            const encoded = encodeURIComponent(msg);
+            window.open(`https://wa.me/5565999999999?text=${encoded}`, '_blank');
+        }
 
-  el('dosBody').innerHTML=
-    '<div class="rec">'+
-      '<div class="rec-i"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div>'+
-      '<h3>Dossiê a caminho</h3>'+
-      '<p>O corretor responsável pela região recebeu sua solicitação e envia o material em até <b>2 horas úteis</b>.</p>'+
-      '<div class="rec-proto"><span>Protocolo</span><b>'+prot+'</b></div>'+
-      '<div class="rec-list">'+
-        '<div><span>Imóvel</span><b>'+p.ref+'</b></div>'+
-        '<div><span>Região</span><b>'+p.loc+'</b></div>'+
-        '<div><span>Valor anunciado</span><b>'+brl(p.preco)+'</b></div>'+
-        '<div><span>Cenário simulado</span><b>'+brl(s.pm)+' × '+s.n+'x</b></div>'+
-        '<div><span>Equivalente</span><b>'+nf(s.sacasMes)+' sacas/mês</b></div>'+
-        '<div><span>Envio para</span><b>'+esc(pedido.mail)+'</b></div>'+
-      '</div>'+
-      '<div class="ways">'+
-        '<button class="way" onclick="copiarResumo()">'+
-          '<i><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="13" height="13" x="9" y="9" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></i>'+
-          '<span>Copiar o resumo da simulação<small>Para levar ao gerente do banco ou ao sócio</small></span></button>'+
-        '<button class="way" onclick="window.print()">'+
-          '<i><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg></i>'+
-          '<span>Imprimir a ficha do imóvel<small>Sai com croqui, ficha técnica e simulação</small></span></button>'+
-        '<a class="way" href="'+mailto()+'">'+
-          '<i><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 5L2 7"/></svg></i>'+
-          '<span>Mandar por e-mail para outra pessoa<small>Abre seu e-mail com a ficha preenchida</small></span></a>'+
-        '<a class="way wa" href="'+zap()+'" target="_blank" rel="noopener">'+
-          '<i><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 2.1.55 4.06 1.6 5.8L2 22l4.4-1.7a9.9 9.9 0 0 0 5.64 1.73c5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m5.8 14.15c-.24.68-1.43 1.31-1.98 1.4-.51.07-1.15.1-1.86-.12a16 16 0 0 1-1.68-.62c-2.96-1.28-4.89-4.26-5.04-4.46-.15-.2-1.2-1.6-1.2-3.05s.76-2.16 1.03-2.46c.27-.3.59-.37.78-.37h.57c.18 0 .43-.07.67.51.25.6.84 2.06.91 2.2.08.16.13.34.03.54-.1.2-.15.32-.29.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.02 1.12 1 2.06 1.31 2.36 1.46.3.15.47.13.64-.08.17-.2.74-.86.94-1.16.2-.3.39-.25.66-.15.27.1 1.72.81 2.01.96.3.15.5.22.57.35.07.12.07.72-.18 1.41"/></svg></i>'+
-          '<span>Agendar a visita ao imóvel<small>Fazenda pede combinar acesso com antecedência</small></span></a>'+
-      '</div>'+
-      '<button class="again" onclick="fecharDossie()">Voltar para a vitrine</button>'+
-    '</div>';
-}
-
-function resumoTexto(){
-  const o=pedido;
-  return 'TERRAFORTE IMÓVEIS — SOLICITAÇÃO '+o.prot+'\n'+
-    'Imóvel: '+o.ref+' — '+o.titulo+'\n'+
-    'Local: '+o.loc+'\n'+
-    'Valor anunciado: '+brl(o.preco)+'\n\n'+
-    'SIMULAÇÃO\n'+
-    'Entrada: '+brl(o.ent)+'\n'+
-    'Parcelas: '+o.n+'x de '+brl(o.pm)+'\n'+
-    'Equivalente: '+nf(o.sacas)+' sacas de soja por mês\n\n'+
-    'Interessado: '+o.nome+' · '+o.fone+' · '+o.mail+'\n'+
-    'Perfil: '+o.perfil;
-}
-function copiarResumo(){
-  navigator.clipboard.writeText(resumoTexto())
-    .then(()=>toast('Resumo copiado'),()=>toast('Não foi possível copiar aqui'));
-}
-function mailto(){
-  return 'mailto:?subject='+encodeURIComponent('Imóvel '+pedido.ref+' — TerraForte ('+pedido.prot+')')+'&body='+encodeURIComponent(resumoTexto());
-}
-function zap(){
-  return 'https://wa.me/5565999999999?text='+encodeURIComponent('Olá! Solicitação '+pedido.prot+' — imóvel '+pedido.ref+'. Gostaria de agendar a visita.');
-}
-
-let tH;
-function toast(m){const t=el('toast');t.textContent=m;t.classList.add('on');clearTimeout(tH);tH=setTimeout(()=>t.classList.remove('on'),2600)}
-
-el('fTipo').onchange =e=>{tipo=e.target.value;pintar()};
-el('fReg').onchange  =e=>{reg=e.target.value;pintar()};
-el('fFaixa').onchange=e=>{faixa=e.target.value;pintar()};
-el('fAgua').onchange =e=>{agua=e.target.value;pintar()};
-el('ord').onchange   =e=>{ord=e.target.value;pintar()};
-document.addEventListener('keydown',e=>{if(e.key==='Escape')fecharDossie()});
-
-pintar();
-
-/* verificação mínima: Price bate com o caso conhecido e o filtro de faixa não vaza */
-(function(){
-  const pm=parcela(100000,0.01,12);
-  console.assert(Math.abs(pm-8884.88)<1,'Tabela Price: 100k a 1% em 12x ≈ 8.884,88');
-  tipo='todos';reg='todos';agua='todos';faixa='0-2';
-  console.assert(filtrar().every(p=>p.preco<2e6),'faixa até 2 mi não deve incluir valores maiores');
-  faixa='todos';
-})();
-</script>
+        renderProperties(propertiesData);
+    </script>
 </body>
 </html>

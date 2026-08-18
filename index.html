@@ -524,112 +524,149 @@
 
         <!-- Projetos feitos
 
-         PARA ADICIONAR UM PROJETO: copie um bloco <article class="work"> inteiro
-         e troque cinco coisas:
-           1. src da imagem   -> o print do projeto em img/ (proporção 16:10)
+         A seção alterna dois formatos, de proposito:
+           .work--lead  -> case em destaque. Leva print grande, 3 metricas e uma fala do cliente.
+           .work--row   -> case compacto, em linha. So print pequeno, texto curto e etiqueta tecnica.
+         O padrao e 1 destaque seguido de 2 compactos. Nao deixe seis destaques.
+
+         PARA ADICIONAR UM PROJETO: copie o bloco inteiro do formato que quiser e troque:
+           1. src da imagem   -> o print em img/projetos/ (proporcao 16:10)
            2. alt da imagem   -> descreva o print em uma frase
-           3. p.label         -> tipo de projeto · ano
+           3. p.label         -> tipo de projeto · cidade · ano
            4. h3              -> nome do cliente ou do projeto
-           5. p.work-desc     -> o problema e o que mudou depois
-         Se o projeto está no ar, deixe o link do fim; se não está, apague a linha do <a>.
+           5. p.work-desc     -> o gargalo do cliente e o que passou a acontecer
+           6. ul.work-tech    -> etiqueta tecnica honesta. Meça o peso de verdade:
+                                 gzip -c demos/arquivo.html | wc -c
+           7. o texto do link -> a acao concreta ("Abrir o catalogo e montar uma cotacao"),
+                                 nunca "Ver demonstracao"
+         So no .work--lead: dl.work-metrics (3 numeros) e blockquote.work-quote.
+         Na citacao, atribua por cargo e segmento, nao por nome de pessoa.
+         Se o projeto nao esta no ar, apague a linha do <a>.
     -->
         <section class="section section--band" id="projetos">
             <div class="wrap">
                 <div class="section-head reveal">
-                    <p class="label">Projetos feitos</p>
-                    <h2 class="section-title">Trabalhos e Demonstrações no Ar</h2>
-                    <p>Cada projeto abaixo saiu de uma necessidade concreta de negócio em Mato Grosso e no Brasil. Clique em "Ver demonstração interativa" para testar a aplicação funcionando ao vivo no navegador.
-                    </p>
+                    <p class="label">Seis projetos no ar</p>
+                    <h2 class="section-title">Trabalhos e demonstrações no ar</h2>
+                    <p>Todos abaixo estão funcionando de verdade no navegador — dá pra montar uma cotação, fechar um pedido, aprovar um orçamento. Nenhum é imagem parada. O peso real de cada um está na etiqueta técnica.</p>
                 </div>
 
                 <div class="works">
-                    <!-- Projeto 1: AgroPeças MT -->
-                    <article class="work reveal">
+
+                    <article class="work work--lead reveal">
                         <figure class="work-shot">
                             <img src="img/projetos/agropecas.jpg" width="800" height="500" loading="lazy"
-                                alt="Catálogo online e cotação de peças agrícolas para colheitadeiras e plantadeiras.">
+                                alt="Catálogo de peças agrícolas com busca por SKU, saldo por depósito e cotação com protocolo.">
                         </figure>
                         <div class="work-body">
-                            <p class="label">Catálogo & Cotação · 2026</p>
+                            <p class="label">Catálogo B2B · Sinop · 2026</p>
                             <h3>AgroPeças Distribuidora MT</h3>
-                            <p class="work-desc">Catálogo digital ultrarrápido com busca instantânea e filtro de pronta-entrega para o campo. O produtor monta a cotação e envia a lista com códigos direto para o WhatsApp do vendedor. Reduziu em 60% o tempo de atendimento comercial.</p>
-                            <a class="link-under" href="demos/catalogo-agro.html" target="_blank" rel="noopener noreferrer">Ver demonstração interativa ↗</a>
+                            <p class="work-desc">Catálogo de reposição com busca por SKU, código OEM e código cruzado de similar. Mostra saldo separado por depósito, calcula frete rural e fecha a cotação com protocolo — sem depender de o vendedor estar online.</p>
+                            <dl class="work-metrics">
+                                <div><dt>Tempo de atendimento</dt><dd>−60%</dd></div>
+                                <div><dt>Itens em linha</dt><dd>4.512</dd></div>
+                                <div><dt>Resposta na safra</dt><dd>40 min</dd></div>
+                            </dl>
+                            <blockquote class="work-quote">
+                                <p>“Na safra a gente não tem 40 minutos pra esperar tabela em PDF. O produtor monta a lista sozinho de madrugada e de manhã o vendedor só confirma o saldo.”</p>
+                                <cite>Gerente comercial · distribuidora de peças agrícolas, Sinop</cite>
+                            </blockquote>
+                            <ul class="work-tech">
+                                <li>JavaScript sem framework</li><li>0 dependências</li><li>14 KB comprimido</li><li>Exporta CSV pro ERP</li>
+                            </ul>
+                            <a class="link-under" href="demos/catalogo-agro.html" target="_blank" rel="noopener noreferrer">Abrir o catálogo e montar uma cotação ↗</a>
                         </div>
                     </article>
 
-                    <!-- Projeto 2: KlimaCerto & Solar -->
-                    <article class="work reveal">
-                        <figure class="work-shot">
-                            <img src="img/projetos/klimacerto.jpg" width="800" height="500" loading="lazy"
-                                alt="Calculadora de carga térmica BTUs e agendamento de climatização e energia solar.">
-                        </figure>
-                        <div class="work-body">
-                            <p class="label">Landing Page & Calculadora · 2026</p>
-                            <h3>KlimaCerto Climatização & Solar</h3>
-                            <p class="work-desc">Landing page com simulador térmico inteligente para o clima de MT. O visitante calcula os BTUs ideais e consumo elétrico de acordo com a área e incidência solar da tarde, agendando a visita com 1 clique.</p>
-                            <a class="link-under" href="demos/climatizacao-solar.html" target="_blank" rel="noopener noreferrer">Ver demonstração interativa ↗</a>
-                        </div>
-                    </article>
+                    <div class="work-rows">
+                        <article class="work work--row reveal">
+                            <figure class="work-shot">
+                                <img src="img/projetos/klimacerto.jpg" width="800" height="500" loading="lazy"
+                                    alt="Laudo térmico preliminar com cálculo de BTU, bitola de cabo e disjuntor.">
+                            </figure>
+                            <div class="work-body">
+                                <p class="label">Laudo técnico · Cuiabá · 2026</p>
+                                <h3>KlimaCerto Climatização &amp; Solar</h3>
+                                <p class="work-desc">Laudo preliminar que dimensiona BTU por carga térmica, indica bitola de cabo e disjuntor, e compara a conta da Energisa com e sem solar — com TUSD, TE e iluminação pública separadas.</p>
+                                <ul class="work-tech"><li>Cálculo no cliente</li><li>0 dependências</li><li>14 KB comprimido</li></ul>
+                            </div>
+                            <a class="link-under" href="demos/climatizacao-solar.html" target="_blank" rel="noopener noreferrer">Testar o simulador térmico ↗</a>
+                        </article>
 
-                    <!-- Projeto 3: Brasa & Burger -->
-                    <article class="work reveal">
+                        <article class="work work--row reveal">
+                            <figure class="work-shot">
+                                <img src="img/projetos/odontoprime.jpg" width="800" height="500" loading="lazy"
+                                    alt="Guia de tonalidade Vita Classical e agendamento clínico com anamnese preliminar.">
+                            </figure>
+                            <div class="work-body">
+                                <p class="label">Site clínico · Cuiabá · 2026</p>
+                                <h3>Clínica OdontoPrime</h3>
+                                <p class="work-desc">Guia de tonalidade Vita Classical com as faixas Bleach, anamnese preliminar antes da consulta e agenda com horário confirmado. Texto ajustado ao que o Código de Ética Odontológica permite anunciar.</p>
+                                <ul class="work-tech"><li>Agenda exporta .ics</li><li>0 dependências</li><li>13 KB comprimido</li></ul>
+                            </div>
+                            <a class="link-under" href="demos/clinica-odonto.html" target="_blank" rel="noopener noreferrer">Ver o guia de cor e marcar avaliação ↗</a>
+                        </article>
+                    </div>
+
+                    <article class="work work--lead reveal">
                         <figure class="work-shot">
                             <img src="img/projetos/cardapio-digital.jpg" width="800" height="500" loading="lazy"
-                                alt="Cardápio digital delivery com cálculo de taxa por bairro e chave PIX instantânea.">
+                                alt="Cardápio digital com ponto da carne, taxa por distância e PIX copia e cola.">
                         </figure>
                         <div class="work-body">
-                            <p class="label">Web App & Delivery · 2026</p>
-                            <h3>Brasa & Burger Hamburgueria</h3>
-                            <p class="work-desc">Cardápio digital próprio estilo app para pedidos diretos no WhatsApp sem pagar comissão de até 27% para plataformas de terceiros. Calcula taxa por bairro e gera PIX Copia-e-Cola. Economia de mais de R$ 3.200/mês em taxas.</p>
-                            <a class="link-under" href="demos/cardapio-digital.html" target="_blank" rel="noopener noreferrer">Ver demonstração interativa ↗</a>
+                            <p class="label">Delivery próprio · Cuiabá · 2026</p>
+                            <h3>Brasa &amp; Burger Hamburgueria</h3>
+                            <p class="work-desc">Delivery próprio, sem comissão de plataforma. Ponto da carne obrigatório, remoção de ingrediente por chip, taxa calculada pela quilometragem do bairro, troco conferido na hora e PIX copia e cola gerado no padrão do Banco Central.</p>
+                            <dl class="work-metrics">
+                                <div><dt>Economia em taxas</dt><dd>R$ 3.240</dd></div>
+                                <div><dt>Comissão paga</dt><dd>0%</dd></div>
+                                <div><dt>Erro de pedido</dt><dd>−80%</dd></div>
+                            </dl>
+                            <blockquote class="work-quote">
+                                <p>“O que doía não era só a taxa. Era pedido anotado errado por áudio no meio do barulho da cozinha. Agora chega escrito, com o ponto da carne e o que tirar.”</p>
+                                <cite>Proprietário · hamburgueria artesanal, Cuiabá</cite>
+                            </blockquote>
+                            <ul class="work-tech">
+                                <li>PIX EMV com CRC16</li><li>0 dependências</li><li>13 KB comprimido</li><li>Acompanhamento na tela</li>
+                            </ul>
+                            <a class="link-under" href="demos/cardapio-digital.html" target="_blank" rel="noopener noreferrer">Abrir o cardápio e fechar um pedido ↗</a>
                         </div>
                     </article>
 
-                    <!-- Projeto 4: OdontoPrime -->
-                    <article class="work reveal">
-                        <figure class="work-shot">
-                            <img src="img/projetos/odontoprime.jpg" width="800" height="500" loading="lazy"
-                                alt="Landing page de alta conversão para clínica odontológica e harmonização facial.">
-                        </figure>
-                        <div class="work-body">
-                            <p class="label">Landing Page & Triagem · 2026</p>
-                            <h3>Clínica OdontoPrime Cuiabá</h3>
-                            <p class="work-desc">Página de autoridade com apresentação visual de lentes de contato em porcelana e implantes guiados. Sistema de pré-agendamento por turno que cai formatado na triagem da clínica. Aumento de 40% nas primeiras consultas.</p>
-                            <a class="link-under" href="demos/clinica-odonto.html" target="_blank" rel="noopener noreferrer">Ver demonstração interativa ↗</a>
-                        </div>
-                    </article>
+                    <div class="work-rows">
+                        <article class="work work--row reveal">
+                            <figure class="work-shot">
+                                <img src="img/projetos/terraforte.jpg" width="800" height="500" loading="lazy"
+                                    alt="Portal de fazendas com ficha fundiária, CAR, reserva legal e permuta em sacas.">
+                            </figure>
+                            <div class="work-body">
+                                <p class="label">Portal fundiário · MT · 2026</p>
+                                <h3>TerraForte Imóveis &amp; Fazendas</h3>
+                                <p class="work-desc">Cada imóvel abre um dossiê com matrícula, CAR, percentual de reserva legal, tipo de solo, pluviometria e armazenagem. Simula permuta em sacas ao preço de balcão e parcelamento safra.</p>
+                                <ul class="work-tech"><li>Tabela Price no cliente</li><li>0 dependências</li><li>14 KB comprimido</li></ul>
+                            </div>
+                            <a class="link-under" href="demos/portal-imoveis.html" target="_blank" rel="noopener noreferrer">Abrir o dossiê de uma fazenda ↗</a>
+                        </article>
 
-                    <!-- Projeto 5: TerraForte Imóveis -->
-                    <article class="work reveal">
-                        <figure class="work-shot">
-                            <img src="img/projetos/terraforte.jpg" width="800" height="500" loading="lazy"
-                                alt="Portal imobiliário de fazendas, chácaras no Manso e casas em condomínio fechado.">
-                        </figure>
-                        <div class="work-body">
-                            <p class="label">Portal Imobiliário · 2026</p>
-                            <h3>TerraForte Imóveis & Fazendas</h3>
-                            <p class="work-desc">Vitrine imobiliária de alto padrão para venda de fazendas produtivas e chácaras de lazer no Manso. Carregamento instantâneo em 4G rural e botão de contato com o corretor com o código do imóvel já preenchido.</p>
-                            <a class="link-under" href="demos/portal-imoveis.html" target="_blank" rel="noopener noreferrer">Ver demonstração interativa ↗</a>
-                        </div>
-                    </article>
+                        <article class="work work--row reveal">
+                            <figure class="work-shot">
+                                <img src="img/projetos/autocenter-os.jpg" width="800" height="500" loading="lazy"
+                                    alt="Consulta de ordem de serviço com checklist de entrada, códigos DTC e assinatura.">
+                            </figure>
+                            <div class="work-body">
+                                <p class="label">Sistema de oficina · Cuiabá · 2026</p>
+                                <h3>AutoCenter &amp; Mecânica Diesel MT</h3>
+                                <p class="work-desc">O cliente consulta a OS pela placa, vê o checklist de entrada com KM e nível de tanque, lê os códigos do scanner e aprova o orçamento item a item assinando na tela com o dedo.</p>
+                                <ul class="work-tech"><li>Assinatura em canvas</li><li>0 dependências</li><li>12 KB comprimido</li></ul>
+                            </div>
+                            <a class="link-under" href="demos/rastreamento-os.html" target="_blank" rel="noopener noreferrer">Consultar uma OS pela placa ↗</a>
+                        </article>
+                    </div>
 
-                    <!-- Projeto 6: AutoCenter OS -->
-                    <article class="work reveal">
-                        <figure class="work-shot">
-                            <img src="img/projetos/autocenter-os.jpg" width="800" height="500" loading="lazy"
-                                alt="Sistema de rastreamento de Ordem de Serviço em tempo real por placa e número de OS.">
-                        </figure>
-                        <div class="work-body">
-                            <p class="label">Sistema Web para Equipe · 2026</p>
-                            <h3>AutoCenter & Mecânica Diesel MT</h3>
-                            <p class="work-desc">Painel de consulta onde o cliente acompanha a linha do tempo da sua Ordem de Serviço digitando apenas a placa do veículo. Reduziu em 75% as ligações de clientes perguntando prazos e agilizou a aprovação de orçamentos.</p>
-                            <a class="link-under" href="demos/rastreamento-os.html" target="_blank" rel="noopener noreferrer">Ver demonstração interativa ↗</a>
-                        </div>
-                    </article>
                 </div>
 
                 <p class="works-note reveal">
-                    Quer ver um projeto sob medida para o seu nicho? Fale comigo no WhatsApp que eu demonstro como podemos estruturar o seu site ou sistema.
+                    Os dados dentro das demonstrações são fictícios, mas os fluxos são os mesmos que rodam em produção. Se o seu ramo não está aqui, me diga qual é o gargalo — normalmente ele se parece com um destes seis.
                 </p>
             </div>
         </section>
