@@ -1,1582 +1,1260 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dom Barbeiro | Barbearia Clássica, Barboterapia & Agendamento Online</title>
-    <meta name="description" content="Agendamento online na Dom Barbeiro em Cuiabá. Escolha o serviço, seu barbeiro de preferência, data e horário com confirmação instantânea.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-body: #0b0e14;
-            --bg-surface: #111622;
-            --bg-card: #171f30;
-            --bg-card-hover: #1e293f;
-            --gold-primary: #c5a059;
-            --gold-light: #dfbe7e;
-            --gold-dark: #967535;
-            --leather: #8a4b24;
-            --border-subtle: #243048;
-            --border-gold: rgba(197, 160, 89, 0.35);
-            --text-main: #f3f5f8;
-            --text-muted: #9aa7bc;
-            --text-dim: #60718b;
-            --success-color: #22c55e;
-            --radius-sm: 6px;
-            --radius-md: 10px;
-            --radius-lg: 16px;
-            --shadow-card: 0 12px 30px rgba(0, 0, 0, 0.45);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
-            line-height: 1.5;
-        }
-
-        .serif {
-            font-family: 'Playfair Display', Georgia, serif;
-        }
-
-        .mono {
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        a { color: inherit; text-decoration: none; }
-        button, input, select, textarea { font: inherit; }
-
-        /* Barra Superior Institucional */
-        .top-info-strip {
-            background: #07090e;
-            border-bottom: 1px solid var(--border-subtle);
-            padding: 8px 24px;
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .top-info-strip b { color: var(--gold-light); }
-
-        .live-status-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: #4ade80;
-            font-weight: 600;
-        }
-
-        .live-status-pill i {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #22c55e;
-            box-shadow: 0 0 8px #22c55e;
-            animation: pulse-dot 2s infinite;
-        }
-
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.85); }
-        }
-
-        /* Cabeçalho */
-        header {
-            background: rgba(17, 22, 34, 0.94);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--border-subtle);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            padding: 16px 24px;
-        }
-
-        .header-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .brand-logo {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .brand-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: var(--radius-md);
-            background: linear-gradient(135deg, var(--gold-primary), var(--leather));
-            color: #0b0e14;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 16px rgba(197, 160, 89, 0.35);
-        }
-
-        .brand-title h1 {
-            font-size: 1.25rem;
-            font-weight: 800;
-            letter-spacing: -0.01em;
-            line-height: 1.1;
-            color: #fff;
-        }
-
-        .brand-title span {
-            font-size: 0.68rem;
-            color: var(--gold-light);
-            text-transform: uppercase;
-            letter-spacing: 0.14em;
-            font-weight: 700;
-        }
-
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .header-vip-link {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: color 0.2s;
-        }
-
-        .header-vip-link:hover { color: var(--gold-light); }
-
-        .btn-schedule-nav {
-            background: var(--gold-primary);
-            color: #0b0e14;
-            border: none;
-            padding: 10px 18px;
-            border-radius: var(--radius-sm);
-            font-weight: 800;
-            font-size: 0.85rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s;
-        }
-
-        .btn-schedule-nav:hover {
-            background: var(--gold-light);
-            transform: translateY(-1px);
-        }
-
-        /* Hero */
-        .hero-banner {
-            max-width: 1200px;
-            margin: 36px auto 20px;
-            padding: 0 24px;
-        }
-
-        .hero-card {
-            background: linear-gradient(135deg, rgba(23, 31, 48, 0.95), rgba(11, 14, 20, 0.95)), url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1200&auto=format&fit=crop&q=80') center/cover;
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-lg);
-            padding: 48px 40px;
-            display: grid;
-            grid-template-columns: 1.3fr 0.9fr;
-            gap: 40px;
-            align-items: center;
-            box-shadow: var(--shadow-card);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            width: 5px;
-            background: linear-gradient(180deg, var(--gold-primary), var(--leather));
-        }
-
-        .hero-tag {
-            font-size: 0.72rem;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: var(--gold-light);
-            font-weight: 800;
-            margin-bottom: 12px;
-            display: inline-block;
-        }
-
-        .hero-card h2 {
-            font-size: clamp(2rem, 3.8vw, 3rem);
-            font-weight: 700;
-            line-height: 1.15;
-            color: #fff;
-            margin-bottom: 16px;
-        }
-
-        .hero-card h2 em {
-            color: var(--gold-light);
-            font-style: italic;
-        }
-
-        .hero-card p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 24px;
-        }
-
-        .amenities-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .amenity-chip {
-            background: rgba(17, 22, 34, 0.8);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-sm);
-            padding: 6px 12px;
-            font-size: 0.78rem;
-            color: #d1d9e6;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .amenity-chip svg { color: var(--gold-primary); }
-
-        .hero-side-stats {
-            background: rgba(11, 14, 20, 0.75);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--border-gold);
-            border-radius: var(--radius-md);
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .hero-side-stats h4 {
-            font-size: 0.9rem;
-            color: var(--gold-light);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            font-weight: 700;
-            border-bottom: 1px solid var(--border-subtle);
-            padding-bottom: 10px;
-        }
-
-        .stat-line {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.85rem;
-        }
-
-        .stat-line span { color: var(--text-muted); }
-        .stat-line strong { color: #fff; font-weight: 700; }
-
-        /* Fluxo Principal de Agendamento */
-        .booking-flow-section {
-            max-width: 1200px;
-            margin: 30px auto 70px;
-            padding: 0 24px;
-            display: grid;
-            grid-template-columns: 1.35fr 0.85fr;
-            gap: 30px;
-            align-items: start;
-        }
-
-        .step-container-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-lg);
-            padding: 32px;
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-            box-shadow: var(--shadow-card);
-        }
-
-        .step-header {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border-bottom: 1px solid var(--border-subtle);
-            padding-bottom: 16px;
-        }
-
-        .step-number {
-            width: 32px;
-            height: 32px;
-            border-radius: var(--radius-sm);
-            background: rgba(197, 160, 89, 0.15);
-            border: 1px solid var(--border-gold);
-            color: var(--gold-light);
-            display: grid;
-            place-items: center;
-            font-weight: 800;
-            font-size: 0.9rem;
-        }
-
-        .step-header h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .step-header p {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        /* 1. Grade de Serviços */
-        .services-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-        }
-
-        .service-option-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-md);
-            padding: 16px 20px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 16px;
-            transition: all 0.2s;
-        }
-
-        .service-option-card:hover {
-            border-color: var(--gold-dark);
-            background: var(--bg-card-hover);
-        }
-
-        .service-option-card.active {
-            border-color: var(--gold-primary);
-            background: rgba(197, 160, 89, 0.08);
-            box-shadow: 0 0 0 1px var(--gold-primary);
-        }
-
-        .service-main-info h4 {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 4px;
-        }
-
-        .service-main-info p {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            line-height: 1.4;
-        }
-
-        .service-duration-badge {
-            font-size: 0.72rem;
-            color: var(--gold-light);
-            background: rgba(197, 160, 89, 0.12);
-            padding: 2px 8px;
-            border-radius: 4px;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            margin-top: 6px;
-            font-weight: 600;
-        }
-
-        .service-price-block {
-            text-align: right;
-            flex-shrink: 0;
-        }
-
-        .service-price {
-            font-size: 1.15rem;
-            font-weight: 800;
-            color: var(--gold-light);
-            font-family: 'JetBrains Mono', monospace;
-        }
-
-        /* 2. Seleção de Barbeiro */
-        .barbers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 12px;
-        }
-
-        .barber-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-md);
-            padding: 14px;
-            cursor: pointer;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.2s;
-        }
-
-        .barber-card:hover {
-            border-color: var(--gold-dark);
-            background: var(--bg-card-hover);
-        }
-
-        .barber-card.active {
-            border-color: var(--gold-primary);
-            background: rgba(197, 160, 89, 0.08);
-            box-shadow: 0 0 0 1px var(--gold-primary);
-        }
-
-        .barber-avatar-wrap {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 2px solid var(--border-subtle);
-            position: relative;
-        }
-
-        .barber-card.active .barber-avatar-wrap {
-            border-color: var(--gold-primary);
-        }
-
-        .barber-avatar-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .barber-name {
-            font-size: 0.88rem;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .barber-specialty {
-            font-size: 0.72rem;
-            color: var(--text-dim);
-            line-height: 1.3;
-        }
-
-        /* 3. Seleção de Dias e Horários */
-        .days-slider {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .day-tab {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-sm);
-            padding: 12px 6px;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.2s;
-        }
-
-        .day-tab:hover:not(.disabled) {
-            border-color: var(--gold-dark);
-        }
-
-        .day-tab.active {
-            background: var(--gold-primary);
-            border-color: var(--gold-primary);
-            color: #0b0e14;
-        }
-
-        .day-tab.active .day-name, .day-tab.active .day-month {
-            color: #0b0e14;
-            font-weight: 700;
-        }
-
-        .day-tab.active .day-num {
-            color: #0b0e14;
-        }
-
-        .day-name {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--text-dim);
-            font-weight: 600;
-        }
-
-        .day-num {
-            font-size: 1.25rem;
-            font-weight: 800;
-            font-family: 'JetBrains Mono', monospace;
-            margin: 4px 0 2px;
-            color: #fff;
-        }
-
-        .day-month {
-            font-size: 0.7rem;
-            color: var(--text-dim);
-        }
-
-        .time-slots-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-            gap: 8px;
-        }
-
-        .time-slot-btn {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-sm);
-            padding: 10px 6px;
-            cursor: pointer;
-            text-align: center;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #d1d9e6;
-            transition: all 0.2s;
-        }
-
-        .time-slot-btn:hover:not(:disabled) {
-            border-color: var(--gold-light);
-            color: #fff;
-        }
-
-        .time-slot-btn.active {
-            background: var(--gold-primary);
-            border-color: var(--gold-primary);
-            color: #0b0e14;
-            font-weight: 800;
-        }
-
-        .time-slot-btn:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-            text-decoration: line-through;
-        }
-
-        /* 4. Mimos / Adicionais */
-        .extras-list {
-            display: grid;
-            gap: 10px;
-        }
-
-        .extra-checkbox-label {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-sm);
-            padding: 12px 16px;
-            cursor: pointer;
-            font-size: 0.85rem;
-            transition: border-color 0.2s;
-        }
-
-        .extra-checkbox-label:hover {
-            border-color: var(--gold-dark);
-        }
-
-        .extra-checkbox-label.checked {
-            border-color: var(--gold-primary);
-            background: rgba(197, 160, 89, 0.06);
-        }
-
-        .extra-checkbox-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .extra-checkbox-left input {
-            accent-color: var(--gold-primary);
-            width: 16px;
-            height: 16px;
-        }
-
-        /* Painel Lateral de Resumo / Checkout */
-        .summary-sticky-panel {
-            position: sticky;
-            top: 96px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .summary-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-gold);
-            border-radius: var(--radius-lg);
-            padding: 28px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            box-shadow: var(--shadow-card);
-        }
-
-        .summary-head {
-            border-bottom: 1px solid var(--border-subtle);
-            padding-bottom: 14px;
-        }
-
-        .summary-head h4 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #fff;
-        }
-
-        .summary-head p {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            margin-top: 2px;
-        }
-
-        .summary-details-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            font-size: 0.85rem;
-        }
-
-        .summary-detail-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: var(--text-muted);
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
-            padding-bottom: 8px;
-        }
-
-        .summary-detail-row:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .summary-detail-row strong {
-            color: #fff;
-            font-weight: 600;
-            text-align: right;
-        }
-
-        .form-user-field {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .form-user-field label {
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .form-user-field input {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: var(--radius-sm);
-            padding: 12px 14px;
-            color: #fff;
-            font-size: 0.88rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .form-user-field input:focus {
-            border-color: var(--gold-primary);
-        }
-
-        .summary-total-box {
-            background: rgba(197, 160, 89, 0.08);
-            border: 1px solid var(--border-gold);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .summary-total-box span {
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            font-weight: 600;
-        }
-
-        .summary-total-box b {
-            font-size: 1.35rem;
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--gold-light);
-        }
-
-        .btn-confirm-appointment {
-            background: var(--gold-primary);
-            color: #0b0e14;
-            border: none;
-            padding: 16px;
-            border-radius: var(--radius-md);
-            font-weight: 800;
-            font-size: 0.95rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: all 0.2s;
-        }
-
-        .btn-confirm-appointment:hover:not(:disabled) {
-            background: var(--gold-light);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(197, 160, 89, 0.4);
-        }
-
-        .btn-confirm-appointment:disabled {
-            background: #243048;
-            color: #60718b;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* Comprovante / Modal de Sucesso */
-        .modal-receipt-backdrop {
-            position: fixed;
-            inset: 0;
-            background: rgba(7, 9, 14, 0.85);
-            backdrop-filter: blur(8px);
-            z-index: 200;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
-        }
-
-        .modal-receipt-backdrop.open {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .receipt-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-gold);
-            border-radius: var(--radius-lg);
-            width: min(520px, 100%);
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 32px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            animation: zoom-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        @keyframes zoom-in {
-            from { transform: scale(0.95); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .receipt-icon-success {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: rgba(34, 197, 94, 0.15);
-            border: 1px solid rgba(34, 197, 94, 0.4);
-            color: #4ade80;
-            display: grid;
-            place-items: center;
-            margin: 0 auto;
-        }
-
-        .receipt-header {
-            text-align: center;
-        }
-
-        .receipt-header h3 {
-            font-size: 1.5rem;
-            color: #fff;
-            margin-bottom: 6px;
-        }
-
-        .receipt-header p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .receipt-voucher-ticket {
-            background: #0b0e14;
-            border: 1px dashed var(--gold-primary);
-            border-radius: var(--radius-md);
-            padding: 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            font-size: 0.85rem;
-        }
-
-        .voucher-header-line {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding-bottom: 8px;
-        }
-
-        .voucher-code {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--gold-light);
-            font-weight: 800;
-            font-size: 1.1rem;
-        }
-
-        .receipt-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .btn-action-receipt {
-            padding: 12px 16px;
-            border-radius: var(--radius-sm);
-            font-weight: 700;
-            font-size: 0.85rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            border: none;
-            transition: all 0.2s;
-        }
-
-        .btn-whatsapp-receipt {
-            background: #25d366;
-            color: #052e16;
-        }
-
-        .btn-whatsapp-receipt:hover {
-            background: #20ba59;
-        }
-
-        .btn-calendar-receipt {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            color: #fff;
-        }
-
-        .btn-calendar-receipt:hover {
-            border-color: var(--gold-light);
-        }
-
-        .btn-close-receipt {
-            background: transparent;
-            color: var(--text-dim);
-            font-size: 0.8rem;
-            text-decoration: underline;
-            margin-top: 4px;
-        }
-
-        /* Clube VIP Banner */
-        .vip-club-section {
-            max-width: 1200px;
-            margin: 0 auto 60px;
-            padding: 0 24px;
-        }
-
-        .vip-club-card {
-            background: linear-gradient(135deg, #1c1409 0%, #111622 100%);
-            border: 1px solid var(--border-gold);
-            border-radius: var(--radius-lg);
-            padding: 36px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 24px;
-        }
-
-        .vip-club-info h3 {
-            font-size: 1.4rem;
-            color: var(--gold-light);
-            margin-bottom: 6px;
-        }
-
-        .vip-club-info p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            max-width: 580px;
-        }
-
-        .vip-badge-tag {
-            background: var(--gold-primary);
-            color: #0b0e14;
-            padding: 10px 20px;
-            border-radius: var(--radius-sm);
-            font-weight: 800;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        footer {
-            background: #07090e;
-            border-top: 1px solid var(--border-subtle);
-            padding: 36px 24px;
-            text-align: center;
-            font-size: 0.82rem;
-            color: var(--text-dim);
-        }
-
-        footer strong { color: #fff; }
-
-        @media (max-width: 960px) {
-            .hero-card { grid-template-columns: 1fr; }
-            .booking-flow-section { grid-template-columns: 1fr; }
-            .summary-sticky-panel { position: static; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dom Barbeiro | Cadeira livre agora, sem ligar pra saber — Cuiabá</title>
+<meta name="description" content="Veja qual cadeira está livre antes de sair de casa, marque com o barbeiro que você já conhece e entre na fila quando o horário estiver cheio. Goiabeiras, Cuiabá.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bevan&family=Cabin:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* tirado do que existe dentro de uma barbearia: azulejo de subway,
+     ferro fundido esmaltado da cadeira, couro do assentador de navalha
+     e o vermelho do poste de barbeiro. Sem dourado. */
+  --tile:#e8ece7; --tile-2:#dbe1da; --porcelain:#f8f9f6; --white:#fff;
+  --iron:#171d1b; --iron-2:#232d2a; --iron-3:#33403c;
+  --ink:#141a18; --ink-60:#4d5a56; --ink-40:#7c8985;
+  --rule:#cfd6cf; --rule-2:#b6c0b7;
+  --pole:#b3332b; --pole-dark:#8e2721; --pole-soft:#f7e9e7;
+  --strop:#8a5a3c;
+  --menthol:#2f7a63; --menthol-soft:#e6f1ed;
+  --r:3px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Cabin',system-ui,sans-serif;background:var(--tile);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.55}
+.sign{font-family:'Bevan',Georgia,serif;font-weight:400;letter-spacing:-.005em;line-height:1.05}
+.num{font-variant-numeric:tabular-nums}
+a{color:inherit}
+button,input,select,textarea{font:inherit}
+:focus-visible{outline:2px solid var(--pole);outline-offset:2px}
+table{border-collapse:collapse;width:100%}
+
+/* ── cabeçalho ─────────────────────────── */
+header{position:sticky;top:0;z-index:60;background:rgba(232,236,231,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule-2)}
+.hd{max-width:1200px;margin:0 auto;padding:13px 22px;display:flex;justify-content:space-between;align-items:center;gap:18px}
+.marca{display:flex;align-items:center;gap:12px;text-decoration:none}
+/* o poste: três faixas inclinadas, que é o que a barbearia tem na porta */
+.poste{width:16px;height:42px;border-radius:8px;overflow:hidden;background:repeating-linear-gradient(-38deg,var(--pole) 0 5px,#f4f2ee 5px 10px,#2f4f7a 10px 15px,#f4f2ee 15px 20px);border:1px solid var(--rule-2);flex-shrink:0}
+.marca h1{font-size:21px}
+.marca .sub{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-40);font-weight:600;margin-top:3px}
+.hd-nav{display:flex;gap:22px;align-items:center}
+.hd-nav a{font-size:14px;color:var(--ink-60);text-decoration:none;font-weight:600}
+.hd-nav a:hover{color:var(--pole)}
+.hd-cta{background:var(--pole);color:#fff;border:none;border-radius:var(--r);padding:11px 18px;font-size:14px;font-weight:700;cursor:pointer;text-decoration:none}
+.hd-cta:hover{background:var(--pole-dark)}
+
+/* ── abertura: a tese à esquerda, o quadro à direita ── */
+.abre{max-width:1200px;margin:0 auto;padding:44px 22px 30px;display:grid;grid-template-columns:.85fr 1.15fr;gap:46px;align-items:start}
+.abre h2{font-size:clamp(30px,4.2vw,46px);max-width:14ch}
+.abre h2 em{font-style:normal;color:var(--pole)}
+.abre>div>p{color:var(--ink-60);font-size:16px;margin-top:18px;max-width:44ch}
+.abre-lista{margin-top:24px;border-top:1px solid var(--rule-2)}
+.abre-lista div{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--rule);font-size:14px;color:var(--ink-60);line-height:1.5}
+.abre-lista b{color:var(--ink);font-weight:700;white-space:nowrap}
+
+/* ── o quadro das cadeiras: o elemento da casa ── */
+.quadro{background:var(--iron);border-radius:var(--r);padding:20px;box-shadow:0 14px 40px rgba(20,26,24,.22)}
+.quadro-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-bottom:14px;border-bottom:1px solid var(--iron-3);margin-bottom:16px}
+.quadro-top h3{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#8fa39d;font-weight:700}
+.quadro-top .agora{font-size:12.5px;color:#c3d2ce}
+.quadro-top .agora b{color:#fff}
+.cadeiras{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.cadeira{background:var(--iron-2);border:1px solid var(--iron-3);border-radius:var(--r);padding:14px;text-align:left;width:100%;cursor:default;color:#e6ece9;position:relative;overflow:hidden}
+.cadeira.livre{cursor:pointer;border-color:var(--menthol)}
+.cadeira.livre:hover{background:#2a3a35}
+.cadeira-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:9px}
+.cadeira-n{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#7d918c;font-weight:700}
+.cadeira-nome{font-size:16px;font-weight:700;margin-top:2px}
+.cadeira-nivel{font-size:11px;color:#7d918c}
+.selo{font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;padding:4px 8px;border-radius:var(--r);white-space:nowrap}
+.selo.ocupada{background:rgba(179,51,43,.2);color:#ff9d94}
+.selo.livre{background:rgba(47,122,99,.22);color:#7fd9bd}
+.selo.fecha{background:rgba(124,137,133,.18);color:#a9b8b4}
+.cadeira-o{font-size:12.5px;color:#a9b8b4;line-height:1.45}
+.cadeira-o b{color:#e6ece9}
+.barra{height:4px;background:var(--iron-3);border-radius:2px;overflow:hidden;margin-top:10px}
+.barra i{display:block;height:100%;background:var(--pole);transition:width 1s linear}
+.cadeira.livre .barra i{background:var(--menthol)}
+.cadeira-cta{display:block;font-size:12px;font-weight:700;color:#7fd9bd;margin-top:9px}
+.quadro-pe{margin-top:14px;padding-top:12px;border-top:1px solid var(--iron-3);font-size:11.5px;color:#7d918c;line-height:1.5}
+
+/* ── vagas relâmpago ───────────────────── */
+.relampago{max-width:1200px;margin:12px auto 0;padding:0 22px}
+.relampago-in{background:var(--porcelain);border:1px solid var(--rule-2);border-left:3px solid var(--pole);border-radius:var(--r);padding:18px 20px}
+.relampago-in h3{font-size:17px;margin-bottom:5px}
+.relampago-in>p{font-size:13.5px;color:var(--ink-60);max-width:64ch;line-height:1.55}
+.vagas{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+.vaga{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:11px 14px;cursor:pointer;text-align:left;min-width:150px}
+.vaga:hover{border-color:var(--pole)}
+.vaga .h{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.vaga .q{font-size:12px;color:var(--ink-60);margin-top:2px}
+.vaga .p{font-size:12.5px;margin-top:7px;font-weight:700;color:var(--pole)}
+.vaga .p s{color:var(--ink-40);font-weight:400;margin-right:6px}
+.relampago-vazio{font-size:13.5px;color:var(--ink-40);margin-top:14px}
+
+/* ── seções ────────────────────────────── */
+.sec{max-width:1200px;margin:0 auto;padding:46px 22px 0}
+.sec-cab{max-width:62ch;margin-bottom:24px}
+.sec-cab .olho{display:block;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--pole);font-weight:700;margin-bottom:11px}
+.sec-cab h3{font-size:clamp(23px,3vw,31px)}
+.sec-cab p{color:var(--ink-60);font-size:15px;margin-top:11px}
+
+/* ── agendamento ───────────────────────── */
+.marcar{background:var(--white);border:1px solid var(--rule-2);border-radius:var(--r);overflow:hidden}
+.marcar-corpo{display:grid;grid-template-columns:1fr 348px}
+.passos{padding:24px 26px;border-right:1px solid var(--rule)}
+.painel{padding:24px;background:var(--porcelain)}
+
+.bloco{padding-bottom:22px;margin-bottom:22px;border-bottom:1px solid var(--rule)}
+.bloco:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.bloco-t{display:flex;align-items:baseline;gap:11px;margin-bottom:14px}
+.bloco-t span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-40);font-weight:700}
+.bloco-t h4{font-size:17px}
+.bloco-t em{font-style:normal;font-size:12.5px;color:var(--pole);font-weight:600;margin-left:auto;white-space:nowrap}
+
+/* reconhecer quem já é cliente */
+.conheco{display:flex;gap:9px;align-items:flex-end;flex-wrap:wrap}
+.conheco .campo{flex:1;min-width:190px}
+.conheco button{background:var(--iron);color:var(--porcelain);border:none;border-radius:var(--r);padding:12px 17px;font-size:13.5px;font-weight:700;cursor:pointer;height:44px}
+.conheco button:hover{background:var(--iron-2)}
+.ponto{margin-top:13px;background:var(--menthol-soft);border-left:2px solid var(--menthol);padding:13px 15px;font-size:13.5px;color:#1d4d3f;line-height:1.6}
+.ponto b{font-weight:700}
+.ponto.atrasado{background:var(--pole-soft);border-left-color:var(--pole);color:#6d221c}
+.ponto small{display:block;margin-top:6px;font-size:12px;opacity:.85}
+
+/* o jeito de procurar: por horário ou por barbeiro */
+.modo{display:flex;border:1px solid var(--rule-2);border-radius:var(--r);overflow:hidden;margin-bottom:16px}
+.modo button{flex:1;background:var(--porcelain);border:none;padding:12px 10px;font-size:13.5px;font-weight:600;color:var(--ink-60);cursor:pointer;text-align:left;padding-left:15px}
+.modo button+button{border-left:1px solid var(--rule-2)}
+.modo button:hover{background:var(--tile-2)}
+.modo button[aria-pressed="true"]{background:var(--iron);color:var(--porcelain)}
+.modo button small{display:block;font-size:11.5px;font-weight:400;opacity:.7;margin-top:2px}
+
+.opcoes{display:grid;gap:7px}
+.opcao{display:flex;gap:12px;align-items:flex-start;background:var(--porcelain);border:1px solid var(--rule);border-radius:var(--r);padding:13px 14px;cursor:pointer;text-align:left;width:100%}
+.opcao:hover{border-color:var(--rule-2)}
+.opcao[aria-pressed="true"]{border-color:var(--pole);box-shadow:inset 0 0 0 1px var(--pole);background:var(--white)}
+.opcao b{display:block;font-size:14px;font-weight:700}
+.opcao small{display:block;font-size:12.5px;color:var(--ink-60);line-height:1.45;margin-top:3px}
+.opcao .lado{margin-left:auto;text-align:right;white-space:nowrap;padding-left:10px}
+.opcao .preco{font-size:15px;font-weight:700}
+.opcao .dur{display:block;font-size:11.5px;color:var(--ink-40);margin-top:2px}
+.opcao .foto{width:44px;height:44px;border-radius:50%;object-fit:cover;background:var(--tile-2);flex-shrink:0}
+
+.dias{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:14px;scrollbar-width:none}
+.dias::-webkit-scrollbar{display:none}
+.dia{flex:0 0 62px;background:var(--porcelain);border:1px solid var(--rule);border-radius:var(--r);padding:9px 4px;cursor:pointer;text-align:center}
+.dia:hover:not(:disabled){border-color:var(--rule-2)}
+.dia[aria-pressed="true"]{background:var(--iron);border-color:var(--iron);color:var(--porcelain)}
+.dia:disabled{opacity:.34;cursor:not-allowed}
+.dia .s{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-40);font-weight:700}
+.dia .n{display:block;font-size:19px;font-weight:700;font-variant-numeric:tabular-nums}
+.dia .m{display:block;font-size:10px;color:var(--ink-40)}
+.dia[aria-pressed="true"] .s,.dia[aria-pressed="true"] .m{color:#9fb0ab}
+.dia .pico{display:block;font-size:9px;color:var(--pole);font-weight:700;margin-top:1px}
+.dia[aria-pressed="true"] .pico{color:#ff9d94}
+
+.horas{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:6px}
+.hora{background:var(--porcelain);border:1px solid var(--rule);border-radius:var(--r);padding:10px 4px;font-size:14px;font-weight:600;cursor:pointer;font-variant-numeric:tabular-nums}
+.hora:hover:not(:disabled){border-color:var(--rule-2)}
+.hora[aria-pressed="true"]{background:var(--pole);border-color:var(--pole);color:#fff}
+.hora.cheia{cursor:pointer;color:var(--ink-40);border-style:dashed;background:none}
+.hora.cheia:hover{border-color:var(--pole);color:var(--pole)}
+.hora small{display:block;font-size:10px;font-weight:400;color:var(--ink-40);margin-top:2px}
+.hora[aria-pressed="true"] small{color:#f3cdc9}
+.horas-vazio{grid-column:1/-1;font-size:13.5px;color:var(--ink-40);padding:6px 0}
+
+.extras{display:grid;gap:6px}
+.extra{display:flex;gap:11px;align-items:flex-start;background:var(--porcelain);border:1px solid var(--rule);border-radius:var(--r);padding:12px 14px;cursor:pointer;font-size:13.5px}
+.extra:hover{border-color:var(--rule-2)}
+.extra:has(input:checked){border-color:var(--pole);background:var(--white)}
+.extra input{accent-color:var(--pole);margin-top:2px;flex-shrink:0}
+.extra b{display:block;font-weight:700}
+.extra small{display:block;font-size:12px;color:var(--ink-60);margin-top:2px;line-height:1.45}
+.extra .v{margin-left:auto;font-weight:700;white-space:nowrap;padding-left:10px}
+
+.campo label{display:block;font-size:12.5px;font-weight:700;color:var(--ink-60);margin-bottom:5px}
+.campo input,.campo select{width:100%;background:var(--white);border:1px solid var(--rule-2);border-radius:var(--r);padding:12px 13px;font-size:14px;color:var(--ink);height:44px}
+.campo input::placeholder{color:var(--ink-40)}
+.campo input:focus,.campo select:focus{border-color:var(--pole);outline:none}
+.campos-2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+
+/* painel lateral: a comanda */
+.comanda-t{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-40);font-weight:700;padding-bottom:11px;border-bottom:1px solid var(--rule-2);margin-bottom:4px}
+.linha{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px solid var(--rule);font-size:13.5px;color:var(--ink-60)}
+.linha b{color:var(--ink);font-weight:700;text-align:right}
+.linha.somatoria{border-bottom:none;border-top:2px solid var(--iron);margin-top:8px;padding-top:13px;font-size:15px;color:var(--ink);font-weight:700}
+.linha.somatoria b{font-size:23px;letter-spacing:-.02em}
+.linha.desc b{color:var(--menthol)}
+.sinal{margin-top:14px;background:var(--pole-soft);border:1px solid #e8cfcc;border-radius:var(--r);padding:14px}
+.sinal h5{font-size:12.5px;font-weight:700;color:#6d221c;margin-bottom:6px}
+.sinal p{font-size:12px;color:#7d3a33;line-height:1.55}
+.sinal code{display:block;background:var(--white);border:1px solid #e8cfcc;border-radius:var(--r);padding:9px;font-family:ui-monospace,monospace;font-size:10.5px;color:var(--ink-60);word-break:break-all;max-height:66px;overflow:auto;margin-top:9px;line-height:1.45}
+.sinal button{width:100%;margin-top:8px;background:var(--white);border:1px solid #e8cfcc;color:#6d221c;border-radius:var(--r);padding:10px;font-size:12.5px;font-weight:700;cursor:pointer}
+.sinal button:hover{background:var(--pole);border-color:var(--pole);color:#fff}
+.fechar{width:100%;margin-top:16px;background:var(--pole);color:#fff;border:none;border-radius:var(--r);padding:15px;font-size:15px;font-weight:700;cursor:pointer}
+.fechar:hover:not(:disabled){background:var(--pole-dark)}
+.fechar:disabled{background:var(--tile-2);color:var(--ink-40);cursor:not-allowed}
+.recado{font-size:12px;color:var(--ink-40);text-align:center;margin-top:9px;min-height:17px;line-height:1.5}
+
+/* ── clube ─────────────────────────────── */
+.clube{display:grid;grid-template-columns:1.1fr .9fr;gap:0;background:var(--iron);border-radius:var(--r);overflow:hidden;color:#e6ece9}
+.clube-txt{padding:30px}
+.clube-txt h3{font-size:26px;color:#fff;margin-bottom:11px}
+.clube-txt>p{font-size:14.5px;color:#a9b8b4;line-height:1.65;max-width:46ch}
+.clube-itens{margin-top:20px;border-top:1px solid var(--iron-3)}
+.clube-itens div{display:flex;gap:11px;padding:11px 0;border-bottom:1px solid var(--iron-3);font-size:13.5px;color:#a9b8b4;line-height:1.5}
+.clube-itens b{color:#fff;white-space:nowrap;font-weight:700}
+.clube-conta{padding:30px;background:var(--iron-2);border-left:1px solid var(--iron-3)}
+.clube-conta h4{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8fa39d;font-weight:700;margin-bottom:16px}
+.clube-ctrl{margin-bottom:18px}
+.clube-ctrl .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px;font-size:13.5px;color:#c3d2ce}
+.clube-ctrl .top b{color:#fff;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:3px;border-radius:2px;background:var(--iron-3);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:#fff;border:3px solid var(--pole);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:#fff;border:3px solid var(--pole);cursor:pointer}
+.clube-res{border-top:1px solid var(--iron-3);padding-top:6px}
+.clube-linha{display:flex;justify-content:space-between;gap:12px;padding:8px 0;font-size:13px;color:#a9b8b4}
+.clube-linha b{color:#fff;font-variant-numeric:tabular-nums}
+.clube-veredito{margin-top:12px;padding:13px 15px;border-radius:var(--r);font-size:13.5px;line-height:1.55}
+.clube-veredito.vale{background:rgba(47,122,99,.18);color:#8fe0c4}
+.clube-veredito.nao{background:rgba(124,137,133,.16);color:#b8c5c1}
+.clube-veredito b{font-weight:700}
+
+/* ── apresentação pro dono ─────────────── */
+.dono{background:var(--porcelain);border-top:1px solid var(--rule-2);margin-top:56px;padding:52px 0 56px}
+.dono-in{max-width:1200px;margin:0 auto;padding:0 22px}
+.dono-abre{display:grid;grid-template-columns:1fr 1fr;gap:46px;align-items:start;margin-bottom:36px}
+.dono-abre h3{font-size:clamp(24px,3.2vw,34px);max-width:16ch}
+.dono-abre h3 em{font-style:normal;color:var(--pole)}
+.dono-abre>div>p{color:var(--ink-60);font-size:15px;margin-top:16px;line-height:1.7}
+.dono-abre>div>p+p{margin-top:12px}
+
+.conta-cx{background:var(--white);border:1px solid var(--rule-2);border-radius:var(--r);padding:22px 24px}
+.conta-cx h4{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-40);font-weight:700;margin-bottom:16px}
+.conta-ctrl{margin-bottom:16px}
+.conta-ctrl .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:7px;font-size:13.5px}
+.conta-ctrl .top b{color:var(--pole);font-weight:700;font-variant-numeric:tabular-nums}
+.conta-cx input[type=range]{background:var(--rule)}
+.perda{margin-top:18px;border-top:1px solid var(--rule-2);padding-top:14px}
+.perda-l{display:flex;justify-content:space-between;gap:12px;padding:7px 0;font-size:13.5px;color:var(--ink-60)}
+.perda-l b{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums}
+.perda-total{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:10px;padding-top:13px;border-top:2px solid var(--iron);font-size:14px;font-weight:700}
+.perda-total b{font-size:27px;color:var(--pole);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.perda-nota{font-size:11.5px;color:var(--ink-40);margin-top:12px;line-height:1.6}
+
+.recursos{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:1px;background:var(--rule-2);border:1px solid var(--rule-2);border-radius:var(--r);overflow:hidden}
+.rec{background:var(--white);padding:22px}
+.rec .marca-n{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--pole);font-weight:700;display:block;margin-bottom:9px}
+.rec h5{font-size:16.5px;margin-bottom:8px}
+.rec p{font-size:13.5px;color:var(--ink-60);line-height:1.6}
+.rec .contra{display:block;margin-top:11px;padding-top:11px;border-top:1px solid var(--rule);font-size:12.5px;color:var(--ink-40);line-height:1.55}
+.rec .contra b{color:var(--ink-60)}
+
+/* ── comprovante ───────────────────────── */
+.veu{position:fixed;inset:0;background:rgba(20,26,24,.66);opacity:0;pointer-events:none;transition:opacity .22s;z-index:90;display:grid;place-items:center;padding:20px;overflow-y:auto}
+.veu.on{opacity:1;pointer-events:auto}
+.comprovante{width:min(500px,100%);background:var(--porcelain);border-radius:var(--r);transform:translateY(12px);transition:transform .22s;max-height:92vh;overflow-y:auto}
+.veu.on .comprovante{transform:none}
+.comp-topo{background:var(--iron);color:#e6ece9;padding:24px;text-align:center}
+.comp-topo i{width:48px;height:48px;border-radius:50%;background:rgba(47,122,99,.2);border:1px solid rgba(47,122,99,.45);color:#7fd9bd;display:grid;place-items:center;margin:0 auto 14px}
+.comp-topo h3{font-size:22px;color:#fff}
+.comp-topo p{font-size:13.5px;color:#a9b8b4;margin-top:8px;line-height:1.6;max-width:40ch;margin-inline:auto}
+.ficha{padding:22px 24px}
+.ficha-cod{display:flex;justify-content:space-between;align-items:center;gap:14px;background:var(--white);border:1px solid var(--rule-2);border-radius:var(--r);padding:13px 16px;margin-bottom:16px}
+.ficha-cod span{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-40);font-weight:700}
+.ficha-cod b{font-size:21px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.ficha-l{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px solid var(--rule);font-size:13.5px;color:var(--ink-60)}
+.ficha-l:last-of-type{border-bottom:none}
+.ficha-l b{color:var(--ink);font-weight:700;text-align:right}
+.regra{margin-top:16px;background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:14px 16px}
+.regra b{display:block;font-size:12.5px;font-weight:700;margin-bottom:7px}
+.regra ul{margin:0;padding-left:17px;font-size:12.5px;color:var(--ink-60);line-height:1.75}
+.canais{padding:0 24px 24px;display:grid;gap:8px}
+.canal{display:flex;align-items:center;gap:12px;background:var(--white);border:1px solid var(--rule-2);border-radius:var(--r);padding:13px 15px;cursor:pointer;text-decoration:none;color:var(--ink);font-size:13.5px;font-weight:700;text-align:left;width:100%}
+.canal:hover{border-color:var(--iron)}
+.canal small{display:block;font-weight:400;color:var(--ink-60);font-size:12px;margin-top:2px;line-height:1.45}
+.canal i{width:32px;height:32px;border-radius:var(--r);background:var(--tile);color:var(--ink-60);display:grid;place-items:center;flex-shrink:0}
+.canal.wa i{background:var(--menthol-soft);color:var(--menthol)}
+.de-novo{background:none;border:none;color:var(--ink-40);font-size:12.5px;text-decoration:underline;text-underline-offset:4px;cursor:pointer;width:100%;padding:4px}
+
+footer{background:var(--iron);color:#8fa39d;padding:32px 22px;margin-top:0}
+.pe{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-size:12.5px;line-height:1.8}
+footer b{color:#e6ece9}
+.aviso{position:fixed;left:50%;bottom:24px;transform:translate(-50%,180%);background:var(--iron);color:var(--porcelain);padding:13px 21px;border-radius:var(--r);font-size:13.5px;font-weight:700;z-index:120;transition:transform .28s ease;border-left:3px solid var(--menthol)}
+.aviso.on{transform:translate(-50%,0)}
+
+@media (max-width:980px){
+  .abre{grid-template-columns:1fr;gap:32px}
+  .marcar-corpo{grid-template-columns:1fr}
+  .passos{border-right:none;border-bottom:1px solid var(--rule)}
+  .clube{grid-template-columns:1fr}
+  .clube-conta{border-left:none;border-top:1px solid var(--iron-3)}
+  .dono-abre{grid-template-columns:1fr;gap:28px}
+  .hd-nav{display:none}
+}
+@media (max-width:560px){
+  .cadeiras{grid-template-columns:1fr}
+  .campos-2{grid-template-columns:1fr}
+  .modo{flex-direction:column}
+  .modo button+button{border-left:none;border-top:1px solid var(--rule-2)}
+}
+@media print{
+  header,.abre,.relampago,.sec,.dono,.canais,.de-novo,footer,.aviso{display:none!important}
+  .veu{position:static;opacity:1;background:none;padding:0;display:block}
+  .comprovante{width:100%;max-height:none;transform:none}
+  .comp-topo{background:#eee;color:#000}
+  .comp-topo h3,.comp-topo p{color:#000}
+  body{background:#fff}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+</style>
 </head>
 <body>
 
-    <!-- Faixa Topo -->
-    <div class="top-info-strip">
-        <span>📍 Av. Senador Metello, 850 · Bairro Goiabeiras · Cuiabá - MT</span>
-        <span class="live-status-pill"><i></i> Barba & Chopp Lounge aberto até 21h</span>
-        <span>Tel / WhatsApp: <b>(65) 3624-7700</b></span>
+<header>
+  <div class="hd">
+    <a href="#" class="marca">
+      <span class="poste" aria-hidden="true"></span>
+      <span><span class="sign" style="font-size:21px">Dom Barbeiro</span><span class="sub">Goiabeiras · Cuiabá</span></span>
+    </a>
+    <nav class="hd-nav">
+      <a href="#quadro">Cadeiras agora</a>
+      <a href="#marcar">Marcar horário</a>
+      <a href="#clube">Clube</a>
+      <a href="#dono">É dono de barbearia?</a>
+    </nav>
+    <a href="#marcar" class="hd-cta">Marcar horário</a>
+  </div>
+</header>
+
+<section class="abre" id="quadro">
+  <div>
+    <h2 class="sign">a cadeira que está livre <em>agora</em>, sem ligar pra saber</h2>
+    <p>O quadro ao lado é o mesmo que fica na parede da loja. Se tem cadeira verde, é sentar. Se está tudo ocupado, você vê quanto falta pra vagar — e decide se sai de casa ou não.</p>
+    <div class="abre-lista">
+      <div><b>Sem espera cega.</b><span>Você chega sabendo o tempo, não descobrindo na porta.</span></div>
+      <div><b>Barbeiro é escolha.</b><span>Quem já tem o seu marca com ele; quem não liga marca pelo horário.</span></div>
+      <div><b>Horário cheio tem fila.</b><span>Se alguém desmarcar, o primeiro da fila é avisado antes de virar vaga pública.</span></div>
+    </div>
+  </div>
+
+  <div class="quadro">
+    <div class="quadro-top">
+      <h3>Quadro das cadeiras</h3>
+      <div class="agora"><b id="livresAgora">—</b> de 4 livres · <b id="relogio">—</b></div>
+    </div>
+    <div class="cadeiras" id="cadeiras"></div>
+    <p class="quadro-pe" id="quadroPe">—</p>
+  </div>
+</section>
+
+<section class="relampago">
+  <div class="relampago-in">
+    <h3 class="sign">Vaga relâmpago</h3>
+    <p>Cadeira parada não rende. Quando abre um buraco nas próximas duas horas, o horário sai com desconto até alguém sentar — quem estiver perto aproveita, e o barbeiro não fica de braço cruzado.</p>
+    <div class="vagas" id="vagas"></div>
+  </div>
+</section>
+
+<section class="sec" id="marcar">
+  <div class="sec-cab">
+    <span class="olho">Marcar horário</span>
+    <h3 class="sign">Duas formas de achar: pelo relógio ou pelo barbeiro</h3>
+    <p>A maioria dos sistemas obriga a escolher o profissional primeiro e só depois mostra o que sobrou. Aqui você decide o que é inegociável — o horário ou a mão de quem corta.</p>
+  </div>
+
+  <div class="marcar" id="cartaoMarcar">
+    <div class="marcar-corpo">
+      <div class="passos">
+
+        <div class="bloco">
+          <div class="bloco-t"><span>Antes de começar</span><h4>Já cortou aqui?</h4></div>
+          <div class="conheco">
+            <div class="campo">
+              <label for="fone">Seu telefone</label>
+              <input type="tel" id="fone" placeholder="(65) 90000-0000" inputmode="tel">
+            </div>
+            <button onclick="reconhecer()">Buscar meu histórico</button>
+          </div>
+          <div id="pontoCorte"></div>
+        </div>
+
+        <div class="bloco">
+          <div class="bloco-t"><span>Como procurar</span><h4>O que não pode mudar</h4></div>
+          <div class="modo" id="modo" role="group" aria-label="Modo de busca"></div>
+          <div id="ordemBusca"></div>
+        </div>
+
+        <div class="bloco">
+          <div class="bloco-t"><span>Serviço</span><h4>O que vai fazer</h4></div>
+          <div class="opcoes" id="servicos" role="group" aria-label="Serviços"></div>
+        </div>
+
+        <div class="bloco">
+          <div class="bloco-t"><span>Adicionais</span><h4>Quer somar alguma coisa</h4><em>opcional</em></div>
+          <div class="extras" id="extras"></div>
+        </div>
+
+        <div class="bloco">
+          <div class="bloco-t"><span>Seus dados</span><h4>Pra confirmar</h4></div>
+          <div class="campos-2">
+            <div class="campo"><label for="nome">Nome</label><input type="text" id="nome" placeholder="Como te chamam"></div>
+            <div class="campo"><label for="fone2">Telefone</label><input type="tel" id="fone2" placeholder="(65) 90000-0000" inputmode="tel"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="painel">
+        <div class="comanda-t">Sua comanda</div>
+        <div id="comanda"></div>
+        <div id="areaSinal"></div>
+        <button class="fechar" id="btnFechar" onclick="fecharAgenda()" disabled>Confirmar horário</button>
+        <p class="recado" id="recado">Escolha o serviço, o dia e a hora.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="clube">
+  <div class="sec-cab">
+    <span class="olho">Clube da casa</span>
+    <h3 class="sign">Mensalidade só vale se você vem mesmo</h3>
+    <p>Em vez de prometer que compensa, a conta abaixo mostra a partir de quantas visitas o clube fica mais barato que pagar avulso — com os seus números, não com os nossos.</p>
+  </div>
+
+  <div class="clube">
+    <div class="clube-txt">
+      <h3 class="sign">Clube Dom Barbeiro</h3>
+      <p>Uma mensalidade, corte e barba sem limite de quantidade, e a agenda abre 48 horas antes pra quem é do clube — que é o que resolve sábado à tarde.</p>
+      <div class="clube-itens">
+        <div><b>R$ 189/mês</b><span>Corte e barba à vontade, com qualquer barbeiro da casa.</span></div>
+        <div><b>48 h antes</b><span>A agenda de sábado abre pro clube antes de abrir pro público.</span></div>
+        <div><b>15% off</b><span>Em pomada, óleo e navalha vendidos no balcão.</span></div>
+        <div><b>Sem fidelidade</b><span>Cancela pelo mesmo lugar que assinou, sem multa e sem ligar.</span></div>
+      </div>
+    </div>
+    <div class="clube-conta">
+      <h4>Faz a conta com o seu hábito</h4>
+      <div class="clube-ctrl">
+        <div class="top"><span>Cortes por mês</span><b id="vCortes">2</b></div>
+        <input type="range" id="cortes" min="0" max="6" value="2" step="1">
+      </div>
+      <div class="clube-ctrl">
+        <div class="top"><span>Barbas por mês</span><b id="vBarbas">2</b></div>
+        <input type="range" id="barbas" min="0" max="8" value="2" step="1">
+      </div>
+      <div class="clube-res">
+        <div class="clube-linha"><span>Pagando avulso</span><b id="avulso">—</b></div>
+        <div class="clube-linha"><span>No clube</span><b>R$ 189,00</b></div>
+        <div class="clube-linha"><span>Diferença no mês</span><b id="diferenca">—</b></div>
+      </div>
+      <div class="clube-veredito" id="veredito">—</div>
+    </div>
+  </div>
+</section>
+
+<section class="dono" id="dono">
+  <div class="dono-in">
+    <div class="dono-abre">
+      <div>
+        <span class="olho">Para quem é dono da barbearia</span>
+        <h3 class="sign">O prejuízo não é o cliente que reclama. É a <em>cadeira parada</em>.</h3>
+        <p>Barbearia não perde dinheiro em corte mal feito — perde no buraco de 40 minutos entre um cliente e outro, no cara que marcou sábado e não apareceu, e no horário que ficou vago porque ninguém ficou sabendo que vagou.</p>
+        <p>Esse é o mesmo sistema que você está usando aí em cima, do lado do cliente. Mexa nos números ao lado com a realidade da sua loja e veja o tamanho do buraco.</p>
+      </div>
+
+      <div class="conta-cx">
+        <h4>Quanto a cadeira parada custa por mês</h4>
+        <div class="conta-ctrl">
+          <div class="top"><span>Cadeiras na loja</span><b id="vCadeiras">4</b></div>
+          <input type="range" id="qCadeiras" min="1" max="12" value="4" step="1">
+        </div>
+        <div class="conta-ctrl">
+          <div class="top"><span>Ticket médio</span><b id="vTicket">R$ 75</b></div>
+          <input type="range" id="qTicket" min="35" max="220" value="75" step="5">
+        </div>
+        <div class="conta-ctrl">
+          <div class="top"><span>Faltas por semana (no-show)</span><b id="vFaltas">7</b></div>
+          <input type="range" id="qFaltas" min="0" max="40" value="7" step="1">
+        </div>
+        <div class="conta-ctrl">
+          <div class="top"><span>Horas ociosas por cadeira, por dia</span><b id="vOcio">1,5 h</b></div>
+          <input type="range" id="qOcio" min="0" max="40" value="15" step="1">
+        </div>
+
+        <div class="perda">
+          <div class="perda-l"><span>Faltas não recuperadas</span><b id="pFalta">—</b></div>
+          <div class="perda-l"><span>Buraco entre atendimentos</span><b id="pOcio">—</b></div>
+          <div class="perda-total"><span>Deixa de entrar todo mês</span><b id="pTotal">—</b></div>
+          <p class="perda-nota" id="pNota">—</p>
+        </div>
+      </div>
     </div>
 
-    <!-- Cabeçalho -->
-    <header>
-        <div class="header-inner">
-            <a href="#" class="brand-logo">
-                <div class="brand-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m14 4 6 6-6 6-6-6 6-6Z"/><path d="M4 14v4a2 2 0 0 0 2 2h4"/><path d="M20 14v4a2 2 0 0 1-2 2h-4"/></svg>
-                </div>
-                <div class="brand-title">
-                    <h1 class="serif">Dom Barbeiro</h1>
-                    <span>Clube & Barboterapia Cuiabá</span>
-                </div>
-            </a>
+    <div class="recursos" id="recursos"></div>
+  </div>
+</section>
 
-            <div class="header-actions">
-                <a href="#clube-vip" class="header-vip-link">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 6-10 12L2 9l4-6Z"/></svg>
-                    <span>Clube VIP por Assinatura</span>
-                </a>
-                <a href="#agendamento" class="btn-schedule-nav">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                    <span>Agendar Horário</span>
-                </a>
-            </div>
-        </div>
-    </header>
+<footer>
+  <div class="pe">
+    <div><b>Dom Barbeiro &amp; Clube de Cavalheiros Ltda</b> · CNPJ 38.910.482/0001-90<br>Av. Senador Metello, 850 · Goiabeiras, Cuiabá – MT · (65) 3624-7700<br>Ter a sáb, 08h30 às 21h · Domingo e segunda fechado</div>
+    <div>Demonstração funcional · DevStudio<br>Agenda, preços e movimento das cadeiras são ilustrativos</div>
+  </div>
+</footer>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero-banner">
-            <div class="hero-card">
-                <div>
-                    <span class="hero-tag">Tradição, Visagismo & Toalha Quente</span>
-                    <h2 class="serif">Mais que um corte, seu <em>ritual de cuidado</em> masculino.</h2>
-                    <p>Ambiente climatizado exclusivo, navalha esterilizada, produtos premium para barba e cabelo e aquele chopp artesanal cortesia enquanto você relaxa.</p>
-                    
-                    <div class="amenities-list">
-                        <span class="amenity-chip">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                            Chopp Artesanal Cortesia
-                        </span>
-                        <span class="amenity-chip">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                            Tolerância e Pontualidade
-                        </span>
-                        <span class="amenity-chip">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-                            Barboterapia com Massagem
-                        </span>
-                    </div>
-                </div>
+<div class="veu" id="veu">
+  <div class="comprovante" id="comprovante" role="dialog" aria-modal="true" aria-labelledby="compTitulo"></div>
+</div>
 
-                <div class="hero-side-stats">
-                    <h4>Informações da Unidade</h4>
-                    <div class="stat-line">
-                        <span>Endereço:</span>
-                        <strong>Goiabeiras, Cuiabá</strong>
-                    </div>
-                    <div class="stat-line">
-                        <span>Horário Hoje:</span>
-                        <strong>08:30 às 21:00</strong>
-                    </div>
-                    <div class="stat-line">
-                        <span>Estacionamento:</span>
-                        <strong style="color: #4ade80;">Valet Gratuito no Local</strong>
-                    </div>
-                    <div class="stat-line">
-                        <span>Espaço Lounge:</span>
-                        <strong>Mesa de Sinuca & Café</strong>
-                    </div>
-                </div>
-            </div>
-        </section>
+<div class="aviso" id="aviso" role="status" aria-live="polite"></div>
 
-        <!-- Fluxo de Agendamento -->
-        <section class="booking-flow-section" id="agendamento">
-            <div class="step-container-card">
+<script>
+/* ════ constantes do negócio ═══════════════════════════════════════
+   ponytail: é o que o dono ajusta. Preço, política de sinal e as
+   taxas de recuperação da calculadora saem todos daqui. */
+const ABRE=8.5, FECHA=21;         /* horário da loja, em horas decimais */
+const PASSO=30;                   /* grade da agenda, em minutos */
+const DESC_RELAMPAGO=0.25;        /* desconto da cadeira ociosa */
+const SINAL=20;                   /* sinal em horário de pico, abatido do total */
+const HORAS_CANCELA=12;           /* prazo pra cancelar sem perder o sinal */
+const MENSALIDADE=189;
 
-                <!-- 1. Escolha do Serviço -->
-                <div>
-                    <div class="step-header">
-                        <div class="step-number">1</div>
-                        <div>
-                            <h3>Escolha o Serviço</h3>
-                            <p>Selecione o procedimento desejado para hoje</p>
-                        </div>
-                    </div>
+/* taxas da calculadora do dono — números de mercado, não promessa */
+const REC_FILA=0.60;    /* da fila de espera, quanto vira cadeira ocupada */
+const REC_SINAL=0.70;   /* quanto o sinal derruba do no-show */
+const REC_RELAMPAGO=0.35; /* quanto da ociosidade a vaga relâmpago cobre */
 
-                    <div class="services-grid" id="servicesContainer" style="margin-top: 18px;">
-                        <!-- Injetado por JS -->
-                    </div>
-                </div>
+const BARBEIROS=[
+  {id:'rodrigo',nome:'Rodrigo',nivel:'sênior',ajuste:15,
+   fama:'Fade e navalha. Fila mais longa da casa, e tem gente que só vem com ele.',
+   foto:'https://images.unsplash.com/photo-1503443207922-dff7d543fd0e?w=120&auto=format&fit=crop&q=70'},
+  {id:'ander',nome:'Anderson',nivel:'sênior',ajuste:15,
+   fama:'Barboterapia e toalha quente. Mão pesada em massagem, do jeito que o pessoal gosta.',
+   foto:'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&auto=format&fit=crop&q=70'},
+  {id:'juninho',nome:'Juninho',nivel:'pleno',ajuste:0,
+   fama:'Rápido no social e no pezinho. Bom pra quem tem hora marcada depois.',
+   foto:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&auto=format&fit=crop&q=70'},
+  {id:'kaue',nome:'Kauê',nivel:'iniciante',ajuste:-10,
+   fama:'Formando na cadeira 4, acompanhado pelo Rodrigo. Preço menor porque leva mais tempo.',
+   foto:'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=120&auto=format&fit=crop&q=70'}
+];
 
-                <!-- 2. Escolha do Barbeiro -->
-                <div>
-                    <div class="step-header">
-                        <div class="step-number">2</div>
-                        <div>
-                            <h3>Escolha o Profissional</h3>
-                            <p>Prefere algum barbeiro especialista em seu estilo?</p>
-                        </div>
-                    </div>
+const SERVICOS=[
+  {id:'social',nome:'Corte social na tesoura',base:55,min:40,
+   desc:'Máquina e tesoura, sem desenho. É o corte que a maioria dos escritórios pede.'},
+  {id:'fade',nome:'Fade navalhado',base:70,min:50,
+   desc:'Degradê fechado com acabamento na navalha. Pede retoque a cada 15 dias pra não perder o desenho.'},
+  {id:'barba',nome:'Barba com toalha quente',base:55,min:40,
+   desc:'Toalha quente, óleo, navalha e balm. Não fazemos em pele com corte ou espinha inflamada.'},
+  {id:'combo',nome:'Corte e barba no mesmo dia',base:110,min:80,
+   desc:'Sai R$ 15 mais barato que os dois separados, e você ocupa a cadeira uma vez só.'},
+  {id:'pezinho',nome:'Pezinho e contorno',base:25,min:20,
+   desc:'Só acabamento da nuca e das costeletas, entre um corte e outro.'}
+];
 
-                    <div class="barbers-grid" id="barbersContainer" style="margin-top: 18px;">
-                        <!-- Injetado por JS -->
-                    </div>
-                </div>
+const EXTRAS=[
+  {id:'sobr',nome:'Sobrancelha na navalha',v:25,min:10,d:'Limpeza do contorno, sem tirar o formato natural.'},
+  {id:'hidra',nome:'Hidratação de barba',v:35,min:15,d:'Óleo aquecido e massagem no folículo. Ajuda quem tem falha.'},
+  {id:'pigm',nome:'Pigmentação de falha',v:45,min:20,d:'Disfarça falha na barba por cerca de 5 dias. Sai no banho aos poucos.'},
+  {id:'cerveja',nome:'Chopp artesanal',v:0,min:0,d:'Cortesia da casa. Só não servimos pra quem vai dirigir moto.'}
+];
 
-                <!-- 3. Escolha da Data e Horário -->
-                <div>
-                    <div class="step-header">
-                        <div class="step-number">3</div>
-                        <div>
-                            <h3>Data e Horário</h3>
-                            <p>Selecione o dia e a janela livre na agenda</p>
-                        </div>
-                    </div>
+/* clientes conhecidos — ponytail: no sistema real isso é a base do PDV */
+const CONHECIDOS={
+  '65999001122':{nome:'Wesley',barbeiro:'rodrigo',servico:'fade',intervalo:15,ultimo:19,visitas:31},
+  '65998887766':{nome:'Cristiano',barbeiro:'ander',servico:'combo',intervalo:28,ultimo:24,visitas:12},
+  '65997775544':{nome:'Paulo Sérgio',barbeiro:'juninho',servico:'social',intervalo:30,ultimo:47,visitas:6}
+};
 
-                    <div style="margin-top: 18px;">
-                        <div class="days-slider" id="daysSlider">
-                            <!-- Injetado por JS -->
-                        </div>
+/* movimento das cadeiras — ponytail: no sistema real vem do PDV em tempo real */
+let CADEIRAS=[
+  {n:1,barbeiro:'rodrigo', ocupada:true, servico:'Fade navalhado',       total:50,restam:31,cliente:'W. M.'},
+  {n:2,barbeiro:'ander',   ocupada:true, servico:'Barba com toalha quente',total:40,restam:12,cliente:'C. A.'},
+  {n:3,barbeiro:'juninho', ocupada:false,proximo:'14:30'},
+  {n:4,barbeiro:'kaue',    ocupada:true, servico:'Corte social',          total:40,restam:6, cliente:'R. F.'}
+];
 
-                        <div class="time-slots-grid" id="timeSlotsGrid">
-                            <!-- Injetado por JS -->
-                        </div>
-                    </div>
-                </div>
+const RECURSOS=[
+  {n:'Fila de espera',t:'Ninguém liga pra perguntar se vagou',
+   p:'Horário cheio não vira porta fechada: o cliente entra na fila daquele encaixe. Se alguém desmarca, o primeiro da fila recebe o aviso antes de a vaga virar pública.',
+   c:'<b>O que a maioria faz:</b> mostra "esgotado" e perde o cliente pra barbearia da esquina.'},
+  {n:'Vaga relâmpago',t:'A cadeira ociosa se vende sozinha',
+   p:'Buraco de 40 minutos na agenda vira oferta com desconto, válida só naquela janela. Cadeira parada rende zero — com desconto rende alguma coisa.',
+   c:'<b>O que a maioria faz:</b> deixa o buraco na agenda e o barbeiro no celular.'},
+  {n:'Sinal no pico',t:'Sábado com falta cai de verdade',
+   p:'Horário de pico pede sinal por PIX, abatido do valor final e devolvido em cancelamento com '+HORAS_CANCELA+' h de antecedência. Quem paga R$ '+SINAL+', aparece.',
+   c:'<b>O que a maioria faz:</b> manda lembrete e reza. Falta em sábado é a mais cara do mês.'},
+  {n:'Ponto de corte',t:'O sistema sabe o seu intervalo',
+   p:'Cada cliente tem um ritmo próprio. Quem corta a cada 15 dias recebe o toque no 15º, não num disparo mensal genérico pra base inteira.',
+   c:'<b>O que a maioria faz:</b> promoção em massa no dia 1º, que quem cortou ontem também recebe.'},
+  {n:'Busca invertida',t:'Escolhe o horário ou o barbeiro, não os dois',
+   p:'Quem tem barbeiro fixo marca por ele. Quem só tem uma brecha na sexta marca pelo relógio e pega quem estiver livre. O fluxo se inverte conforme a pessoa.',
+   c:'<b>O que a maioria faz:</b> força escolher o profissional primeiro e depois mostra que ele não tem vaga.'},
+  {n:'Preço por mão',t:'Aprendiz custa menos, e isso está escrito',
+   p:'Sênior, pleno e iniciante têm preços diferentes na mesma tabela. O cliente escolhe sabendo, e o aprendiz enche a cadeira em vez de esperar sobra.',
+   c:'<b>O que a maioria faz:</b> preço único, aprendiz ocioso e cliente reclamando que pagou caro.'}
+];
 
-                <!-- 4. Mimos & Cuidados Opcionais -->
-                <div>
-                    <div class="step-header">
-                        <div class="step-number">4</div>
-                        <div>
-                            <h3>Adicionais & Experiência</h3>
-                            <p>Deseja incluir algum cuidado extra no seu atendimento?</p>
-                        </div>
-                    </div>
+/* ── estado ─────────────────────────────── */
+let modo='horario';               /* horario | barbeiro */
+let sBarbeiro=null, sServico=null, sDia=null, sHora=null, sExtras=[];
+let cliente=null;                 /* quem foi reconhecido pelo telefone */
+let dias=[], ocupados={};
+let relampago=null;               /* vaga com desconto escolhida */
+let filaDe=null;                  /* horário cheio em que entrou na fila */
+const el=id=>document.getElementById(id);
+const brl=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const SEM=['dom','seg','ter','qua','qui','sex','sáb'];
+const MES=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
 
-                    <div class="extras-list" id="extrasContainer" style="margin-top: 18px;">
-                        <!-- Injetado por JS -->
-                    </div>
-                </div>
+/* ── o quadro das cadeiras ──────────────── */
+function barbeiro(id){return BARBEIROS.find(b=>b.id===id)}
+/* o dia de cada um acaba em hora diferente: o aprendiz sai as 18h */
+function agoraDec(){const d=new Date();return d.getHours()+d.getMinutes()/60}
+function encerrou(c){
+  const h=agoraDec();
+  if(h>=FECHA||h<ABRE) return true;
+  if(c.barbeiro==='kaue'&&h>=18) return true;
+  return false;
+}
+function livres(){return CADEIRAS.filter(c=>!c.ocupada&&!encerrou(c)).length}
 
-            </div>
+function pintarQuadro(){
+  const agora=new Date();
+  el('relogio').textContent=agora.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  el('livresAgora').textContent=livres();
 
-            <!-- Painel de Resumo / Checkout -->
-            <div class="summary-sticky-panel">
-                <div class="summary-card">
-                    <div class="summary-head">
-                        <h4>Resumo do Agendamento</h4>
-                        <p>Confira os detalhes antes de confirmar</p>
-                    </div>
+  el('cadeiras').innerHTML=CADEIRAS.map(function(c){
+    const b=barbeiro(c.barbeiro);
+    const fechou=encerrou(c);
+    const selo = fechou ? '<span class="selo fecha">encerrou o dia</span>'
+               : c.ocupada ? '<span class="selo ocupada">ocupada</span>'
+                           : '<span class="selo livre">livre agora</span>';
+    const corpo = fechou
+      ? '<div class="cadeira-o">'+(agoraDec()>=FECHA||agoraDec()<ABRE
+          ?'Casa fechada. Reabre às 08h30.'
+          :'Encerrou o dia às 18h. Volta amanhã às 08h30.')+'</div>'
+      : c.ocupada
+      ? '<div class="cadeira-o"><b>'+c.servico+'</b> · cliente '+c.cliente+'<br>vaga em <b>'+c.restam+' min</b></div>'+
+        '<div class="barra"><i style="width:'+Math.round((1-c.restam/c.total)*100)+'%"></i></div>'
+      : '<div class="cadeira-o">Sem ninguém na cadeira. Próximo marcado só às <b>'+c.proximo+'</b>.</div>'+
+        '<div class="barra"><i style="width:100%"></i></div>'+
+        '<span class="cadeira-cta">Sentar com o '+b.nome+' →</span>';
 
-                    <div class="summary-details-list">
-                        <div class="summary-detail-row">
-                            <span>Serviço:</span>
-                            <strong id="summaryService">—</strong>
-                        </div>
-                        <div class="summary-detail-row">
-                            <span>Duração estimada:</span>
-                            <strong id="summaryDuration">—</strong>
-                        </div>
-                        <div class="summary-detail-row">
-                            <span>Barbeiro:</span>
-                            <strong id="summaryBarber">—</strong>
-                        </div>
-                        <div class="summary-detail-row">
-                            <span>Data e Hora:</span>
-                            <strong id="summaryDateTime" style="color: var(--gold-light);">—</strong>
-                        </div>
-                        <div class="summary-detail-row">
-                            <span>Adicionais:</span>
-                            <strong id="summaryExtras">Nenhum</strong>
-                        </div>
-                    </div>
+    return '<'+(c.ocupada||fechou?'div':'button')+' class="cadeira'+(!c.ocupada&&!fechou?' livre':'')+'"'+
+      (!c.ocupada&&!fechou?' onclick="sentarAgora(\''+c.barbeiro+'\')"':'')+'>'+
+      '<div class="cadeira-top">'+
+        '<div><div class="cadeira-n">Cadeira '+c.n+'</div>'+
+        '<div class="cadeira-nome">'+b.nome+'</div>'+
+        '<div class="cadeira-nivel">'+b.nivel+'</div></div>'+
+        selo+
+      '</div>'+corpo+
+      '</'+(c.ocupada||fechou?'div':'button')+'>';
+  }).join('');
 
-                    <div class="form-user-field">
-                        <label>Seu Nome Completo:</label>
-                        <input type="text" id="clientName" placeholder="Ex: Rodrigo Mendes" oninput="validateBookingForm()">
-                    </div>
+  const n=livres(), prox=proximaVagando();
+  el('quadroPe').textContent = CADEIRAS.every(encerrou)
+    ? 'Casa fechada agora. O quadro volta a se mexer às 08h30 — dá pra marcar mesmo assim, aqui embaixo.'
+    : n===0
+    ? (prox?'Casa cheia. A primeira cadeira vagando é a '+prox.n+', em '+prox.restam+' minutos.'
+           :'Casa cheia no momento.')
+    : n+(n===1?' cadeira livre agora — dá pra chegar e sentar.':' cadeiras livres agora — dá pra chegar e sentar.');
+}
+function proximaVagando(){
+  return CADEIRAS.filter(c=>c.ocupada&&!encerrou(c)).sort((a,b)=>a.restam-b.restam)[0];
+}
+/* ponytail: a contagem é simulada pra demonstrar o quadro vivo.
+   No sistema real o PDV empurra o estado de cada cadeira. */
+function tique(){
+  CADEIRAS.forEach(function(c){
+    if(!c.ocupada||encerrou(c)) return;
+    c.restam--;
+    if(c.restam<=0){c.ocupada=false;c.proximo=proximoHorarioTexto()}
+  });
+  pintarQuadro(); pintarVagas();
+}
+function proximoHorarioTexto(){
+  const d=new Date(Date.now()+90*60000);
+  return String(d.getHours()).padStart(2,'0')+':'+(d.getMinutes()<30?'00':'30');
+}
 
-                    <div class="form-user-field">
-                        <label>WhatsApp para Confirmação:</label>
-                        <input type="tel" id="clientPhone" placeholder="Ex: (65) 99999-8888" oninput="validateBookingForm()">
-                    </div>
+function sentarAgora(idBarbeiro){
+  modo='barbeiro'; sBarbeiro=idBarbeiro; relampago=null; filaDe=null;
+  sDia=0; sHora=null;
+  pintarModo(); pintarOrdem(); pintarServicos();
+  el('marcar').scrollIntoView({behavior:'smooth',block:'start'});
+  aviso('Cadeira do '+barbeiro(idBarbeiro).nome+' livre — escolha o serviço');
+}
 
-                    <div class="summary-total-box">
-                        <span>Valor Total:</span>
-                        <b id="summaryTotalPrice">R$ 0,00</b>
-                    </div>
+/* ── vagas relâmpago ────────────────────── */
+/* a lógica é honesta: cadeira livre agora, ou vagando em menos de 2 h,
+   com o preço do serviço mais curto que cabe naquela janela */
+function vagasRelampago(){
+  const out=[];
+  CADEIRAS.forEach(function(c){
+    if(encerrou(c)) return;
+    const emMin = c.ocupada ? c.restam : 0;
+    if(emMin>120) return;
+    const d=new Date(Date.now()+emMin*60000);
+    const hh=String(d.getHours()).padStart(2,'0');
+    const mm=d.getMinutes()<30?'00':'30';
+    out.push({barbeiro:c.barbeiro,cadeira:c.n,emMin:emMin,hora:hh+':'+mm});
+  });
+  return out.sort((a,b)=>a.emMin-b.emMin);
+}
+function pintarVagas(){
+  const v=vagasRelampago();
+  if(!v.length){
+    el('vagas').innerHTML='<p class="relampago-vazio">Nenhuma cadeira vagando nas próximas duas horas. Todo mundo com serviço longo na mão — marque pelo formulário abaixo.</p>';
+    return;
+  }
+  el('vagas').innerHTML=v.map(function(x){
+    const b=barbeiro(x.barbeiro);
+    const cheio=SERVICOS[1].base+b.ajuste;               /* fade navalhado */
+    const comDesc=Math.round(cheio*(1-DESC_RELAMPAGO));
+    return '<button class="vaga" onclick="pegarRelampago(\''+x.barbeiro+'\',\''+x.hora+'\','+comDesc+')">'+
+      '<div class="h num">'+x.hora+'</div>'+
+      '<div class="q">'+b.nome+' · cadeira '+x.cadeira+(x.emMin?' · vaga em '+x.emMin+' min':' · livre agora')+'</div>'+
+      '<div class="p"><s>'+brl(cheio)+'</s>'+brl(comDesc)+'</div></button>';
+  }).join('');
+}
+function pegarRelampago(idBarbeiro,hora,preco){
+  modo='barbeiro'; sBarbeiro=idBarbeiro; sServico='fade'; sDia=0; sHora=hora;
+  relampago={preco:preco,hora:hora}; filaDe=null;
+  pintarModo(); pintarOrdem(); pintarServicos(); pintarComanda();
+  el('marcar').scrollIntoView({behavior:'smooth',block:'start'});
+  aviso('Vaga relâmpago das '+hora+' segurada por 10 minutos');
+}
 
-                    <button class="btn-confirm-appointment" id="btnConfirmBooking" onclick="finishAppointment()" disabled>
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>
-                        <span>Confirmar Agendamento</span>
-                    </button>
-                </div>
-            </div>
-        </section>
+/* ── reconhecer o cliente ───────────────── */
+function soNumeros(s){return String(s).replace(/\D/g,'')}
+function reconhecer(){
+  const f=soNumeros(el('fone').value);
+  if(f.length<10){
+    el('pontoCorte').innerHTML='<div class="ponto atrasado">Faltou número. Digite com o DDD, como <b>65 90000-0000</b>.</div>';
+    return;
+  }
+  const c=CONHECIDOS[f];
+  if(!c){
+    cliente=null;
+    el('pontoCorte').innerHTML='<div class="ponto">Primeira vez aqui, então. Escolha abaixo como prefere procurar — depois da primeira visita o sistema passa a saber o seu intervalo.<small>Telefones de demonstração: 65 99900-1122 · 65 99888-7766 · 65 99777-5544</small></div>';
+    return;
+  }
+  cliente=c;
+  sBarbeiro=c.barbeiro; sServico=c.servico; modo='barbeiro';
+  el('nome').value=c.nome; el('fone2').value=el('fone').value;
 
-        <!-- Clube VIP por Assinatura -->
-        <section class="vip-club-section" id="clube-vip">
-            <div class="vip-club-card">
-                <div class="vip-club-info">
-                    <span class="hero-tag">Exclusividade Dom Barbeiro</span>
-                    <h3 class="serif">Clube de Assinatura Mensal VIP</h3>
-                    <p>Corte o cabelo e faça a barba quantas vezes quiser no mês com horário prioritário, chopp liberado em todas as visitas e 15% de desconto em pomadas e óleos importados.</p>
-                </div>
-                <div class="vip-badge-tag">
-                    A partir de R$ 189/mês
-                </div>
-            </div>
-        </section>
-    </main>
+  const atraso=c.ultimo-c.intervalo;
+  const b=barbeiro(c.barbeiro);
+  el('pontoCorte').innerHTML='<div class="ponto'+(atraso>0?' atrasado':'')+'">'+
+    'Oi, '+c.nome+'. Seu último corte foi há <b>'+c.ultimo+' dias</b> e você costuma voltar a cada <b>'+c.intervalo+'</b>.'+
+    (atraso>0
+      ? ' Está <b>'+atraso+' dia'+(atraso>1?'s':'')+' além do seu ponto</b> — se for fade, já perdeu o desenho.'
+      : ' Ainda dentro do seu ritmo, faltam '+(-atraso)+' dia'+(-atraso===1?'':'s')+'.')+
+    '<small>'+c.visitas+' visitas na casa · último atendimento com o '+b.nome+'. Já deixei ele e o serviço marcados abaixo.</small></div>';
 
-    <!-- Modal de Comprovante de Agendamento -->
-    <div class="modal-receipt-backdrop" id="receiptModal">
-        <div class="receipt-card">
-            <div class="receipt-icon-success">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
-            </div>
+  pintarModo(); pintarOrdem(); pintarServicos(); pintarComanda();
+  aviso('Histórico encontrado — '+c.visitas+' visitas');
+}
 
-            <div class="receipt-header">
-                <h3 class="serif">Horário Confirmado!</h3>
-                <p>Seu agendamento foi registrado com sucesso em nosso sistema.</p>
-            </div>
+/* ── modo de busca ──────────────────────── */
+function pintarModo(){
+  el('modo').innerHTML=
+    '<button aria-pressed="'+(modo==='horario')+'" onclick="setModo(\'horario\')">Tenho hora certa'+
+      '<small>Escolho o horário e pego quem estiver livre</small></button>'+
+    '<button aria-pressed="'+(modo==='barbeiro')+'" onclick="setModo(\'barbeiro\')">Tenho barbeiro certo'+
+      '<small>Escolho a mão e vejo quando ele tem vaga</small></button>';
+}
+function setModo(m){
+  modo=m; sHora=null; relampago=null; filaDe=null;
+  if(m==='horario') sBarbeiro=null;
+  pintarModo(); pintarOrdem(); pintarComanda();
+}
 
-            <div class="receipt-voucher-ticket">
-                <div class="voucher-header-line">
-                    <span style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em;">Voucher de Agendamento</span>
-                    <span class="voucher-code" id="voucherCode">#DB-8492</span>
-                </div>
-                <div>
-                    <small style="color: var(--text-dim); display: block; font-size: 0.72rem;">Cliente:</small>
-                    <strong id="voucherClientName" style="color: #fff; font-size: 0.95rem;">—</strong>
-                </div>
-                <div>
-                    <small style="color: var(--text-dim); display: block; font-size: 0.72rem;">Procedimento & Barbeiro:</small>
-                    <span id="voucherServiceAndBarber" style="color: #d1d9e6;">—</span>
-                </div>
-                <div>
-                    <small style="color: var(--text-dim); display: block; font-size: 0.72rem;">Quando:</small>
-                    <strong id="voucherDateTime" style="color: var(--gold-light); font-size: 0.95rem;">—</strong>
-                </div>
-                <div>
-                    <small style="color: var(--text-dim); display: block; font-size: 0.72rem;">Local:</small>
-                    <span style="color: #9aa7bc;">Dom Barbeiro · Goiabeiras (Cuiabá-MT)</span>
-                </div>
-            </div>
+/* a ordem dos passos muda conforme o modo — é o ponto do recurso */
+function pintarOrdem(){
+  montarDias();
+  el('ordemBusca').innerHTML = modo==='barbeiro'
+    ? '<div style="margin-top:14px"><div class="bloco-t"><span>Passo 1</span><h4>Com quem</h4></div><div class="opcoes" id="barbeiros"></div></div>'+
+      '<div style="margin-top:18px"><div class="bloco-t"><span>Passo 2</span><h4>Quando ele tem vaga</h4></div><div class="dias" id="dias"></div><div class="horas" id="horas"></div></div>'
+    : '<div style="margin-top:14px"><div class="bloco-t"><span>Passo 1</span><h4>Quando</h4></div><div class="dias" id="dias"></div><div class="horas" id="horas"></div></div>'+
+      '<div style="margin-top:18px"><div class="bloco-t"><span>Passo 2</span><h4>Quem estiver livre nessa hora</h4></div><div class="opcoes" id="barbeiros"></div></div>';
+  pintarDias(); pintarHoras(); pintarBarbeiros();
+}
 
-            <div class="receipt-actions">
-                <button class="btn-action-receipt btn-whatsapp-receipt" onclick="sendWhatsAppConfirmation()">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                    <span>Receber Lembrete no WhatsApp</span>
-                </button>
-                <button class="btn-action-receipt btn-calendar-receipt" onclick="downloadIcsInvite()">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"/></svg>
-                    <span>Salvar na Minha Agenda (.ics)</span>
-                </button>
-                <button class="btn-close-receipt" onclick="closeReceiptModal()">Fazer outro agendamento</button>
-            </div>
-        </div>
-    </div>
+/* ── agenda ─────────────────────────────── */
+function montarDias(){
+  if(dias.length) return;
+  const d=new Date(); d.setHours(0,0,0,0);
+  while(dias.length<8){
+    const dow=d.getDay();
+    if(dow!==0&&dow!==1) dias.push({data:new Date(d),sab:dow===6});  /* fecha dom e seg */
+    d.setDate(d.getDate()+1);
+  }
+  /* ponytail: ocupação fixa só pra demonstrar horário cheio e fila */
+  dias.forEach(function(x,i){
+    ocupados[i]={};
+    BARBEIROS.forEach(function(b,j){
+      ocupados[i][b.id] = grade(x.sab).filter(function(h,k){return (i*3+j*5+k)%4===0});
+    });
+  });
+}
+function grade(sab){
+  const out=[], fim=sab?19:FECHA;
+  for(let t=ABRE;t<fim;t+=PASSO/60){
+    const h=Math.floor(t), m=Math.round((t-h)*60);
+    out.push(String(h).padStart(2,'0')+':'+String(m).padStart(2,'0'));
+  }
+  return out;
+}
+function pintarDias(){
+  if(!el('dias')) return;
+  el('dias').innerHTML=dias.map(function(x,i){
+    return '<button class="dia" aria-pressed="'+(sDia===i)+'" onclick="setDia('+i+')">'+
+      '<span class="s">'+SEM[x.data.getDay()]+'</span>'+
+      '<span class="n">'+String(x.data.getDate()).padStart(2,'0')+'</span>'+
+      '<span class="m">'+MES[x.data.getMonth()]+'</span>'+
+      (x.sab?'<span class="pico">pico</span>':'')+'</button>';
+  }).join('');
+}
+function setDia(i){sDia=i;sHora=null;relampago=null;filaDe=null;pintarDias();pintarHoras();pintarBarbeiros();pintarComanda()}
+function setHora(h){sHora=h;relampago=null;filaDe=null;pintarHoras();pintarBarbeiros();pintarComanda()}
 
-    <footer>
-        <p><strong>Dom Barbeiro & Clube de Cavalheiros Ltda</strong> — CNPJ 38.910.482/0001-90</p>
-        <p style="margin-top: 4px;">Av. Senador Metello, 850 · Goiabeiras, Cuiabá - MT · Tel: (65) 3624-7700</p>
-        <p style="margin-top: 6px; color: #404f66;">Demonstração técnica e funcional desenvolvida por DevStudio.</p>
-    </footer>
+function ehPico(){return sDia!==null&&dias[sDia].sab}
 
-    <script>
-        // Dados dos Serviços
-        const servicesData = [
-            {
-                id: "corte",
-                name: "Corte Tradicional / Fade Navalhado",
-                desc: "Visagismo, lavagem especial com massagem capilar e finalização com pomada matte premium.",
-                duration: "45 min",
-                price: 65.00
-            },
-            {
-                id: "barba",
-                name: "Barboterapia na Toalha Quente",
-                desc: "Ritual completo com óleo pré-barba, toalha quente com aroma de eucalipto, navalhete e pós-barba hidratante.",
-                duration: "35 min",
-                price: 55.00
-            },
-            {
-                id: "combo",
-                name: "Combo Dom Barbeiro (Cabelo + Barboterapia)",
-                desc: "A experiência completa da casa com desconto especial, lavagem, sobrancelha e chopp artesanal liberado.",
-                duration: "60 min",
-                price: 105.00
-            },
-            {
-                id: "pigmentacao",
-                name: "Camuflagem de Fios Brancos & Pigmentação",
-                desc: "Disfarce natural de grisalhos na barba ou cabelo com durabilidade de até 15 dias sem manchar a pele.",
-                duration: "30 min",
-                price: 45.00
-            },
-            {
-                id: "detox",
-                name: "Limpeza Facial com Máscara Negra Detox",
-                desc: "Remoção profunda de cravos e impurezas com esfoliação térmica e hidratação facial com carvão ativado.",
-                duration: "25 min",
-                price: 40.00
-            }
-        ];
+/* quem está livre num dia e hora */
+function livresEm(i,h){
+  return BARBEIROS.filter(function(b){return ocupados[i][b.id].indexOf(h)<0});
+}
+function pintarHoras(){
+  if(!el('horas')) return;
+  if(sDia===null){
+    el('horas').innerHTML='<p class="horas-vazio">Escolha o dia acima.</p>';
+    return;
+  }
+  const g=grade(dias[sDia].sab);
+  el('horas').innerHTML=g.map(function(h){
+    const gente = modo==='barbeiro'&&sBarbeiro
+      ? (ocupados[sDia][sBarbeiro].indexOf(h)<0?1:0)
+      : livresEm(sDia,h).length;
+    if(gente===0){
+      return '<button class="hora cheia" onclick="entrarNaFila(\''+h+'\')" aria-label="'+h+' cheio, entrar na fila">'+
+        h+'<small>entrar na fila</small></button>';
+    }
+    return '<button class="hora" aria-pressed="'+(sHora===h)+'" onclick="setHora(\''+h+'\')">'+h+
+      (modo==='horario'?'<small>'+gente+' livre'+(gente>1?'s':'')+'</small>':'')+'</button>';
+  }).join('');
+}
+function pintarBarbeiros(){
+  if(!el('barbeiros')) return;
+  const lista = (modo==='horario'&&sDia!==null&&sHora)
+    ? livresEm(sDia,sHora)
+    : BARBEIROS;
+  if(!lista.length){
+    el('barbeiros').innerHTML='<p class="horas-vazio">Ninguém livre nesse horário. Volte e entre na fila, ou escolha outra hora.</p>';
+    return;
+  }
+  el('barbeiros').innerHTML=lista.map(function(b){
+    const base=sServico?SERVICOS.find(s=>s.id===sServico).base:SERVICOS[1].base;
+    return '<button class="opcao" aria-pressed="'+(sBarbeiro===b.id)+'" onclick="setBarbeiro(\''+b.id+'\')">'+
+      '<img class="foto" src="'+b.foto+'" alt="" loading="lazy">'+
+      '<span><b>'+b.nome+'</b><small>'+b.fama+'</small></span>'+
+      '<span class="lado"><span class="preco num">'+brl(base+b.ajuste)+'</span>'+
+      '<span class="dur">'+b.nivel+(b.ajuste>0?' · +'+brl(b.ajuste):b.ajuste<0?' · '+brl(b.ajuste):'')+'</span></span></button>';
+  }).join('');
+}
+function setBarbeiro(id){sBarbeiro=id;if(modo==='barbeiro'){sHora=null}pintarBarbeiros();pintarHoras();pintarComanda()}
 
-        // Dados dos Barbeiros
-        const barbersData = [
-            {
-                id: "eduardo",
-                name: "Eduardo 'Navalha'",
-                specialty: "Mestre em Fade & Barbas Clássicas",
-                avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80"
-            },
-            {
-                id: "mateus",
-                name: "Mateus Albuquerque",
-                specialty: "Visagista & Cortes Modernos",
-                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80"
-            },
-            {
-                id: "lucas",
-                name: "Lucas 'Don' Ferreira",
-                specialty: "Especialista em Barboterapia",
-                avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80"
-            },
-            {
-                id: "qualquer",
-                name: "Primeiro Disponível",
-                specialty: "Atendimento mais rápido da equipe",
-                avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&auto=format&fit=crop&q=80"
-            }
-        ];
+function pintarServicos(){
+  el('servicos').innerHTML=SERVICOS.map(function(s){
+    const aj=sBarbeiro?barbeiro(sBarbeiro).ajuste:0;
+    return '<button class="opcao" aria-pressed="'+(sServico===s.id)+'" onclick="setServico(\''+s.id+'\')">'+
+      '<span><b>'+s.nome+'</b><small>'+s.desc+'</small></span>'+
+      '<span class="lado"><span class="preco num">'+brl(s.base+aj)+'</span>'+
+      '<span class="dur">'+s.min+' min na cadeira</span></span></button>';
+  }).join('');
+  pintarExtras();
+}
+function setServico(id){sServico=id;pintarServicos();pintarBarbeiros();pintarComanda()}
+function pintarExtras(){
+  el('extras').innerHTML=EXTRAS.map(function(x){
+    return '<label class="extra"><input type="checkbox" value="'+x.id+'"'+(sExtras.indexOf(x.id)>=0?' checked':'')+' onchange="setExtra(\''+x.id+'\',this.checked)">'+
+      '<span><b>'+x.nome+'</b><small>'+x.d+'</small></span>'+
+      '<span class="v num">'+(x.v?'+ '+brl(x.v):'cortesia')+'</span></label>';
+  }).join('');
+}
+function setExtra(id,on){
+  if(on) sExtras.push(id); else sExtras=sExtras.filter(x=>x!==id);
+  pintarComanda();
+}
 
-        // Mimos e Extras
-        const extrasData = [
-            { id: "sobrancelha", name: "Alinhamento de Sobrancelha na Navalha", price: 15.00 },
-            { id: "mentolado", name: "Lavagem Refrescante com Shampoo Ice Mentol", price: 10.00 },
-            { id: "pomada", name: "Aplicação e Modelagem com Pomada Efeito Brilho", price: 10.00 }
-        ];
+/* ── fila de espera ─────────────────────── */
+function entrarNaFila(h){
+  if(sDia===null){aviso('Escolha o dia primeiro');return}
+  filaDe=h; sHora=null; relampago=null;
+  pintarHoras(); pintarComanda();
+  aviso('Fila do horário das '+h+' — você é o 2º');
+}
 
-        // Estado da Seleção
-        let selectedService = servicesData[0];
-        let selectedBarber = barbersData[0];
-        let selectedDayIndex = 0;
-        let selectedTime = "10:00";
-        let selectedExtras = [];
+/* ── comanda ────────────────────────────── */
+function servico(){return sServico?SERVICOS.find(s=>s.id===sServico):null}
+function minutos(){
+  const s=servico(); if(!s) return 0;
+  const extra=sExtras.reduce((a,id)=>a+EXTRAS.find(x=>x.id===id).min,0);
+  const lento=sBarbeiro&&barbeiro(sBarbeiro).nivel==='iniciante'?15:0;
+  return s.min+extra+lento;
+}
+function subtotal(){
+  const s=servico(); if(!s) return 0;
+  const aj=sBarbeiro?barbeiro(sBarbeiro).ajuste:0;
+  const base=relampago?relampago.preco:s.base+aj;
+  return base+sExtras.reduce((a,id)=>a+EXTRAS.find(x=>x.id===id).v,0);
+}
+function precisaSinal(){return ehPico()&&!relampago&&subtotal()>0}
+function total(){return subtotal()}
+function quandoTexto(){
+  if(sDia===null||!sHora) return null;
+  const d=dias[sDia].data;
+  return SEM[d.getDay()]+', '+String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+' às '+sHora;
+}
 
-        const weekDays = [];
-        const timeSlots = ["08:30", "09:15", "10:00", "10:45", "11:30", "14:00", "14:45", "15:30", "16:15", "17:00", "17:45", "18:30", "19:15", "20:00"];
+function pintarComanda(){
+  const s=servico(), b=sBarbeiro?barbeiro(sBarbeiro):null;
 
-        // Gerar 6 dias úteis a partir de hoje
-        function generateDays() {
-            const daysNames = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
-            const monthNames = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-            
-            let cur = new Date();
-            while (weekDays.length < 6) {
-                cur.setDate(cur.getDate() + 1);
-                if (cur.getDay() === 0) continue; // Domingo fechado
-                weekDays.push({
-                    dateObj: new Date(cur),
-                    dayName: daysNames[cur.getDay()],
-                    dayNum: String(cur.getDate()).padStart(2, '0'),
-                    monthName: monthNames[cur.getMonth()]
-                });
-            }
-        }
+  if(filaDe){
+    el('comanda').innerHTML=
+      '<div class="linha"><span>Situação</span><b>Na fila</b></div>'+
+      '<div class="linha"><span>Horário</span><b>'+filaDe+'</b></div>'+
+      '<div class="linha"><span>Sua posição</span><b>2º da fila</b></div>'+
+      '<div class="linha"><span>Dia</span><b>'+(sDia!==null?SEM[dias[sDia].data.getDay()]+' '+String(dias[sDia].data.getDate()).padStart(2,'0')+'/'+String(dias[sDia].data.getMonth()+1).padStart(2,'0'):'—')+'</b></div>'+
+      '<p class="recado" style="text-align:left;margin-top:12px">Se alguém desmarcar esse horário, você é avisado antes de a vaga voltar pro site. Entrar na fila não cobra nada e não segura horário nenhum.</p>';
+    el('areaSinal').innerHTML='';
+    el('btnFechar').disabled=false;
+    el('btnFechar').textContent='Entrar na fila das '+filaDe;
+    el('recado').textContent='Você pode entrar em mais de uma fila no mesmo dia.';
+    return;
+  }
 
-        function renderServices() {
-            const container = document.getElementById('servicesContainer');
-            container.innerHTML = servicesData.map(s => `
-                <div class="service-option-card ${selectedService.id === s.id ? 'active' : ''}" onclick="selectService('${s.id}')">
-                    <div class="service-main-info">
-                        <h4>${s.name}</h4>
-                        <p>${s.desc}</p>
-                        <span class="service-duration-badge">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                            ${s.duration}
-                        </span>
-                    </div>
-                    <div class="service-price-block">
-                        <span class="service-price">R$ ${s.price.toFixed(2).replace('.', ',')}</span>
-                    </div>
-                </div>
-            `).join('');
-        }
+  el('comanda').innerHTML=
+    '<div class="linha"><span>Serviço</span><b>'+(s?s.nome:'—')+'</b></div>'+
+    '<div class="linha"><span>Com</span><b>'+(b?b.nome+' · '+b.nivel:'—')+'</b></div>'+
+    '<div class="linha"><span>Quando</span><b>'+(quandoTexto()||'—')+'</b></div>'+
+    '<div class="linha"><span>Tempo na cadeira</span><b>'+(minutos()?minutos()+' min':'—')+'</b></div>'+
+    '<div class="linha"><span>Adicionais</span><b>'+(sExtras.length?sExtras.map(id=>EXTRAS.find(x=>x.id===id).nome).join(', '):'nenhum')+'</b></div>'+
+    (relampago?'<div class="linha desc"><span>Vaga relâmpago</span><b>−'+Math.round(DESC_RELAMPAGO*100)+'%</b></div>':'')+
+    '<div class="linha somatoria"><span>Total</span><b class="num">'+brl(total())+'</b></div>';
 
-        function renderBarbers() {
-            const container = document.getElementById('barbersContainer');
-            container.innerHTML = barbersData.map(b => `
-                <div class="barber-card ${selectedBarber.id === b.id ? 'active' : ''}" onclick="selectBarber('${b.id}')">
-                    <div class="barber-avatar-wrap">
-                        <img src="${b.avatar}" alt="${b.name}">
-                    </div>
-                    <div class="barber-name">${b.name}</div>
-                    <div class="barber-specialty">${b.specialty}</div>
-                </div>
-            `).join('');
-        }
+  el('areaSinal').innerHTML = precisaSinal()
+    ? '<div class="sinal"><h5>Sábado pede sinal de '+brl(SINAL)+'</h5>'+
+      '<p>Sábado é o dia que mais tem falta, e cadeira vazia no sábado não se recupera. O sinal é abatido do total no dia e devolvido inteiro se você cancelar com '+HORAS_CANCELA+' horas de antecedência.</p>'+
+      '<code id="pixSinal">'+pix(SINAL)+'</code>'+
+      '<button onclick="copiarPix()">Copiar código PIX do sinal</button></div>'
+    : '';
 
-        function renderDaysAndSlots() {
-            const daysContainer = document.getElementById('daysSlider');
-            daysContainer.innerHTML = weekDays.map((d, i) => `
-                <div class="day-tab ${selectedDayIndex === i ? 'active' : ''}" onclick="selectDay(${i})">
-                    <div class="day-name">${d.dayName}</div>
-                    <div class="day-num">${d.dayNum}</div>
-                    <div class="day-month">${d.monthName}</div>
-                </div>
-            `).join('');
+  const falta = !s ? 'Escolha o serviço.'
+    : sDia===null ? 'Agora escolha o dia.'
+    : !sHora ? 'Falta o horário.'
+    : !sBarbeiro ? 'Escolha com quem.'
+    : null;
+  el('btnFechar').disabled=!!falta;
+  el('btnFechar').textContent='Confirmar horário';
+  el('recado').textContent = falta || ('Fica reservado em nome de quem você informar. '+(precisaSinal()?'Confirma depois do sinal.':'Sem cobrança agora.'));
+}
 
-            const slotsContainer = document.getElementById('timeSlotsGrid');
-            slotsContainer.innerHTML = timeSlots.map((t, idx) => {
-                const isOccupied = (selectedDayIndex === 0 && (idx === 1 || idx === 5));
-                return `
-                    <button class="time-slot-btn ${selectedTime === t ? 'active' : ''}" 
-                            ${isOccupied ? 'disabled' : ''} 
-                            onclick="selectTime('${t}')">
-                        ${t}
-                    </button>
-                `;
-            }).join('');
-        }
+/* ── PIX do sinal (padrão EMV do Banco Central) ── */
+function crc16(s){
+  let c=0xFFFF;
+  for(let i=0;i<s.length;i++){
+    c^=s.charCodeAt(i)<<8;
+    for(let j=0;j<8;j++) c=(c&0x8000)?((c<<1)^0x1021)&0xFFFF:(c<<1)&0xFFFF;
+  }
+  return c.toString(16).toUpperCase().padStart(4,'0');
+}
+function tlv(id,v){return id+String(v.length).padStart(2,'0')+v}
+function pix(valor){
+  let p = tlv('00','01')
+    + tlv('26',tlv('00','BR.GOV.BCB.PIX')+tlv('01','38910482000190'))
+    + tlv('52','0000') + tlv('53','986') + tlv('54',valor.toFixed(2))
+    + tlv('58','BR') + tlv('59','DOM BARBEIRO') + tlv('60','CUIABA')
+    + tlv('62',tlv('05','SINAL'+String(Date.now()).slice(-6))) + '6304';
+  return p+crc16(p);
+}
+function copiarPix(){
+  navigator.clipboard.writeText(el('pixSinal').textContent)
+    .then(()=>aviso('Código PIX do sinal copiado'),()=>aviso('Selecione o código e copie manualmente'));
+}
 
-        function renderExtras() {
-            const container = document.getElementById('extrasContainer');
-            container.innerHTML = extrasData.map(e => {
-                const isChecked = selectedExtras.some(x => x.id === e.id);
-                return `
-                    <label class="extra-checkbox-label ${isChecked ? 'checked' : ''}" onclick="toggleExtra('${e.id}')">
-                        <div class="extra-checkbox-left">
-                            <input type="checkbox" ${isChecked ? 'checked' : ''} readonly>
-                            <span>${e.name}</span>
-                        </div>
-                        <strong style="color: var(--gold-light); font-family: 'JetBrains Mono', monospace;">+ R$ ${e.price.toFixed(2).replace('.', ',')}</strong>
-                    </label>
-                `;
-            }).join('');
-        }
+/* ── fecho: comprovante na própria página ── */
+let reserva=null;
+function fecharAgenda(){
+  const nome=(el('nome').value||'').trim()||'Não informado';
+  const fone=(el('fone2').value||'').trim()||(el('fone').value||'').trim()||'Não informado';
 
-        function selectService(id) {
-            selectedService = servicesData.find(s => s.id === id);
-            renderServices();
-            updateSummary();
-        }
+  if(filaDe){
+    // ponytail: a posição real vem da fila do sistema
+    const cod='FL-'+String(Math.floor(Math.random()*900)+100);
+    reserva={fila:true,cod:cod,hora:filaDe,nome:nome,fone:fone,
+      dia:sDia!==null?SEM[dias[sDia].data.getDay()]+' '+String(dias[sDia].data.getDate()).padStart(2,'0')+'/'+String(dias[sDia].data.getMonth()+1).padStart(2,'0'):'—'};
+    mostrarComprovante();
+    return;
+  }
 
-        function selectBarber(id) {
-            selectedBarber = barbersData.find(b => b.id === id);
-            renderBarbers();
-            updateSummary();
-        }
+  const s=servico(), b=barbeiro(sBarbeiro), d=dias[sDia].data;
+  const ini=new Date(d); ini.setHours(+sHora.slice(0,2),+sHora.slice(3),0,0);
+  const fim=new Date(ini); fim.setMinutes(fim.getMinutes()+minutos());
+  // ponytail: a numeração real vem do sistema da loja
+  const cod='DB-'+String(Math.floor(Math.random()*9000)+1000);
 
-        function selectDay(index) {
-            selectedDayIndex = index;
-            renderDaysAndSlots();
-            updateSummary();
-        }
+  reserva={fila:false,cod:cod,nome:nome,fone:fone,servico:s.nome,barbeiro:b.nome,nivel:b.nivel,
+    quando:quandoTexto(),ini:ini,fim:fim,min:minutos(),total:total(),
+    extras:sExtras.map(id=>EXTRAS.find(x=>x.id===id).nome),
+    pico:ehPico(),relampago:!!relampago,sinal:precisaSinal()?SINAL:0};
+  mostrarComprovante();
+}
 
-        function selectTime(time) {
-            selectedTime = time;
-            renderDaysAndSlots();
-            updateSummary();
-        }
+function mostrarComprovante(){
+  const r=reserva;
+  el('comprovante').innerHTML = r.fila
+    ? '<div class="comp-topo">'+
+        '<i>'+ico('fila')+'</i>'+
+        '<h3 class="sign" id="compTitulo">Você está na fila</h3>'+
+        '<p>Ninguém pagou nada e nenhum horário ficou preso. Se esse horário abrir, você é o primeiro a saber.</p>'+
+      '</div>'+
+      '<div class="ficha">'+
+        '<div class="ficha-cod"><span>Senha da fila</span><b>'+r.cod+'</b></div>'+
+        '<div class="ficha-l"><span>Horário desejado</span><b>'+r.dia+' às '+r.hora+'</b></div>'+
+        '<div class="ficha-l"><span>Sua posição</span><b>2º</b></div>'+
+        '<div class="ficha-l"><span>Em nome de</span><b>'+esc(r.nome)+'</b></div>'+
+        '<div class="ficha-l"><span>Aviso vai para</span><b>'+esc(r.fone)+'</b></div>'+
+        '<div class="regra"><b>Como a fila funciona</b><ul>'+
+          '<li>Cancelamento nesse horário aciona o 1º da fila; ele tem 20 minutos pra responder.</li>'+
+          '<li>Se ele não responder, passa pra você automaticamente.</li>'+
+          '<li>Você pode estar em várias filas ao mesmo tempo, sem custo.</li>'+
+          '<li>Sair da fila é com a mesma senha, sem falar com ninguém.</li>'+
+        '</ul></div>'+
+      '</div>'+ canais(true)
+    : '<div class="comp-topo">'+
+        '<i>'+ico('ok')+'</i>'+
+        '<h3 class="sign" id="compTitulo">Cadeira reservada</h3>'+
+        '<p>'+r.quando+', com o '+r.barbeiro+'. Chegue uns cinco minutos antes que o chopp já está gelado.</p>'+
+      '</div>'+
+      '<div class="ficha">'+
+        '<div class="ficha-cod"><span>Comprovante</span><b>'+r.cod+'</b></div>'+
+        '<div class="ficha-l"><span>Serviço</span><b>'+r.servico+'</b></div>'+
+        '<div class="ficha-l"><span>Barbeiro</span><b>'+r.barbeiro+' · '+r.nivel+'</b></div>'+
+        '<div class="ficha-l"><span>Quando</span><b>'+r.quando+'</b></div>'+
+        '<div class="ficha-l"><span>Tempo na cadeira</span><b>'+r.min+' min</b></div>'+
+        (r.extras.length?'<div class="ficha-l"><span>Adicionais</span><b>'+r.extras.join(', ')+'</b></div>':'')+
+        (r.relampago?'<div class="ficha-l"><span>Desconto</span><b>Vaga relâmpago −'+Math.round(DESC_RELAMPAGO*100)+'%</b></div>':'')+
+        '<div class="ficha-l"><span>Total</span><b>'+brl(r.total)+'</b></div>'+
+        (r.sinal?'<div class="ficha-l"><span>Sinal já pago</span><b>−'+brl(r.sinal)+'</b></div>':'')+
+        '<div class="regra"><b>O combinado</b><ul>'+
+          '<li>Atraso de mais de 15 minutos vira encaixe: você é atendido, mas depois de quem chegou na hora.</li>'+
+          (r.sinal
+            ? '<li>Cancelou com '+HORAS_CANCELA+' h ou mais de antecedência: o sinal de '+brl(r.sinal)+' volta inteiro no mesmo PIX.</li><li>Cancelou depois disso ou não apareceu: o sinal cobre a cadeira parada.</li>'
+            : '<li>Cancelar ou remarcar é livre até 2 horas antes, pelo número do comprovante.</li>')+
+          '<li>Se o barbeiro atrasar mais de 15 minutos, a casa avisa antes de você sair — e o serviço sai por conta dela.</li>'+
+        '</ul></div>'+
+      '</div>'+ canais(false);
+  el('veu').classList.add('on');
+  document.body.style.overflow='hidden';
+}
 
-        function toggleExtra(id) {
-            const foundIndex = selectedExtras.findIndex(x => x.id === id);
-            if (foundIndex >= 0) {
-                selectedExtras.splice(foundIndex, 1);
-            } else {
-                const item = extrasData.find(x => x.id === id);
-                selectedExtras.push(item);
-            }
-            renderExtras();
-            updateSummary();
-        }
+function canais(fila){
+  return '<div class="canais">'+
+    (fila?'':'<button class="canal" onclick="baixarIcs()"><i>'+ico('cal')+'</i>'+
+      '<span>Salvar na minha agenda<small>Convite com lembrete uma hora antes</small></span></button>')+
+    '<button class="canal" onclick="copiarComprovante()"><i>'+ico('copy')+'</i>'+
+      '<span>Copiar o comprovante<small>Manda pra quem vai junto ou guarda no bloco de notas</small></span></button>'+
+    '<button class="canal" onclick="window.print()"><i>'+ico('print')+'</i>'+
+      '<span>Imprimir<small>Ou salvar em PDF pelo próprio navegador</small></span></button>'+
+    '<a class="canal wa" href="'+zap()+'" target="_blank" rel="noopener"><i>'+ico('wa')+'</i>'+
+      '<span>Falar com a loja<small>Só se precisar mudar alguma coisa</small></span></a>'+
+    '<button class="de-novo" onclick="fecharComprovante()">'+(fila?'Voltar e escolher outro horário':'Marcar outro horário')+'</button>'+
+  '</div>';
+}
+function ico(k){
+  const p={
+    ok:'<path d="M20 6 9 17l-5-5"/>',
+    fila:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/>',
+    cal:'<rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+    copy:'<rect width="13" height="13" x="9" y="9" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+    print:'<path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/>',
+    wa:'<path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.9-1.4A10 10 0 1 0 12 2z"/><path d="M8.5 8.5c0 3.5 3.5 7 7 7"/>'
+  }[k];
+  return '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">'+p+'</svg>';
+}
+function fecharComprovante(){
+  el('veu').classList.remove('on');
+  document.body.style.overflow='';
+  filaDe=null; sHora=null; relampago=null;
+  pintarHoras(); pintarComanda();
+}
 
-        function updateSummary() {
-            const d = weekDays[selectedDayIndex];
-            document.getElementById('summaryService').innerText = selectedService.name;
-            document.getElementById('summaryDuration').innerText = selectedService.duration;
-            document.getElementById('summaryBarber').innerText = selectedBarber.name;
-            document.getElementById('summaryDateTime').innerText = `${d.dayName}, ${d.dayNum}/${d.monthName} às ${selectedTime}`;
+function textoComprovante(){
+  const r=reserva;
+  if(r.fila){
+    return 'DOM BARBEIRO — FILA DE ESPERA '+r.cod+'\n'+
+      'Horário desejado: '+r.dia+' às '+r.hora+'\n'+
+      'Posição: 2º\nEm nome de: '+r.nome+'\nAviso para: '+r.fone+'\n\n'+
+      'Entrar na fila não cobra nada e não reserva horário.\n'+
+      'Av. Senador Metello, 850 — Goiabeiras, Cuiabá/MT';
+  }
+  return 'DOM BARBEIRO — COMPROVANTE '+r.cod+'\n'+
+    r.quando+'\n'+
+    'Serviço: '+r.servico+'\n'+
+    'Barbeiro: '+r.barbeiro+' ('+r.nivel+')\n'+
+    'Tempo na cadeira: '+r.min+' min\n'+
+    (r.extras.length?'Adicionais: '+r.extras.join(', ')+'\n':'')+
+    'Total: '+brl(r.total)+(r.sinal?' (sinal de '+brl(r.sinal)+' já pago)':'')+'\n'+
+    'Em nome de: '+r.nome+' · '+r.fone+'\n\n'+
+    'Atraso acima de 15 min vira encaixe.\n'+
+    'Av. Senador Metello, 850 — Goiabeiras, Cuiabá/MT · (65) 3624-7700';
+}
+function copiarComprovante(){
+  navigator.clipboard.writeText(textoComprovante())
+    .then(()=>aviso('Comprovante copiado'),()=>aviso('Não foi possível copiar aqui'));
+}
+function z(d){return d.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z'}
+function baixarIcs(){
+  const r=reserva;
+  const corpo=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Dom Barbeiro//Agenda//PT','BEGIN:VEVENT',
+    'UID:'+r.cod+'@dombarbeiro.com.br','DTSTAMP:'+z(new Date()),'DTSTART:'+z(r.ini),'DTEND:'+z(r.fim),
+    'SUMMARY:'+r.servico+' com '+r.barbeiro+' ('+r.cod+')',
+    'LOCATION:Av. Senador Metello 850, Goiabeiras, Cuiabá - MT',
+    'DESCRIPTION:'+textoComprovante().replace(/\n/g,'\\n'),
+    'BEGIN:VALARM','TRIGGER:-PT1H','ACTION:DISPLAY','DESCRIPTION:Dom Barbeiro em 1 hora','END:VALARM',
+    'END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const url=URL.createObjectURL(new Blob([corpo],{type:'text/calendar'}));
+  const a=document.createElement('a'); a.href=url; a.download='dom-barbeiro-'+r.cod+'.ics'; a.click();
+  URL.revokeObjectURL(url);
+  aviso('Convite baixado — com lembrete 1 h antes');
+}
+function zap(){
+  return 'https://wa.me/556536247700?text='+encodeURIComponent('Olá! É sobre o '+(reserva?reserva.cod:'meu horário')+'.');
+}
 
-            if (selectedExtras.length > 0) {
-                document.getElementById('summaryExtras').innerText = selectedExtras.map(x => x.name.split(' ')[0]).join(', ');
-            } else {
-                document.getElementById('summaryExtras').innerText = "Nenhum";
-            }
+/* ── clube: a conta com o hábito de quem lê ── */
+function contaClube(){
+  const c=+el('cortes').value, b=+el('barbas').value;
+  el('vCortes').textContent=c; el('vBarbas').textContent=b;
+  /* preço cheio do pleno, que é o do meio da tabela */
+  const pc=SERVICOS.find(s=>s.id==='fade').base, pb=SERVICOS.find(s=>s.id==='barba').base;
+  const avulso=c*pc+b*pb;
+  const dif=avulso-MENSALIDADE;
+  el('avulso').textContent=brl(avulso);
+  el('diferenca').textContent=(dif>=0?'+ ':'− ')+brl(Math.abs(dif));
+  const v=el('veredito');
+  if(avulso===0){
+    v.className='clube-veredito nao';
+    v.innerHTML='Com zero visitas o clube não faz sentido nenhum. Mexa nos controles com o que você realmente faz por mês.';
+  } else if(dif>0){
+    v.className='clube-veredito vale';
+    v.innerHTML='Nesse ritmo o clube economiza <b>'+brl(dif)+' por mês</b> — '+brl(dif*12)+' no ano. E ainda te dá a agenda de sábado 48 h antes.';
+  } else {
+    const faltam=Math.ceil((MENSALIDADE-avulso)/pc);
+    v.className='clube-veredito nao';
+    v.innerHTML='Nesse ritmo sai <b>'+brl(-dif)+' mais caro</b> que pagar avulso. O clube passa a compensar a partir de '+faltam+' corte'+(faltam>1?'s':'')+' a mais por mês.';
+  }
+}
 
-            const extrasTotal = selectedExtras.reduce((sum, item) => sum + item.price, 0);
-            const total = selectedService.price + extrasTotal;
+/* ── calculadora do dono ────────────────── */
+function contaDono(){
+  const cad=+el('qCadeiras').value, tk=+el('qTicket').value;
+  const falt=+el('qFaltas').value, oc=(+el('qOcio').value)/10;
+  el('vCadeiras').textContent=cad;
+  el('vTicket').textContent=brl(tk);
+  el('vFaltas').textContent=falt;
+  el('vOcio').textContent=oc.toFixed(1).replace('.',',')+' h';
 
-            document.getElementById('summaryTotalPrice').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
-            validateBookingForm();
-        }
+  /* 4,33 semanas por mês; 25 dias úteis de barbearia (fecha dom e seg) */
+  const perdaFalta = falt*4.33*tk;
+  /* uma hora ociosa vale, em média, um atendimento e meio de 40 min */
+  const perdaOcio  = cad*oc*25*1.5*tk;
+  const total=perdaFalta+perdaOcio;
 
-        function validateBookingForm() {
-            const name = document.getElementById('clientName').value.trim();
-            const phone = document.getElementById('clientPhone').value.trim();
-            const isValid = (name.length >= 3 && phone.length >= 8);
-            document.getElementById('btnConfirmBooking').disabled = !isValid;
-        }
+  el('pFalta').textContent=brl(perdaFalta);
+  el('pOcio').textContent=brl(perdaOcio);
+  el('pTotal').textContent=brl(total);
 
-        let currentAppointment = null;
+  const recupera = perdaFalta*REC_SINAL + perdaOcio*REC_RELAMPAGO;
+  el('pNota').innerHTML='Esse número de cima é o teto: é o que a agenda renderia se toda cadeira parada virasse atendimento, '+
+    'o que não acontece nem na melhor loja. O que dá pra buscar de verdade, com sinal no pico, fila de espera e vaga relâmpago, '+
+    'fica em torno de <b style="color:var(--menthol)">'+brl(recupera)+' por mês</b> — '+Math.round(REC_SINAL*100)+'% das faltas e '+
+    Math.round(REC_RELAMPAGO*100)+'% da ociosidade. Não é promessa: são as taxas com que dimensionamos o projeto, e estão escritas no código desta página.';
+}
 
-        function finishAppointment() {
-            const name = document.getElementById('clientName').value.trim();
-            const phone = document.getElementById('clientPhone').value.trim();
-            const d = weekDays[selectedDayIndex];
-            const voucherNum = 'DB-' + Math.floor(1000 + Math.random() * 9000);
+/* ── recursos ───────────────────────────── */
+el('recursos').innerHTML=RECURSOS.map(function(r){
+  return '<div class="rec"><span class="marca-n">'+r.n+'</span><h5 class="sign">'+r.t+'</h5>'+
+    '<p>'+r.p+'</p><span class="contra">'+r.c+'</span></div>';
+}).join('');
 
-            const extrasTotal = selectedExtras.reduce((sum, item) => sum + item.price, 0);
-            const total = selectedService.price + extrasTotal;
+/* ── util ───────────────────────────────── */
+let hAviso;
+function aviso(m){const a=el('aviso');a.textContent=m;a.classList.add('on');clearTimeout(hAviso);hAviso=setTimeout(()=>a.classList.remove('on'),2600)}
+el('veu').addEventListener('click',e=>{if(e.target===el('veu'))fecharComprovante()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&el('veu').classList.contains('on'))fecharComprovante()});
+['cortes','barbas'].forEach(id=>el(id).addEventListener('input',contaClube));
+['qCadeiras','qTicket','qFaltas','qOcio'].forEach(id=>el(id).addEventListener('input',contaDono));
 
-            currentAppointment = {
-                code: voucherNum,
-                name: name,
-                phone: phone,
-                service: selectedService.name,
-                barber: selectedBarber.name,
-                when: `${d.dayName}, ${d.dayNum}/${d.monthName} às ${selectedTime}`,
-                dateObj: d.dateObj,
-                time: selectedTime,
-                total: `R$ ${total.toFixed(2).replace('.', ',')}`
-            };
+/* ── início ─────────────────────────────── */
+montarDias();
+pintarQuadro(); pintarVagas(); pintarModo(); pintarOrdem();
+pintarServicos(); pintarComanda(); contaClube(); contaDono();
+setInterval(tique,60000);
 
-            document.getElementById('voucherCode').innerText = `#${currentAppointment.code}`;
-            document.getElementById('voucherClientName').innerText = currentAppointment.name;
-            document.getElementById('voucherServiceAndBarber').innerText = `${currentAppointment.service} com ${currentAppointment.barber}`;
-            document.getElementById('voucherDateTime').innerText = currentAppointment.when;
+/* ── verificações ───────────────────────── */
+console.assert(crc16('123456789')==='29B1','CRC16-CCITT-FALSE do vetor padrão deve ser 29B1');
+(function(){
+  const p=pix(SINAL);
+  console.assert(p.slice(0,6)==='000201','payload PIX começa com 000201');
+  console.assert(crc16(p.slice(0,-4))===p.slice(-4),'CRC do payload do sinal confere');
 
-            document.getElementById('receiptModal').classList.add('open');
-        }
+  /* a agenda nunca abre domingo nem segunda */
+  console.assert(dias.every(d=>d.data.getDay()!==0&&d.data.getDay()!==1),'não abrimos domingo nem segunda');
+  console.assert(dias.length===8,'oito dias de agenda');
 
-        function closeReceiptModal() {
-            document.getElementById('receiptModal').classList.remove('open');
-        }
+  /* sábado fecha mais cedo, então tem menos horário que dia de semana */
+  console.assert(grade(true).length<grade(false).length,'sábado tem grade menor');
+  console.assert(grade(false)[0]==='08:30','primeiro horário às 08:30');
 
-        function sendWhatsAppConfirmation() {
-            if (!currentAppointment) return;
-            let msg = `*💈 CONFIRMAÇÃO DE AGENDAMENTO — DOM BARBEIRO*\n`;
-            msg += `─────────────────────────\n`;
-            msg += `▪ *Protocolo:* ${currentAppointment.code}\n`;
-            msg += `▪ *Cliente:* ${currentAppointment.name}\n`;
-            msg += `▪ *Serviço:* ${currentAppointment.service}\n`;
-            msg += `▪ *Barbeiro:* ${currentAppointment.barber}\n`;
-            msg += `▪ *Data & Horário:* ${currentAppointment.when}\n`;
-            msg += `▪ *Valor Total:* ${currentAppointment.total}\n`;
-            msg += `─────────────────────────\n`;
-            msg += `📍 *Local:* Av. Senador Metello, 850 · Goiabeiras (Cuiabá-MT)\n`;
-            msg += `Olá! Gostaria de confirmar meu agendamento na barbearia.`;
+  /* preço acompanha o nível: sênior custa mais que iniciante */
+  const sen=BARBEIROS.find(b=>b.nivel==='sênior'), ini=BARBEIROS.find(b=>b.nivel==='iniciante');
+  console.assert(sen.ajuste>ini.ajuste,'sênior tem de custar mais que iniciante');
 
-            const encoded = encodeURIComponent(msg);
-            window.open(`https://wa.me/556536247700?text=${encoded}`, '_blank');
-        }
+  /* combo tem de ser mais barato que corte e barba separados */
+  const c=SERVICOS.find(s=>s.id==='fade').base, b=SERVICOS.find(s=>s.id==='barba').base;
+  const combo=SERVICOS.find(s=>s.id==='combo').base;
+  console.assert(combo<c+b,'combo precisa sair mais barato que os dois soltos');
 
-        function downloadIcsInvite() {
-            if (!currentAppointment) return;
-            const [hours, minutes] = currentAppointment.time.split(':').map(Number);
-            const startDate = new Date(currentAppointment.dateObj);
-            startDate.setHours(hours, minutes, 0, 0);
+  /* vaga relâmpago só oferece cadeira que vaga em até 2 h e que não encerrou */
+  console.assert(vagasRelampago().every(v=>v.emMin<=120),'relâmpago só até 2 horas');
+  console.assert(livres()<=CADEIRAS.filter(c=>!encerrou(c)).length,'cadeira encerrada não conta como livre');
+  console.assert(CADEIRAS.every(c=>!encerrou(c)||!vagasRelampago().some(v=>v.cadeira===c.n)),
+    'cadeira encerrada não pode virar vaga relâmpago');
 
-            const endDate = new Date(startDate);
-            endDate.setMinutes(endDate.getMinutes() + 50);
+  /* a conta do clube tem de virar de lado em algum ponto */
+  const antesC=el('cortes').value, antesB=el('barbas').value;
+  el('cortes').value=0; el('barbas').value=0; contaClube();
+  console.assert(el('veredito').className.indexOf('nao')>=0,'sem visita o clube não compensa');
+  el('cortes').value=6; el('barbas').value=8; contaClube();
+  console.assert(el('veredito').className.indexOf('vale')>=0,'com uso alto o clube compensa');
+  el('cortes').value=antesC; el('barbas').value=antesB; contaClube();
 
-            const formatICSDate = (d) => d.toISOString().replace(/-|:|\.\d+/g, '');
-
-            const icsContent = [
-                'BEGIN:VCALENDAR',
-                'VERSION:2.0',
-                'PRODID:-//Dom Barbeiro Cuiaba//Agendamento//PT',
-                'BEGIN:VEVENT',
-                `UID:${currentAppointment.code}@dombarbeiro.com.br`,
-                `DTSTAMP:${formatICSDate(new Date())}`,
-                `DTSTART:${formatICSDate(startDate)}`,
-                `DTEND:${formatICSDate(endDate)}`,
-                `SUMMARY:Dom Barbeiro — ${currentAppointment.service} (${currentAppointment.barber})`,
-                `LOCATION:Av. Senador Metello, 850, Goiabeiras, Cuiabá - MT`,
-                `DESCRIPTION:Agendamento código #${currentAppointment.code}. Chegar com 5 min de antecedência para aproveitar o chopp cortesia!`,
-                'END:VEVENT',
-                'END:VCALENDAR'
-            ].join('\r\n');
-
-            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `agendamento-${currentAppointment.code}.ics`;
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        // Inicialização
-        generateDays();
-        renderServices();
-        renderBarbers();
-        renderDaysAndSlots();
-        renderExtras();
-        updateSummary();
-    </script>
+  /* a conta do dono cresce com cadeira e com falta */
+  const q=el('qFaltas').value;
+  el('qFaltas').value=0; contaDono(); const semFalta=el('pTotal').textContent;
+  el('qFaltas').value=20; contaDono(); const comFalta=el('pTotal').textContent;
+  console.assert(semFalta!==comFalta,'a falta tem de mexer no prejuízo');
+  el('qFaltas').value=q; contaDono();
+})();
+</script>
 </body>
 </html>

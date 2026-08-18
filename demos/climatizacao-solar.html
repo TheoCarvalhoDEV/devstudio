@@ -10,12 +10,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#fcfbf9; --paper-2:#f3f0ea; --card:#fff;
-  --navy:#0a192f; --navy-2:#12294a; --navy-3:#1e3a5f;
-  --ink:#111827; --ink-60:#4b5563; --ink-40:#7d8590;
-  --rule:#e3ded3; --rule-2:#cec7b8;
-  --copper:#a8542a; --copper-soft:#f6ece5;
-  --volt:#1f5c3d; --volt-soft:#eaf2ed;
+  /* painel de instrumento. Fundo de noite, leitura fria, calor em cobre. */
+  --paper:#0a1420;   /* fundo da pagina */
+  --paper-2:#0f1d2d; /* recuo */
+  --card:#132436;    /* superficie */
+  --navy:#0a1420; --navy-2:#16293d; --navy-3:#25506f;
+  --ink:#e9f1f7;     /* texto */
+  --ink-60:#93aac0; --ink-40:#63809b;
+  --rule:#1e3549; --rule-2:#2b4a63;
+  --copper:#ff8a4c; --copper-soft:rgba(255,138,76,.12);
+  --volt:#3fd08a; --volt-soft:rgba(63,208,138,.13);
+  --ice:#7fd4f5;
   --r:6px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -28,17 +33,17 @@ button,input,select,textarea{font:inherit}
 table{border-collapse:collapse;width:100%}
 
 /* ── metadados operacionais, não banner ── */
-header{position:sticky;top:0;z-index:50;background:rgba(252,251,249,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+header{position:sticky;top:0;z-index:50;background:rgba(10,20,32,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
 .hd{max-width:1200px;margin:0 auto;padding:13px 22px;display:flex;justify-content:space-between;align-items:center;gap:18px}
 .brand{display:flex;align-items:center;gap:12px;text-decoration:none}
-.brand-i{width:38px;height:38px;border-radius:var(--r);background:var(--navy);color:var(--paper);display:grid;place-items:center}
+.brand-i{width:38px;height:38px;border-radius:var(--r);background:var(--ice);color:#06212f;display:grid;place-items:center}
 .brand h1{font-size:17px;font-weight:700}
 .brand span{display:block;font-variant-numeric:tabular-nums;font-size:10px;color:var(--ink-40);letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
 .hd-nav{display:flex;gap:22px;align-items:center}
 .hd-nav a{font-size:13.5px;color:var(--ink-60);text-decoration:none;font-weight:500}
 .hd-nav a:hover{color:var(--ink)}
-.hd-cta{background:var(--navy);color:var(--paper);border-radius:var(--r);padding:10px 17px;font-size:13.5px;font-weight:600;text-decoration:none}
-.hd-cta:hover{background:var(--navy-2)}
+.hd-cta{background:var(--card);border:1px solid var(--rule-2);color:var(--ink);border-radius:var(--r);padding:10px 17px;font-size:13.5px;font-weight:600;text-decoration:none}
+.hd-cta:hover{border-color:var(--ice);color:var(--ice)}
 
 /* ── abertura ── */
 .open{max-width:1200px;margin:0 auto;padding:52px 22px 34px;display:grid;grid-template-columns:1.35fr 1fr;gap:52px;align-items:end;border-bottom:1px solid var(--rule)}
@@ -51,6 +56,23 @@ header{position:sticky;top:0;z-index:50;background:rgba(252,251,249,.94);backdro
 .fact span{font-size:12.5px;color:var(--ink-60)}
 .fact b{font-variant-numeric:tabular-nums;font-size:15px;font-weight:500;font-variant-numeric:tabular-nums}
 
+/* ── escala termica: a leitura da carga na faixa util ── */
+.escala{max-width:1200px;margin:0 auto;padding:22px 22px 0}
+.escala-in{background:var(--paper-2);border:1px solid var(--rule);border-radius:var(--r);padding:18px 20px}
+.escala-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:14px}
+.escala-top h3{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-40);font-weight:500}
+.escala-top .leitura{font-size:13px;color:var(--ink-60)}
+.escala-top .leitura b{color:var(--ink);font-variant-numeric:tabular-nums}
+.faixa{position:relative;height:26px;border-radius:3px;overflow:visible;
+  background:linear-gradient(90deg,#2b7fb8 0%,#3fa8c9 16%,#6fbf8f 34%,#d6b657 56%,#e07b3c 76%,#c74a2c 100%)}
+.faixa-marcas{display:flex;justify-content:space-between;margin-top:6px;font-size:10px;color:var(--ink-40);font-variant-numeric:tabular-nums}
+.agulha{position:absolute;top:-6px;bottom:-6px;width:3px;background:#fff;border-radius:2px;
+  box-shadow:0 0 0 2px rgba(10,20,32,.9);transition:left .4s cubic-bezier(.34,1.3,.5,1)}
+.agulha::after{content:attr(data-l);position:absolute;top:-27px;left:50%;transform:translateX(-50%);
+  white-space:nowrap;background:#fff;color:#0a1420;font-size:10.5px;font-weight:700;
+  padding:3px 8px;border-radius:4px;font-variant-numeric:tabular-nums}
+.escala-nota{font-size:11.5px;color:var(--ink-40);margin-top:11px;line-height:1.55}
+
 /* ── laudo: entrada + documento ── */
 .laudo{max-width:1200px;margin:0 auto;padding:30px 22px 60px;display:grid;grid-template-columns:1fr 460px;gap:34px;align-items:start}
 .entrada{display:grid;gap:26px}
@@ -61,7 +83,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(252,251,249,.94);backdro
 .presets{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
 .preset{background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:11px 9px;cursor:pointer;text-align:left;transition:border-color .16s}
 .preset:hover{border-color:var(--rule-2)}
-.preset[aria-pressed="true"]{border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.preset[aria-pressed="true"]{border-color:var(--ice);box-shadow:inset 0 0 0 1px var(--ice)}
 .preset b{display:block;font-size:12.5px;font-weight:600}
 .preset small{display:block;font-variant-numeric:tabular-nums;font-size:10px;color:var(--ink-40);margin-top:2px}
 
@@ -72,30 +94,30 @@ header{position:sticky;top:0;z-index:50;background:rgba(252,251,249,.94);backdro
 .ctrl-top .v{font-variant-numeric:tabular-nums;font-size:13.5px;color:var(--copper);font-variant-numeric:tabular-nums}
 .ctrl-hint{font-size:11.5px;color:var(--ink-40);margin-top:6px;line-height:1.5}
 input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:3px;border-radius:2px;background:var(--rule-2);outline:none}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:var(--card);border:3px solid var(--navy);cursor:pointer}
-input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--card);border:3px solid var(--navy);cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;background:#fff;border:3px solid var(--ice);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:#fff;border:3px solid var(--ice);cursor:pointer}
 
 .escolhas{display:grid;gap:6px}
 .escolha{display:flex;gap:11px;align-items:flex-start;background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:11px 12px;cursor:pointer}
 .escolha:hover{border-color:var(--rule-2)}
-.escolha:has(input:checked){border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
-.escolha input{accent-color:var(--navy);margin-top:2px;flex-shrink:0}
+.escolha:has(input:checked){border-color:var(--ice);box-shadow:inset 0 0 0 1px var(--ice)}
+.escolha input{accent-color:var(--ice);margin-top:2px;flex-shrink:0}
 .escolha b{display:block;font-size:13px;font-weight:600}
 .escolha small{display:block;font-size:11.5px;color:var(--ink-60);line-height:1.45;margin-top:2px}
 .escolha .tag{margin-left:auto;font-variant-numeric:tabular-nums;font-size:10.5px;color:var(--ink-40);white-space:nowrap;padding-left:8px}
 
 /* ── documento ── */
 .doc{position:sticky;top:78px;background:var(--card);border:1px solid var(--rule-2);border-radius:var(--r);overflow:hidden}
-.doc-top{background:var(--navy);color:var(--paper);padding:16px 20px}
-.doc-top .k{font-variant-numeric:tabular-nums;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#8ea7c4}
+.doc-top{background:var(--navy-3);color:#fff;padding:16px 20px}
+.doc-top .k{font-variant-numeric:tabular-nums;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#b9d6ea}
 .doc-top h3{font-size:16px;margin-top:3px;color:#fff}
-.doc-top p{font-variant-numeric:tabular-nums;font-size:10.5px;color:#8ea7c4;margin-top:5px}
+.doc-top p{font-variant-numeric:tabular-nums;font-size:10.5px;color:#b9d6ea;margin-top:5px}
 
 .doc-sec{border-bottom:1px solid var(--rule);padding:16px 20px}
 .doc-sec:last-of-type{border-bottom:none}
 .doc-sec h4{font-variant-numeric:tabular-nums;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-40);font-weight:500;margin-bottom:11px}
 .headline{display:flex;align-items:baseline;gap:9px;margin-bottom:6px}
-.headline b{font-variant-numeric:tabular-nums;font-size:38px;font-weight:700;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.headline b{font-variant-numeric:tabular-nums;font-size:38px;font-weight:700;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums;color:var(--ice)}
 .headline span{font-size:12.5px;color:var(--ink-60)}
 .doc-sec>p{font-size:12.5px;color:var(--ink-60);line-height:1.55}
 
@@ -112,7 +134,7 @@ input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;bac
 .pilha i{display:block;transition:width .3s ease}
 
 .eletrica{background:var(--copper-soft);border-left:2px solid var(--copper);padding:12px 14px;margin-top:12px}
-.eletrica p{font-size:11.5px;color:#6b3a1d;line-height:1.55}
+.eletrica p{font-size:11.5px;color:#ffc9a8;line-height:1.55}
 .eletrica b{font-weight:600}
 
 .conta{font-size:12.5px}
@@ -125,8 +147,8 @@ input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;bac
 .conta-nota{font-size:11px;color:var(--ink-40);line-height:1.55;margin-top:10px}
 
 .doc-cta{padding:16px 20px;background:var(--paper-2);border-top:1px solid var(--rule-2)}
-.btn-agendar{width:100%;background:var(--navy);color:var(--paper);border:none;border-radius:var(--r);padding:14px;font-family:'Lexend',sans-serif;font-size:14.5px;font-weight:600;cursor:pointer}
-.btn-agendar:hover{background:var(--navy-2)}
+.btn-agendar{width:100%;background:var(--ice);color:#06212f;border:none;border-radius:var(--r);padding:14px;font-family:'Lexend',sans-serif;font-size:14.5px;font-weight:600;cursor:pointer}
+.btn-agendar:hover{background:#a5e2fa}
 .doc-cta p{font-variant-numeric:tabular-nums;font-size:10px;color:var(--ink-40);text-align:center;margin-top:8px;line-height:1.5}
 
 /* ── agendamento ── */
@@ -145,11 +167,11 @@ input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;bac
 .dias{display:grid;grid-template-columns:repeat(auto-fit,minmax(64px,1fr));gap:6px;margin-bottom:22px}
 .dia{background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);padding:9px 4px;cursor:pointer;text-align:center}
 .dia:hover{border-color:var(--rule-2)}
-.dia[aria-pressed="true"]{background:var(--navy);border-color:var(--navy);color:var(--paper)}
+.dia[aria-pressed="true"]{background:var(--ice);border-color:var(--ice);color:#06212f}
 .dia .w{display:block;font-variant-numeric:tabular-nums;font-size:9.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-40)}
 .dia .n{display:block;font-variant-numeric:tabular-nums;font-size:18px;font-weight:700;font-variant-numeric:tabular-nums}
 .dia .m{display:block;font-variant-numeric:tabular-nums;font-size:9.5px;color:var(--ink-40)}
-.dia[aria-pressed="true"] .w,.dia[aria-pressed="true"] .m{color:#8ea7c4}
+.dia[aria-pressed="true"] .w,.dia[aria-pressed="true"] .m{color:#2b5b74}
 
 .janelas{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:6px}
 .janela{background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);padding:10px 6px;cursor:pointer;font-variant-numeric:tabular-nums;font-size:12.5px;color:var(--ink)}
@@ -162,7 +184,8 @@ input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;bac
 .campos{display:grid;gap:12px}
 .cp label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-60);margin-bottom:5px}
 .cp input,.cp select,.cp textarea{width:100%;background:var(--paper);border:1px solid var(--rule);border-radius:var(--r);padding:11px 12px;font-size:13.5px;color:var(--ink)}
-.cp input:focus,.cp select:focus,.cp textarea:focus{border-color:var(--navy);background:var(--card);outline:none}
+.cp input::placeholder,.cp textarea::placeholder{color:var(--ink-40)}
+.cp input:focus,.cp select:focus,.cp textarea:focus{border-color:var(--ice);background:var(--card);outline:none}
 .cp textarea{resize:vertical;min-height:70px;font-family:'Lexend',sans-serif}
 .btn-confirmar{width:100%;background:var(--volt);color:#fff;border:none;border-radius:var(--r);padding:14px;font-family:'Lexend',sans-serif;font-size:14.5px;font-weight:600;cursor:pointer;margin-top:4px}
 .btn-confirmar:hover:not(:disabled){background:#17472f}
@@ -176,7 +199,7 @@ input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;bac
 .ok>p{color:var(--ink-60);font-size:14px;max-width:46ch;margin:10px auto 24px;line-height:1.6}
 .os-card{max-width:520px;margin:0 auto 22px;border:1px solid var(--rule-2);border-radius:var(--r);overflow:hidden;text-align:left}
 .os-top{background:var(--navy);color:var(--paper);padding:15px 20px;display:flex;justify-content:space-between;align-items:center;gap:14px}
-.os-top .k{font-variant-numeric:tabular-nums;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8ea7c4}
+.os-top .k{font-variant-numeric:tabular-nums;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#b9d6ea}
 .os-top b{font-variant-numeric:tabular-nums;font-size:18px;display:block;margin-top:2px}
 .os-when{font-variant-numeric:tabular-nums;font-size:13px;font-weight:700;text-align:right;line-height:1.35}
 .os-row{display:flex;justify-content:space-between;gap:14px;padding:11px 20px;border-bottom:1px solid var(--rule);font-size:12.5px;color:var(--ink-60)}
@@ -184,7 +207,7 @@ input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;bac
 .os-row b{font-variant-numeric:tabular-nums;color:var(--ink);font-weight:500;text-align:right;font-variant-numeric:tabular-nums}
 .canais{max-width:520px;margin:0 auto;display:grid;gap:8px}
 .canal{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--rule);border-radius:var(--r);padding:13px 15px;cursor:pointer;text-decoration:none;color:var(--ink);font-size:13.5px;font-weight:600;text-align:left;width:100%}
-.canal:hover{border-color:var(--navy)}
+.canal:hover{border-color:var(--ice)}
 .canal small{display:block;font-weight:400;color:var(--ink-60);font-size:11.5px;margin-top:2px;line-height:1.45}
 .canal i{width:32px;height:32px;border-radius:var(--r);background:var(--paper-2);color:var(--ink-60);display:grid;place-items:center;flex-shrink:0}
 .canal.wa i{background:var(--volt-soft);color:var(--volt)}
@@ -203,7 +226,7 @@ input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;bac
 footer{border-top:1px solid var(--rule);padding:28px 22px;background:var(--paper-2)}
 .ft{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-40);line-height:1.7}
 footer b{color:var(--ink-60)}
-.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,180%);background:var(--navy);color:var(--paper);padding:12px 20px;border-radius:var(--r);font-size:13px;font-weight:600;z-index:120;transition:transform .28s ease}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,180%);background:var(--card);border:1px solid var(--rule-2);color:var(--ink);padding:12px 20px;border-radius:var(--r);font-size:13px;font-weight:600;z-index:120;transition:transform .28s ease}
 .toast.on{transform:translate(-50%,0)}
 
 @media (max-width:960px){
@@ -223,7 +246,7 @@ footer b{color:var(--ink-60)}
   .padrao td:first-child{width:auto}
 }
 @media print{
-  header,.open,.entrada,.agenda,.padrao,.doc-cta,.canais,.refazer,footer,.toast{display:none!important}
+  header,.escala,.open,.entrada,.agenda,.padrao,.doc-cta,.canais,.refazer,footer,.toast{display:none!important}
   .laudo{display:block;padding:0}
   .doc{position:static;border:none}
   .doc-top{background:#eee;color:#000}
@@ -262,6 +285,18 @@ footer b{color:var(--ink-60)}
     <div class="fact"><span>Máxima registrada em Cuiabá</span><b>43,8 °C</b></div>
     <div class="fact"><span>Obras que chegam com circuito subdimensionado</span><b>1 em 3</b></div>
     <div class="fact"><span>Prazo de homologação na Energisa</span><b>até 34 dias</b></div>
+  </div>
+</section>
+
+<section class="escala" aria-hidden="true">
+  <div class="escala-in">
+    <div class="escala-top">
+      <h3>Carga térmica na faixa útil</h3>
+      <div class="leitura">Calculado agora: <b><span id="escalaTotal">—</span> BTU/h</b> · equipamento indicado <b id="escalaCap">—</b></div>
+    </div>
+    <div class="faixa"><div class="agulha" id="agulha" data-l="—" style="left:26%"></div></div>
+    <div class="faixa-marcas"><span>7.000</span><span>12.000</span><span>18.000</span><span>24.000</span><span>36.000</span><span>60.000</span></div>
+    <p class="escala-nota" id="escalaNota">A escala vai do menor split de janela ao maior split que existe. Ela move junto com o formulário abaixo.</p>
   </div>
 </section>
 
@@ -611,6 +646,17 @@ function pintar(){
   el('pGente').style.width=pc(r.gente); el('lGente').textContent=r.gente?'+ '+nf(r.gente)+' BTU/h':'—';
   el('pEquip').style.width=pc(r.equip); el('lEquip').textContent=r.equip?'+ '+nf(r.equip)+' BTU/h':'—';
   el('lTotal').textContent=nf(r.total)+' BTU/h';
+
+  /* posicao logaritmica: a faixa util nao e linear */
+  const t=Math.max(7000,Math.min(60000,r.total));
+  const pos=(Math.log(t)-Math.log(7000))/(Math.log(60000)-Math.log(7000));
+  el('agulha').style.left=(pos*100).toFixed(1)+'%';
+  el('agulha').dataset.l=nf(r.total);
+  el('escalaTotal').textContent=nf(r.total);
+  el('escalaCap').textContent=(r.unidades>1?r.unidades+' × ':'')+nf(r.cap)+' BTU/h';
+  el('escalaNota').textContent = r.total>60000
+    ? 'A carga passou do maior split do mercado. A agulha para no fim da faixa e o laudo divide em '+r.unidades+' máquinas.'
+    : 'A escala vai do menor split ao maior que existe. Ela move junto com o formulário abaixo.';
 
   el('btu').textContent = r.unidades>1 ? r.unidades+' × '+nf(r.cap) : nf(r.cap);
   el('modelo').textContent=modeloTexto(r.cap,r.unidades);
