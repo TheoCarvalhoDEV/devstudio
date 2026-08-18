@@ -1,682 +1,821 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AutoCenter & Diesel MT | Portal do Cliente & Rastreamento de O.S</title>
-    <meta name="description" content="Acompanhe o andamento da manutenção do seu veículo em tempo real, laudos do scanner de injeção eletrônica e aprove orçamentos com total transparência.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@700;800;900&family=IBM+Plex+Mono:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-body: #0a0e14;
-            --bg-surface: #111722;
-            --bg-card: #182232;
-            --border-color: #273548;
-            --border-hover: #3b4f6b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --text-dim: #64748b;
-            --brand-blue: #2563eb;
-            --brand-blue-hover: #1d4ed8;
-            --brand-green: #22c55e;
-            --brand-orange: #f97316;
-            --radius-md: 6px;
-            --radius-lg: 12px;
-            --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.4);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoCenter &amp; Diesel MT | Acompanhe sua Ordem de Serviço</title>
+<meta name="description" content="Digite a placa e acompanhe a ordem de serviço do seu veículo em tempo real. Aprove o orçamento item a item sem sair da página.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --deck:#0a0d11; --panel:#131920; --panel-2:#1b232c; --line:#252f3a; --line-2:#33404e;
+  --txt:#e8eef4; --mid:#93a3b3; --low:#63737f;
+  --hi:#ffc61a; --hi-deep:#c99500;
+  --go:#3ddc84; --wait:#ff9f1c; --stop:#ff5c5c;
+  --plate:#0b4bab;
+  --r:8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Hanken Grotesk',system-ui,sans-serif;background:var(--deck);color:var(--txt);-webkit-font-smoothing:antialiased;line-height:1.5}
+h1,h2,h3,h4{letter-spacing:-.02em;line-height:1.15}
+a{color:inherit}
+button,input,select{font:inherit}
+:focus-visible{outline:2px solid var(--hi);outline-offset:3px}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', -apple-system, sans-serif;
-        }
+/* ── cabeçalho ──────────────────────────── */
+header{border-bottom:1px solid var(--line);background:var(--panel);position:sticky;top:0;z-index:50}
+.hd{max-width:1180px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand-i{width:40px;height:40px;border-radius:var(--r);background:var(--hi);color:#141414;display:grid;place-items:center}
+.brand h1{font-size:17px;font-weight:900;text-transform:uppercase;letter-spacing:-.01em}
+.brand span{display:block;font-variant-numeric:tabular-nums;font-size:10px;color:var(--low);letter-spacing:.1em;text-transform:uppercase;margin-top:2px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.28}}
 
-        body {
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
-            line-height: 1.5;
-        }
+/* ── consulta ───────────────────────────── */
+.query{max-width:1180px;margin:0 auto;padding:34px 20px 26px;display:grid;grid-template-columns:1fr auto;gap:34px;align-items:end;border-bottom:1px solid var(--line)}
+.query h2{font-size:clamp(22px,3vw,32px);font-weight:900;text-transform:uppercase;letter-spacing:-.02em;line-height:1.1}
+.query h2 em{font-style:normal;color:var(--hi)}
+.query>div>p{color:var(--mid);font-size:14px;max-width:52ch;margin-top:11px;line-height:1.6}
 
-        /* Top Bar */
-        .top-erp-bar {
-            background: #06090e;
-            color: #94a3b8;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.72rem;
-            padding: 8px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+.consulta{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
+.plate{width:216px;background:#fff;border:2px solid #0e0e0e;border-radius:6px;overflow:hidden;flex-shrink:0}
+.plate-top{background:var(--plate);color:#fff;height:18px;display:flex;align-items:center;justify-content:space-between;padding:0 6px}
+.plate-top .mercosul{display:flex;gap:2px;align-items:center}
+.plate-top .mercosul i{width:5px;height:5px;border-radius:50%;border:1px solid #ffd400;display:block}
+.plate-top .br{font-variant-numeric:tabular-nums;font-size:7.5px;font-weight:700;letter-spacing:.16em}
+.plate-top .flag{width:15px;height:10px;border-radius:1px;background:#009b3a;display:grid;place-items:center}
+.plate-top .flag span{width:8px;height:6px;background:#ffdf00;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.plate input{width:100%;border:none;padding:7px 6px 9px;font-variant-numeric:tabular-nums;font-size:26px;font-weight:700;text-align:center;letter-spacing:.14em;text-indent:.14em;color:#0e0e0e;text-transform:uppercase;background:#fff}
+.plate input:focus{outline:none;background:#fffdf2}
+.plate input::placeholder{color:#c9c9c9}
+.plate.bad{border-color:var(--stop);animation:shake .3s}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.go{background:var(--hi);color:#141414;border:none;border-radius:var(--r);padding:12px 22px;font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:.02em;cursor:pointer;display:inline-flex;align-items:center;gap:9px;height:46px}
+.go:hover{background:#ffd451}
+.plate-msg{font-variant-numeric:tabular-nums;font-size:11.5px;color:var(--low);min-height:16px;margin-top:8px;width:100%}
+.plate-msg.bad{color:var(--stop)}
+.samples{font-variant-numeric:tabular-nums;font-size:11px;color:var(--low);display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-top:4px}
+.sample{background:var(--panel);border:1px solid var(--line);color:var(--mid);border-radius:4px;padding:5px 9px;cursor:pointer;font-family:inherit;font-size:11px}
+.sample:hover{border-color:var(--hi);color:var(--hi)}
 
-        .live-server-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: #4ade80;
-            font-weight: 700;
-        }
+/* ── ordem de serviço ───────────────────── */
+.os{max-width:1180px;margin:0 auto;padding:0 20px 70px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.os-head{padding:22px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-start}
+.os-code{font-variant-numeric:tabular-nums;font-size:11px;letter-spacing:.14em;color:var(--hi);background:rgba(255,198,26,.1);border:1px solid rgba(255,198,26,.3);border-radius:4px;padding:4px 9px;display:inline-block;margin-bottom:11px}
+.os-head h3{font-size:22px;font-weight:700}
+.os-meta{font-variant-numeric:tabular-nums;font-size:12px;color:var(--mid);margin-top:8px;line-height:1.7}
+.os-meta b{color:var(--txt);font-weight:500}
+.os-state{text-align:right;flex-shrink:0}
+.state-pill{display:inline-flex;align-items:center;gap:8px;border-radius:99px;padding:8px 15px;font-size:12.5px;font-weight:700}
+.state-pill.exec{background:rgba(255,159,28,.13);color:var(--wait);border:1px solid rgba(255,159,28,.32)}
+.state-pill.done{background:rgba(61,220,132,.13);color:var(--go);border:1px solid rgba(61,220,132,.32)}
+.state-pill.hold{background:rgba(255,92,92,.13);color:var(--stop);border:1px solid rgba(255,92,92,.32)}
+.eta{font-variant-numeric:tabular-nums;font-size:12px;color:var(--mid);margin-top:10px}
+.eta b{display:block;font-size:16px;color:var(--txt);margin-top:2px}
 
-        .live-server-tag span {
-            width: 7px;
-            height: 7px;
-            background: #22c55e;
-            border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 6px #22c55e;
-        }
+/* ── esteira ────────────────────────────── */
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-bottom:1px solid var(--line)}
+.fstep{background:var(--panel);padding:18px 16px;position:relative}
+.fstep .n{font-variant-numeric:tabular-nums;font-size:10px;color:var(--low);letter-spacing:.12em}
+.fstep h5{font-size:13.5px;font-weight:700;color:var(--low);margin:6px 0 4px}
+.fstep p{font-size:11.5px;color:var(--low);line-height:1.45}
+.fstep time{display:block;font-variant-numeric:tabular-nums;font-size:10.5px;color:var(--low);margin-top:7px}
+.fstep::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--line)}
+.fstep.ok h5,.fstep.ok p{color:var(--mid)}
+.fstep.ok h5{color:var(--txt)}
+.fstep.ok time{color:var(--go)}
+.fstep.ok::after{background:var(--go)}
+.fstep.now{background:var(--panel-2)}
+.fstep.now h5{color:var(--hi)}
+.fstep.now p,.fstep.now time{color:var(--mid)}
+.fstep.now::after{background:var(--hi);animation:blink 2s infinite}
 
-        /* Header */
-        header {
-            background: rgba(17, 23, 34, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            padding: 16px 24px;
-        }
+/* ── corpo ──────────────────────────────── */
+.os-body{display:grid;grid-template-columns:1.5fr 1fr;gap:0}
+.os-col{padding:24px}
+.os-col+.os-col{border-left:1px solid var(--line)}
+.blk-t{font-variant-numeric:tabular-nums;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--low);padding-bottom:10px;border-bottom:1px solid var(--line);margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.blk-t span{color:var(--hi)}
 
-        .header-wrap {
-            max-width: 1140px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+/* itens do orçamento */
+.item{display:grid;grid-template-columns:auto 1fr auto;gap:13px;align-items:start;padding:13px 0;border-bottom:1px solid var(--line)}
+.item:last-child{border-bottom:none}
+.item-chk{width:20px;height:20px;accent-color:var(--hi);cursor:pointer;margin-top:2px}
+.item-chk:disabled{cursor:not-allowed;opacity:.5}
+.item h6{font-size:13.5px;font-weight:600;line-height:1.35}
+.item-sub{font-variant-numeric:tabular-nums;font-size:11px;color:var(--low);margin-top:4px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.badge{border-radius:3px;padding:2px 6px;font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+.badge.peca{background:var(--panel-2);color:var(--mid)}
+.badge.serv{background:rgba(11,75,171,.22);color:#7fb0ff}
+.badge.crit{background:rgba(255,92,92,.15);color:var(--stop)}
+.badge.apr{background:rgba(61,220,132,.14);color:var(--go)}
+.badge.rec{background:var(--panel-2);color:var(--low)}
+.item-val{font-variant-numeric:tabular-nums;font-size:14px;font-weight:500;text-align:right;white-space:nowrap}
+.item.off h6,.item.off .item-val{color:var(--low);text-decoration:line-through}
 
-        .brand-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: white;
-        }
+.totals{margin-top:18px;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.trow{display:flex;justify-content:space-between;gap:14px;padding:5px 0;font-size:13px;color:var(--mid)}
+.trow b{font-variant-numeric:tabular-nums;color:var(--txt);font-weight:500}
+.trow.big{border-top:1px solid var(--line);margin-top:8px;padding-top:12px;font-size:15px;color:var(--txt);font-weight:700}
+.trow.big b{font-size:21px;color:var(--hi);font-weight:700}
+.approve{width:100%;margin-top:14px;background:var(--go);color:#07240f;border:none;border-radius:var(--r);padding:15px;font-size:14.5px;font-weight:900;text-transform:uppercase;letter-spacing:.02em;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px}
+.approve:hover:not(:disabled){background:#5ae89a}
+.approve:disabled{background:var(--panel-2);color:var(--low);cursor:not-allowed}
+.approve-note{font-variant-numeric:tabular-nums;font-size:10.5px;color:var(--low);text-align:center;margin-top:9px;line-height:1.5}
 
-        .brand-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #1d4ed8, #3b82f6);
-            border-radius: var(--radius-md);
-            display: grid;
-            place-items: center;
-            color: white;
-            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
-        }
+/* histórico */
+.log{position:relative;padding-left:24px}
+.log::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.lg{position:relative;padding-bottom:20px}
+.lg:last-child{padding-bottom:0}
+.lg::before{content:"";position:absolute;left:-22px;top:5px;width:14px;height:14px;border-radius:50%;background:var(--panel);border:2px solid var(--line-2)}
+.lg.hi::before{border-color:var(--hi);background:var(--hi)}
+.lg h6{font-size:13px;font-weight:600}
+.lg time{font-variant-numeric:tabular-nums;font-size:10.5px;color:var(--low);display:block;margin-bottom:3px}
+.lg p{font-size:12px;color:var(--mid);line-height:1.55;margin-top:3px}
 
-        .brand-name h1 {
-            font-family: 'Chivo', sans-serif;
-            font-size: 1.25rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: -0.01em;
-            line-height: 1;
-        }
 
-        .brand-name span {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.65rem;
-            color: #60a5fa;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            font-weight: 600;
-            display: block;
-            margin-top: 3px;
-        }
+.notify{margin-top:24px;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.notify h5{font-size:13px;font-weight:700;margin-bottom:5px}
+.notify p{font-size:12px;color:var(--mid);line-height:1.55;margin-bottom:13px}
+.chan{display:grid;gap:7px}
+.chan button{display:flex;align-items:center;gap:11px;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:11px 13px;cursor:pointer;color:var(--txt);font-size:13px;font-weight:600;text-align:left;width:100%}
+.chan button:hover{border-color:var(--line-2)}
+.chan button[aria-pressed="true"]{border-color:var(--go);background:rgba(61,220,132,.07)}
+.chan i{width:28px;height:28px;border-radius:5px;background:var(--panel-2);color:var(--mid);display:grid;place-items:center;flex-shrink:0}
+.chan button[aria-pressed="true"] i{background:rgba(61,220,132,.14);color:var(--go)}
 
-        /* Main Container */
-        main {
-            max-width: 1140px;
-            margin: 36px auto 70px;
-            padding: 0 24px;
-        }
+.tools{display:flex;gap:8px;margin-top:20px;flex-wrap:wrap}
+.tool{flex:1;min-width:130px;background:var(--panel-2);border:1px solid var(--line);color:var(--txt);border-radius:6px;padding:11px;font-size:12.5px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
+.tool:hover{border-color:var(--hi);color:var(--hi)}
 
-        /* Search Box */
-        .search-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 28px;
-            margin-bottom: 28px;
-            box-shadow: var(--shadow-card);
-        }
+/* ── vistoria de entrada ────────────────── */
+.vist{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:16px}
+.vist>div{background:var(--panel);padding:12px 14px}
+.vist dt{font-variant-numeric:tabular-nums;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--low);margin-bottom:5px}
+.vist dd{font-variant-numeric:tabular-nums;font-size:15px;font-weight:500;color:var(--txt);font-variant-numeric:tabular-nums}
 
-        .search-card h2 {
-            font-family: 'Chivo', sans-serif;
-            font-size: 1.4rem;
-            font-weight: 800;
-            margin-bottom: 6px;
-        }
+.tanque{margin-top:7px}
+.tanque-barra{height:8px;background:var(--deck);border:1px solid var(--line-2);border-radius:2px;overflow:hidden}
+.tanque-barra i{display:block;height:100%;background:var(--hi)}
+.tanque-marcas{display:flex;justify-content:space-between;font-variant-numeric:tabular-nums;font-size:8.5px;color:var(--low);margin-top:3px}
 
-        .search-card p {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-        }
+.avarias{display:grid;gap:8px;margin-bottom:16px}
+.avaria{display:grid;grid-template-columns:74px 1fr;gap:11px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:9px;align-items:center}
+.avaria img{width:74px;height:56px;object-fit:cover;border-radius:3px;border:1px solid var(--line-2)}
+.avaria b{display:block;font-size:12.5px;font-weight:600}
+.avaria span{display:block;font-size:11.5px;color:var(--mid);line-height:1.45;margin-top:2px}
+.checklist{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:5px}
+.chk{display:flex;justify-content:space-between;gap:8px;font-size:11.5px;color:var(--mid);padding:6px 9px;background:var(--panel);border:1px solid var(--line);border-radius:3px}
+.chk b{font-variant-numeric:tabular-nums;color:var(--txt);font-weight:500}
+.chk b.falta{color:var(--stop)}
+.termo{font-variant-numeric:tabular-nums;font-size:10.5px;color:var(--low);margin-top:11px;line-height:1.6;padding-top:11px;border-top:1px solid var(--line)}
 
-        .search-group {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
+/* ── scanner OBD-II ─────────────────────── */
+.scan-meta{font-variant-numeric:tabular-nums;font-size:10.5px;color:var(--low);margin-bottom:12px;line-height:1.6}
+.scan-meta b{color:var(--mid)}
+.dtc{display:grid;gap:7px;margin-bottom:16px}
+.dtc-item{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:start;background:var(--panel);border:1px solid var(--line);border-left-width:3px;border-radius:var(--r);padding:11px 13px}
+.dtc-item.ativo{border-left-color:var(--stop)}
+.dtc-item.pendente{border-left-color:var(--wait)}
+.dtc-item.historico{border-left-color:var(--line-2)}
+.dtc-cod{font-variant-numeric:tabular-nums;font-size:14px;font-weight:700;letter-spacing:.03em;white-space:nowrap}
+.dtc-item.ativo .dtc-cod{color:var(--stop)}
+.dtc-item.pendente .dtc-cod{color:var(--wait)}
+.dtc-item.historico .dtc-cod{color:var(--low)}
+.dtc-desc{font-size:12.5px;line-height:1.45}
+.dtc-desc small{display:block;font-variant-numeric:tabular-nums;font-size:10.5px;color:var(--low);margin-top:3px}
+.dtc-st{font-variant-numeric:tabular-nums;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--low);white-space:nowrap}
+.params{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.params>div{background:var(--panel);display:flex;justify-content:space-between;gap:12px;padding:9px 13px;font-size:12px;color:var(--mid)}
+.params b{font-variant-numeric:tabular-nums;color:var(--txt);font-weight:500;text-align:right;font-variant-numeric:tabular-nums}
+.params b.fora{color:var(--stop)}
 
-        .plate-input-field {
-            flex: 1;
-            min-width: 280px;
-            background: #090e17;
-            border: 2px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 14px 18px;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #ffffff;
-            text-transform: uppercase;
-            outline: none;
-            letter-spacing: 0.1em;
-            transition: all 0.2s;
-        }
+/* ── assinatura ─────────────────────────── */
+.assin{margin-top:16px;background:var(--panel-2);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.assin h6{font-variant-numeric:tabular-nums;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--low);margin-bottom:4px}
+.assin>p{font-size:11.5px;color:var(--mid);line-height:1.55;margin-bottom:10px}
+.pad-assin{position:relative;background:#fff;border:1px solid var(--line-2);border-radius:3px;height:132px;overflow:hidden}
+.pad-assin canvas{display:block;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.pad-linha{position:absolute;left:22px;right:22px;bottom:30px;border-bottom:1px dashed #b8b8b8;pointer-events:none}
+.pad-dica{position:absolute;left:0;right:0;bottom:11px;text-align:center;font-variant-numeric:tabular-nums;font-size:10px;color:#9a9a9a;pointer-events:none}
+.assin-acoes{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:9px}
+.assin-limpar{background:none;border:none;color:var(--low);font-variant-numeric:tabular-nums;font-size:11px;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.assin-limpar:hover{color:var(--txt)}
+.assin-st{font-variant-numeric:tabular-nums;font-size:10.5px;color:var(--low)}
+.assin-st.ok{color:var(--go)}
+.assin-img{max-width:280px;border-bottom:1px solid var(--line-2);margin:0 auto 6px;display:block}
 
-        .plate-input-field:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-        }
+/* ── recibo de aprovação ────────────────── */
+.receipt{padding:34px 24px;text-align:center;animation:up .35s ease}
+@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.receipt-i{width:56px;height:56px;border-radius:50%;background:rgba(61,220,132,.13);border:1px solid rgba(61,220,132,.34);color:var(--go);display:grid;place-items:center;margin:0 auto 16px}
+.receipt h3{font-size:23px;font-weight:900;text-transform:uppercase}
+.receipt>p{color:var(--mid);font-size:14px;max-width:46ch;margin:11px auto 24px;line-height:1.6}
+.prot{background:var(--deck);border:1px solid var(--line);border-radius:var(--r);padding:16px;max-width:420px;margin:0 auto 22px}
+.prot span{font-variant-numeric:tabular-nums;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--low);display:block;margin-bottom:5px}
+.prot b{font-variant-numeric:tabular-nums;font-size:25px;font-weight:700;color:var(--go)}
+.rlist{max-width:420px;margin:0 auto 22px;text-align:left;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.rlist>div{display:flex;justify-content:space-between;gap:14px;padding:11px 15px;border-bottom:1px solid var(--line);font-size:13px;color:var(--mid)}
+.rlist>div:last-child{border-bottom:none}
+.rlist b{font-variant-numeric:tabular-nums;color:var(--txt);font-weight:500;text-align:right}
+.again{background:none;border:none;color:var(--low);font-variant-numeric:tabular-nums;font-size:11px;text-decoration:underline;text-underline-offset:4px;cursor:pointer;margin-top:22px}
 
-        .btn-query-os {
-            background: var(--brand-blue);
-            color: white;
-            border: none;
-            border-radius: var(--radius-md);
-            padding: 14px 28px;
-            font-family: 'Chivo', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: background 0.2s;
-        }
+.miss{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:56px 24px;text-align:center}
+.miss b{display:block;font-size:19px;font-weight:700;margin-bottom:9px}
+.miss p{color:var(--mid);font-size:14px;max-width:44ch;margin:0 auto 20px;line-height:1.6}
 
-        .btn-query-os:hover {
-            background: var(--brand-blue-hover);
-        }
+footer{border-top:1px solid var(--line);background:var(--panel);padding:30px 20px}
+.ft{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:12.5px;color:var(--low);line-height:1.75}
+footer b{color:var(--mid)}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,180%);background:var(--panel-2);border:1px solid var(--line-2);border-left:3px solid var(--go);padding:13px 20px;border-radius:var(--r);font-size:13px;font-weight:600;z-index:120;transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.toast.on{transform:translate(-50%,0)}
 
-        .demo-samples-row {
-            margin-top: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.78rem;
-            color: var(--text-dim);
-            flex-wrap: wrap;
-        }
-
-        .sample-pill {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            color: #93c5fd;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.75rem;
-            padding: 3px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .sample-pill:hover {
-            border-color: #60a5fa;
-        }
-
-        /* Order Details Card */
-        .order-result-card {
-            background: var(--bg-surface);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 32px;
-            box-shadow: var(--shadow-card);
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-
-        .order-header-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            gap: 16px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .os-number-tag {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: #60a5fa;
-            background: rgba(37, 99, 235, 0.12);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-            padding: 3px 8px;
-            border-radius: 4px;
-            display: inline-block;
-            margin-bottom: 6px;
-        }
-
-        .vehicle-title {
-            font-family: 'Chivo', sans-serif;
-            font-size: 1.45rem;
-            font-weight: 800;
-            margin-bottom: 4px;
-        }
-
-        .vehicle-meta-sub {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        .os-status-pill {
-            background: rgba(34, 197, 94, 0.12);
-            color: #4ade80;
-            border: 1px solid rgba(34, 197, 94, 0.3);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Check-in Technical Grid */
-        .checkin-specs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-md);
-            padding: 16px 20px;
-        }
-
-        .checkin-spec-item span {
-            display: block;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.7rem;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            margin-bottom: 2px;
-        }
-
-        .checkin-spec-item strong {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.92rem;
-            color: #ffffff;
-        }
-
-        /* Stepper Flow */
-        .stepper-timeline {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin: 6px 0;
-        }
-
-        .timeline-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .step-circle {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: var(--bg-card);
-            border: 2px solid var(--border-color);
-            display: grid;
-            place-items: center;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.82rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--text-dim);
-        }
-
-        .timeline-step.completed .step-circle {
-            background: var(--brand-green);
-            border-color: var(--brand-green);
-            color: #052e16;
-        }
-
-        .timeline-step.active .step-circle {
-            background: var(--brand-blue);
-            border-color: #60a5fa;
-            color: #ffffff;
-            box-shadow: 0 0 14px rgba(37, 99, 235, 0.5);
-        }
-
-        .step-label {
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: var(--text-dim);
-        }
-
-        .timeline-step.completed .step-label, .timeline-step.active .step-label {
-            color: #ffffff;
-        }
-
-        /* Items Table */
-        .items-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.85rem;
-            background: var(--bg-card);
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-        }
-
-        .items-table th {
-            background: #111722;
-            color: var(--text-muted);
-            text-align: left;
-            padding: 12px 16px;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 0.72rem;
-            text-transform: uppercase;
-        }
-
-        .items-table td {
-            padding: 12px 16px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .category-badge {
-            background: #0e141f;
-            border: 1px solid var(--border-color);
-            padding: 2px 7px;
-            border-radius: 4px;
-            font-size: 0.72rem;
-            color: #cbd5e1;
-        }
-
-        .price-val-mono {
-            font-family: 'IBM Plex Mono', monospace;
-            font-weight: 700;
-            text-align: right;
-        }
-
-        /* Order Bottom Actions */
-        .order-bottom-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-            background: var(--bg-card);
-            padding: 20px 24px;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--border-color);
-        }
-
-        .order-total-block span {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            display: block;
-        }
-
-        .order-total-block strong {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 1.4rem;
-            color: #4ade80;
-        }
-
-        .btn-mechanic-whatsapp {
-            background: #25d366;
-            color: #052e16;
-            text-decoration: none;
-            padding: 12px 22px;
-            border-radius: var(--radius-md);
-            font-weight: 800;
-            font-size: 0.88rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s;
-        }
-
-        .btn-mechanic-whatsapp:hover {
-            background: #20ba59;
-        }
-
-        footer {
-            background: #06090e;
-            border-top: 1px solid var(--border-color);
-            padding: 30px 24px;
-            text-align: center;
-            font-size: 0.8rem;
-            color: var(--text-dim);
-        }
-
-        @media (max-width: 720px) {
-            .stepper-timeline { grid-template-columns: 1fr 1fr; gap: 18px; }
-            .order-result-card { padding: 20px; }
-        }
-    </style>
+@media (max-width:900px){
+  .os-body{grid-template-columns:1fr}
+  .os-col+.os-col{border-left:none;border-top:1px solid var(--line)}
+  .flow{grid-template-columns:repeat(2,1fr)}
+  .os-state{text-align:left}
+}
+@media print{
+  header,.query,.approve,.notify,.tools,.again,footer,.toast{display:none!important}
+  body{background:#fff;color:#000}
+  .card,.item,.totals{border-color:#ccc;background:#fff}
+  .fstep{background:#fff}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+</style>
 </head>
 <body>
 
-    <!-- Top Bar -->
-    <div class="top-erp-bar">
-        <span class="live-server-tag"><span></span> SERVIDOR DE GESTÃO AUTOMOTIVA ONLINE</span>
-        <span>Boxes Ocupados: <strong>7/9</strong> · Ordens Ativas: <strong>23</strong></span>
-    </div>
+<header>
+  <div class="hd">
+    <a href="#" class="brand">
+      <span class="brand-i"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span>
+      <div><h1>AutoCenter Diesel MT</h1><span>Linha leve e pesada</span></div>
+    </a>
+    
+  </div>
+</header>
 
-    <!-- Header -->
-    <header>
-        <div class="header-wrap">
-            <a href="#" class="brand-link">
-                <div class="brand-icon">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-                </div>
-                <div class="brand-name">
-                    <h1>AutoCenter & Diesel MT</h1>
-                    <span>Centro Automotivo & Linha Pesada Diesel</span>
-                </div>
-            </a>
+<section class="query">
+  <div>
+    <h2>Seu veículo está <em>pronto</em>?</h2>
+    <p>Digite a placa e veja a vistoria de entrada, o que o scanner leu, o orçamento item a item e em que etapa o serviço está. Se houver item aguardando aprovação, você libera aqui mesmo — assinando na tela.</p>
+  </div>
+  <div>
+    <div class="consulta">
+      <div class="plate" id="plate">
+        <div class="plate-top">
+          <span class="mercosul"><i></i><i></i><i></i></span>
+          <span class="br">BRASIL</span>
+          <span class="flag"><span></span></span>
         </div>
-    </header>
+        <input type="text" id="placa" maxlength="7" placeholder="ABC1D23" value="RNT4E20"
+               inputmode="text" autocomplete="off" spellcheck="false" aria-label="Placa do veículo">
+      </div>
+      <button class="go" onclick="consultar()">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        Consultar
+      </button>
+      <p class="plate-msg" id="msg">Mercosul (ABC1D23) ou modelo antigo (ABC1234)</p>
+    </div>
+    <div class="samples">
+      <span>Demonstração:</span>
+      <button class="sample" onclick="usar('RNT4E20')">RNT4E20 · Hilux</button>
+      <button class="sample" onclick="usar('JHD8840')">JHD8840 · John Deere</button>
+      <button class="sample" onclick="usar('QPA2F55')">QPA2F55 · Scania</button>
+    </div>
+  </div>
+</section>
 
-    <main>
-        <!-- Search Card -->
-        <section class="search-card">
-            <h2>Rastreamento de Ordem de Serviço (O.S)</h2>
-            <p>Consulte a evolução do serviço em tempo real, laudos do scanner eletrônico e previsão de liberação do veículo.</p>
+<section class="os" id="os"></section>
 
-            <div class="search-group">
-                <input type="text" class="plate-input-field" id="osPlateQuery" placeholder="DIGITE A PLACA (EX: RNT4E20)..." value="RNT4E20">
-                <button class="btn-query-os" onclick="queryOS()">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                    <span>Buscar O.S</span>
-                </button>
-            </div>
+<footer>
+  <div class="ft">
+    <div><b>AutoCenter &amp; Mecânica Diesel MT Ltda</b><br>Av. Beira Rio, 1.200 · Cuiabá – MT · (65) 3624-0000<br>Seg a sex 07h30–18h · Sáb 07h30–12h</div>
+    <div>Demonstração funcional · DevStudio<br>Ordens de serviço e valores ilustrativos</div>
+  </div>
+</footer>
 
-            <div class="demo-samples-row">
-                <span>Placas de teste:</span>
-                <span class="sample-pill" onclick="setPlateSample('RNT4E20')">RNT4E20 (Toyota Hilux SRX 2024)</span>
-                <span class="sample-pill" onclick="setPlateSample('JHD8840')">JHD8840 (John Deere 6100J)</span>
-            </div>
-        </section>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-        <!-- Order Result Area -->
-        <section id="orderMount">
-            <!-- Dynamic order details -->
-        </section>
-    </main>
+<script>
+/* ── base de ordens ─────────────────────── */
+const ETAPAS=[
+  {n:'01',t:'Recepção',   d:'Entrada no pátio e abertura da OS'},
+  {n:'02',t:'Vistoria',   d:'KM, tanque, avarias e termo assinado'},
+  {n:'03',t:'Diagnóstico',d:'Scanner OBD-II e inspeção do mecânico'},
+  {n:'04',t:'Orçamento',  d:'Enviado para aprovação do responsável'},
+  {n:'05',t:'Execução',   d:'Serviço em andamento no box'},
+  {n:'06',t:'Entrega',    d:'Testado e liberado para retirada'}
+];
 
-    <!-- Footer -->
-    <footer>
-        <p><strong>AutoCenter & Mecânica Diesel MT Ltda</strong> — CNPJ 18.240.912/0001-33 · Av. Beira Rio, 1.200 · Cuiabá - MT</p>
-        <p style="margin-top: 4px;">Demonstração funcional de portal de oficina desenvolvida por DevStudio.</p>
-    </footer>
+const BASE={
+  'RNT4E20':{
+    os:'OS-8492', veiculo:'Toyota Hilux SRX 2.8 Diesel 4x4 · 2024',
+    cliente:'Agropecuária Rio Manso Ltda', km:'87.420 km',
+    entrada:'18/08 · 08h30', previsao:'Hoje até 17h30',
+    etapa:4, estado:'exec', estadoTxt:'Aguardando aprovação',
+    vistoria:{km:'87.420 km',tanque:0.5,tanqueTxt:'1/2 tanque',
+      vistoriador:'Adilson Ramos · matrícula 0142',
+      termo:'Termo de vistoria assinado pelo condutor às 08h41 de 18/08. Cópia digital anexa à OS.',
+      avarias:[
+        {l:'Para-choque dianteiro',d:'Risco de 12 cm no canto direito, tinta não exposta.',f:'https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=200&auto=format&fit=crop&q=60'},
+        {l:'Parabrisa',d:'Trinca de 4 cm na base, fora do campo de visão do condutor.',f:'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?w=200&auto=format&fit=crop&q=60'}
+      ],
+      itens:{'Estepe':'Presente','Macaco e chave':'Presente','Triângulo':'Ausente','CRLV':'No porta-luvas','Multimídia':'Original','Tapetes':'4 peças'}},
+    scanner:{eq:'Texa Axone Nano · ISO 15765-4 CAN',lido:'18/08 às 09h12',
+      dtc:[
+        {c:'P0087',d:'Pressão do trilho de combustível abaixo do esperado',sis:'Common rail',st:'ativo'},
+        {c:'P2002',d:'Eficiência do filtro de particulados abaixo do limite — banco 1',sis:'Pós-tratamento',st:'pendente'},
+        {c:'U0121',d:'Perda de comunicação com o módulo do ABS',sis:'Rede CAN',st:'historico'}
+      ],
+      par:{'Pressão do rail em marcha lenta':['248 bar','esperado 280 a 320',true],
+           'Temperatura do líquido de arrefecimento':['89 °C','normal',false],
+           'Tensão da bateria com motor ligado':['13,9 V','normal',false],
+           'Contrapressão do escape':['42 mbar','normal',false]}},
+    mecanico:'Marcos Vinícius · linha diesel leve',
+    box:'Box 4',
+    linha:[
+      {t:'Veículo recebido',hora:'18/08 08h30',nota:'Checklist assinado. Tanque em 1/2, sem avarias externas registradas.'},
+      {t:'Diagnóstico eletrônico',hora:'18/08 09h15',nota:'Scanner sem códigos de falha ativos. Pastilhas dianteiras com 2 mm — abaixo do limite de 3 mm.'},
+      {t:'Orçamento enviado',hora:'18/08 10h02',nota:'Aguardando aprovação do responsável pela frota.'}
+    ],
+    itens:[
+      {id:1,d:'Jogo de pastilhas de freio cerâmica dianteira (Brembo)',t:'peca',v:480,st:'pendente',crit:true},
+      {id:2,d:'Retífica dos discos dianteiros',t:'serv',v:180,st:'pendente',crit:true},
+      {id:3,d:'Filtro de combustível diesel duplo reforçado',t:'peca',v:290,st:'aprovado',crit:false},
+      {id:4,d:'Óleo 5W30 sintético baixo teor de cinzas (8 L)',t:'peca',v:560,st:'aprovado',crit:false},
+      {id:5,d:'Mão de obra: revisão geral, sangria e teste eletrônico',t:'serv',v:350,st:'aprovado',crit:false},
+      {id:6,d:'Alinhamento e balanceamento das quatro rodas',t:'serv',v:220,st:'pendente',crit:false}
+    ]
+  },
+  'JHD8840':{
+    os:'OS-8470', veiculo:'Trator John Deere 6100J cabinado',
+    cliente:'Fazenda Santa Maria · Sinop-MT', km:'6.840 h de motor',
+    entrada:'17/08 · 14h00', previsao:'19/08 até 11h00',
+    etapa:5, estado:'hold', estadoTxt:'Aguardando peça',
+    vistoria:{km:'6.840 h de motor',tanque:0.25,tanqueTxt:'1/4 de tanque',
+      vistoriador:'Carlos Eduardo · matrícula 0087',
+      termo:'Termo assinado pelo transportador na descarga da prancha às 14h12 de 17/08.',
+      avarias:[
+        {l:'Vazamento no comando',d:'Óleo hidráulico escorrendo pela tampa lateral, confirmado na chegada.',f:'https://images.unsplash.com/photo-1530267981375-f0de937f5f13?w=200&auto=format&fit=crop&q=60'},
+        {l:'Vidro da cabine',d:'Trinca no vidro traseiro, pré-existente e registrada.',f:'https://images.unsplash.com/photo-1592982537447-7440770cbfc9?w=200&auto=format&fit=crop&q=60'}
+      ],
+      itens:{'Chave reserva':'Entregue','Manual':'Ausente','Caixa de ferramentas':'Presente','Lastro dianteiro':'6 peças','Documentação':'Com o proprietário'}},
+    scanner:{eq:'John Deere Service Advisor 5.3',lido:'17/08 às 16h20',
+      dtc:[
+        {c:'SPN 157 FMI 18',d:'Pressão do circuito hidráulico abaixo do mínimo operacional',sis:'Hidráulico',st:'ativo'},
+        {c:'SPN 4364 FMI 17',d:'Eficiência do catalisador SCR abaixo do esperado',sis:'Pós-tratamento',st:'pendente'}
+      ],
+      par:{'Pressão do comando duplo':['96 bar','esperado 180 a 210',true],
+           'Temperatura do fluido hidráulico':['74 °C','normal',false],
+           'Horas até a próxima revisão':['160 h','normal',false]}},
+    mecanico:'Carlos Eduardo · mecânica pesada',
+    box:'Box 8 · pátio coberto',
+    linha:[
+      {t:'Máquina recebida em prancha',hora:'17/08 14h00',nota:'Vazamento no comando hidráulico confirmado na chegada.'},
+      {t:'Diagnóstico hidráulico',hora:'17/08 16h20',nota:'Perda de pressão na válvula de comando duplo. Vedação interna comprometida — troca do conjunto.'},
+      {t:'Peça solicitada à fábrica',hora:'17/08 17h05',nota:'Válvula original em trânsito de Campinas. Previsão de chegada: 19/08 às 08h.'}
+    ],
+    itens:[
+      {id:1,d:'Válvula de comando hidráulico duplo original',t:'peca',v:3800,st:'aprovado',crit:true},
+      {id:2,d:'Fluido hidráulico de alta pressão (50 L)',t:'peca',v:1450,st:'aprovado',crit:false},
+      {id:3,d:'Kit de vedações do conjunto de levante',t:'peca',v:640,st:'pendente',crit:false},
+      {id:4,d:'Mão de obra especializada e diagnóstico',t:'serv',v:800,st:'aprovado',crit:false}
+    ]
+  },
+  'QPA2F55':{
+    os:'OS-8455', veiculo:'Scania R450 6x2 · cavalo mecânico 2021',
+    cliente:'Transportes Vale do Teles Pires', km:'642.180 km',
+    entrada:'16/08 · 06h40', previsao:'Liberado desde ontem 16h20',
+    etapa:6, estado:'done', estadoTxt:'Pronto para retirada',
+    vistoria:{km:'642.180 km',tanque:0.75,tanqueTxt:'3/4 de tanque',
+      vistoriador:'Marcos Vinícius · matrícula 0231',
+      termo:'Termo assinado pelo motorista às 06h52 de 16/08. Veículo devolvido com o mesmo nível de tanque.',
+      avarias:[
+        {l:'Para-lama esquerdo',d:'Amassado leve, pré-existente, sem tinta exposta.',f:'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=200&auto=format&fit=crop&q=60'}
+      ],
+      itens:{'Estepe':'Presente','Cintas de carga':'8 peças','Tacógrafo':'Lacre íntegro','CRLV':'Com o motorista','Extintor':'Válido até 2027'}},
+    scanner:{eq:'Scania SDP3 · protocolo proprietário',lido:'16/08 às 08h10',
+      dtc:[
+        {c:'P0401',d:'Fluxo insuficiente de recirculação de gases (EGR)',sis:'Emissões',st:'historico'}
+      ],
+      par:{'Pressão de sobrealimentação':['2,4 bar','normal',false],
+           'Consumo médio do último ciclo':['2,9 km/L','normal',false],
+           'Tensão do alternador':['28,2 V','normal',false],
+           'Nível de Arla 32':['64%','normal',false]}},
+    mecanico:'Adilson Ramos · linha pesada',
+    box:'Pátio de liberação',
+    linha:[
+      {t:'Cavalo recebido',hora:'16/08 06h40',nota:'Entrada para revisão preventiva de 640 mil km.'},
+      {t:'Diagnóstico completo',hora:'16/08 08h10',nota:'Sem falhas críticas. Correia do alternador com desgaste lateral.'},
+      {t:'Serviço executado',hora:'17/08 11h30',nota:'Revisão completa, troca da correia e teste de estrada de 40 km.'},
+      {t:'Liberado para retirada',hora:'17/08 16h20',nota:'Nota fiscal emitida. Pátio aberto até 18h nos dias úteis.'}
+    ],
+    itens:[
+      {id:1,d:'Revisão preventiva de 640 mil km (kit completo)',t:'serv',v:2400,st:'aprovado',crit:false},
+      {id:2,d:'Correia do alternador e tensionador',t:'peca',v:890,st:'aprovado',crit:false},
+      {id:3,d:'Óleo de motor 15W40 (38 L) e filtros',t:'peca',v:1680,st:'aprovado',crit:false}
+    ]
+  }
+};
 
-    <script>
-        const osDatabase = {
-            "RNT4E20": {
-                code: "OS-8492",
-                vehicle: "Toyota Hilux SRX 2.8 Turbo Diesel 4x4 (2024)",
-                client: "Agropecuária Rio Manso Ltda",
-                km: "42.800 km",
-                fuel: "¾ Tanque",
-                technician: "Marcos Vinícius (Especialista Diesel ASE)",
-                entryDate: "18/08/2026 às 08:30",
-                estimate: "Hoje até às 17:30",
-                step: 3,
-                statusLabel: "Em Execução (Troca de Pastilhas & Sangria)",
-                diagnostic: "Scanner OBD-II: DTC P0087 resolvido após limpeza de bicos injetores e substituição do filtro duplo de combustível.",
-                items: [
-                    { desc: "Jogo de Pastilhas de Freio Cerâmica Dianteira (Brembo)", type: "Peça Original", price: 480.00 },
-                    { desc: "Filtro de Combustível Diesel Duplo Reforçado (Donaldson)", type: "Peça Original", price: 290.00 },
-                    { desc: "Óleo 5W30 100% Sintético Low-SAPS (8 Litros)", type: "Fluido / Lubrificante", price: 560.00 },
-                    { desc: "Mão de Obra: Revisão Geral, Sangria e Teste de Bancada", type: "Serviço Especializado", price: 350.00 }
-                ]
-            },
-            "JHD8840": {
-                code: "OS-8470",
-                vehicle: "Trator Agrícola John Deere 6100J Cabinada",
-                client: "Fazenda Santa Maria - Sinop/MT",
-                km: "3.420 Horas",
-                fuel: "½ Tanque",
-                technician: "Carlos Eduardo (Mecânica Pesada de Campo)",
-                entryDate: "17/08/2026 às 14:00",
-                estimate: "19/08/2026 às 11:00",
-                step: 2,
-                statusLabel: "Aguardando Válvula Hidráulica",
-                diagnostic: "Pressão hidráulica com vazão reduzida no comando auxiliar. Válvula direcional com desgaste prematuro.",
-                items: [
-                    { desc: "Válvula de Comando Hidráulico Duplo Original", type: "Peça Original", price: 3800.00 },
-                    { desc: "Fluido Hidráulico de Alta Pressão ISO 68 (50L)", type: "Fluido / Lubrificante", price: 1450.00 },
-                    { desc: "Mão de Obra de Diagnóstico e Calibração de Pressão", type: "Serviço Especializado", price: 800.00 }
-                ]
-            }
-        };
+/* ── estado ─────────────────────────────── */
+let atual=null, marcados={}, canal=null;
+let assinado=false, assinaturaPng=null;
+const el=id=>document.getElementById(id);
+const brl=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
-        function queryOS() {
-            const query = document.getElementById('osPlateQuery').value.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
-            const data = osDatabase[query] || osDatabase["RNT4E20"];
-            const container = document.getElementById('orderMount');
+/* ── placa ──────────────────────────────── */
+const MERCOSUL=/^[A-Z]{3}\d[A-Z]\d{2}$/;
+const ANTIGA=/^[A-Z]{3}\d{4}$/;
+function validaPlaca(p){return MERCOSUL.test(p)||ANTIGA.test(p)}
 
-            let total = data.items.reduce((sum, i) => sum + i.price, 0);
+el('placa').addEventListener('input',e=>{
+  e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,7);
+  el('plate').classList.remove('bad'); el('msg').classList.remove('bad');
+  el('msg').textContent = e.target.value.length<7
+    ? 'Formato Mercosul (ABC1D23) ou antigo (ABC1234)'
+    : (validaPlaca(e.target.value)?'Placa válida — pode consultar':'Confira: não bate com nenhum dos dois formatos');
+});
+el('placa').addEventListener('keydown',e=>{if(e.key==='Enter')consultar()});
+function usar(p){el('placa').value=p;el('placa').dispatchEvent(new Event('input'));consultar()}
 
-            container.innerHTML = `
-                <div class="order-result-card">
-                    <div class="order-header-info">
-                        <div>
-                            <span class="os-number-tag">O.S Nº ${data.code}</span>
-                            <h3 class="vehicle-title">${data.vehicle}</h3>
-                            <span class="vehicle-meta-sub">Cliente: <strong>${data.client}</strong> · Entrada: ${data.entryDate}</span>
-                        </div>
-                        <div class="os-status-pill">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                            <span>${data.statusLabel}</span>
-                        </div>
-                    </div>
+function consultar(){
+  const p=el('placa').value.trim();
+  if(!validaPlaca(p)){
+    el('plate').classList.add('bad'); el('msg').classList.add('bad');
+    el('msg').textContent='Placa incompleta ou fora do padrão. Confira e tente de novo.';
+    el('placa').focus();
+    return;
+  }
+  atual=BASE[p]||null;
+  if(!atual){
+    el('os').innerHTML='<div class="miss"><b>Nenhuma OS aberta para '+esc(p)+'</b>'+
+      '<p>Ou o veículo já foi retirado, ou a placa foi digitada de outro jeito no cadastro. O balcão localiza pelo chassi ou pelo nome do responsável.</p>'+
+      '<a class="tool" style="max-width:260px;margin:0 auto" href="tel:+556536240000">'+
+      '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>'+
+      'Ligar para o balcão</a></div>';
+    return;
+  }
+  marcados={}; canal=null;
+  atual.itens.forEach(i=>{if(i.st==='pendente') marcados[i.id]=true});
+  pintar();
+  el('os').scrollIntoView({behavior:'smooth',block:'start'});
+}
 
-                    <!-- Technical Specs Checkin -->
-                    <div class="checkin-specs-grid">
-                        <div class="checkin-spec-item">
-                            <span>Quilometragem / Horímetro</span>
-                            <strong>${data.km}</strong>
-                        </div>
-                        <div class="checkin-spec-item">
-                            <span>Nível de Combustível</span>
-                            <strong>${data.fuel}</strong>
-                        </div>
-                        <div class="checkin-spec-item">
-                            <span>Técnico Responsável</span>
-                            <strong>${data.technician}</strong>
-                        </div>
-                        <div class="checkin-spec-item">
-                            <span>Previsão de Entrega</span>
-                            <strong style="color: #60a5fa;">${data.estimate}</strong>
-                        </div>
-                    </div>
+/* ── totais ─────────────────────────────── */
+function aprovados(){return atual.itens.filter(i=>i.st==='aprovado')}
+function pendentes(){return atual.itens.filter(i=>i.st==='pendente')}
+function somaAprov(){return aprovados().reduce((a,i)=>a+i.v,0)}
+function somaMarcados(){return pendentes().filter(i=>marcados[i.id]).reduce((a,i)=>a+i.v,0)}
 
-                    <!-- Stepper -->
-                    <div class="stepper-timeline">
-                        <div class="timeline-step ${data.step >= 1 ? 'completed' : ''}">
-                            <div class="step-circle">${data.step > 1 ? '✓' : '1'}</div>
-                            <span class="step-label">1. Recepção & Vistoria</span>
-                        </div>
-                        <div class="timeline-step ${data.step >= 2 ? (data.step === 2 ? 'active' : 'completed') : ''}">
-                            <div class="step-circle">${data.step > 2 ? '✓' : '2'}</div>
-                            <span class="step-label">2. Diagnóstico Scanner</span>
-                        </div>
-                        <div class="timeline-step ${data.step >= 3 ? (data.step === 3 ? 'active' : 'completed') : ''}">
-                            <div class="step-circle">${data.step > 3 ? '✓' : '3'}</div>
-                            <span class="step-label">3. Execução Técnica</span>
-                        </div>
-                        <div class="timeline-step ${data.step >= 4 ? 'completed' : ''}">
-                            <div class="step-circle">4</div>
-                            <span class="step-label">4. Teste & Retirada</span>
-                        </div>
-                    </div>
+/* ── render ─────────────────────────────── */
+function pintar(){
+  const o=atual, pend=pendentes();
+  el('os').innerHTML=
+    '<div class="card">'+
+      '<div class="os-head">'+
+        '<div>'+
+          '<span class="os-code">'+o.os+' · '+el('placa').value+'</span>'+
+          '<h3>'+o.veiculo+'</h3>'+
+          '<div class="os-meta">CLIENTE <b>'+o.cliente+'</b> · '+o.km+'<br>'+
+            'ENTRADA <b>'+o.entrada+'</b> · '+o.box+'<br>'+
+            'MECÂNICO <b>'+o.mecanico+'</b></div>'+
+        '</div>'+
+        '<div class="os-state">'+
+          '<span class="state-pill '+o.estado+'">'+
+            (o.estado==='done'?'✓':o.estado==='hold'?'⏸':'⚙')+' '+o.estadoTxt+'</span>'+
+          '<div class="eta">PREVISÃO DE ENTREGA<b>'+o.previsao+'</b></div>'+
+        '</div>'+
+      '</div>'+
 
-                    <!-- Items Table -->
-                    <div>
-                        <h4 style="font-family: 'Chivo'; font-size: 1.1rem; margin-bottom: 12px;">Discriminação de Peças e Serviços Aplicados</h4>
-                        <table class="items-table">
-                            <thead>
-                                <tr>
-                                    <th>Descrição do Item</th>
-                                    <th>Categoria</th>
-                                    <th style="text-align: right;">Valor</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${data.items.map(i => `
-                                    <tr>
-                                        <td><strong>${i.desc}</strong></td>
-                                        <td><span class="category-badge">${i.type}</span></td>
-                                        <td class="price-val-mono">R$ ${i.price.toFixed(2).replace('.', ',')}</td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
-                    </div>
+      '<div class="flow">'+ETAPAS.map((e,i)=>{
+        const cls=i+1<o.etapa?'ok':(i+1===o.etapa?'now':'');
+        const reg=o.linha[i];
+        return '<div class="fstep '+cls+'"><span class="n">'+e.n+'</span><h5>'+e.t+'</h5><p>'+e.d+'</p>'+
+          (reg&&i+1<=o.etapa?'<time>'+reg.hora+'</time>':'')+'</div>';
+      }).join('')+'</div>'+
 
-                    <!-- Bottom Summary -->
-                    <div class="order-bottom-bar">
-                        <div class="order-total-block">
-                            <span>Total Aprovado da O.S:</span>
-                            <strong>R$ ${total.toFixed(2).replace('.', ',')}</strong>
-                        </div>
+      '<div class="os-body">'+
+        '<div class="os-col">'+
+          '<div class="blk-t">Orçamento'+(pend.length?'<span>'+pend.length+' item(ns) aguardando você</span>':'<span>tudo aprovado</span>')+'</div>'+
+          o.itens.map(i=>{
+            const marc=i.st==='pendente'?!!marcados[i.id]:i.st==='aprovado';
+            const off=i.st==='pendente'&&!marc;
+            return '<div class="item'+(off?' off':'')+'">'+
+              '<input type="checkbox" class="item-chk" '+(marc?'checked':'')+' '+(i.st!=='pendente'?'disabled':'')+
+                ' onchange="marcar('+i.id+',this.checked)" aria-label="'+esc(i.d)+'">'+
+              '<div><h6>'+i.d+'</h6><div class="item-sub">'+
+                '<span class="badge '+(i.t==='peca'?'peca':'serv')+'">'+(i.t==='peca'?'peça':'serviço')+'</span>'+
+                (i.crit?'<span class="badge crit">segurança</span>':'')+
+                (i.st==='aprovado'?'<span class="badge apr">já aprovado</span>':'<span class="badge rec">aguardando</span>')+
+              '</div></div>'+
+              '<div class="item-val">'+brl(i.v)+'</div></div>';
+          }).join('')+
 
-                        <a href="https://wa.me/5565999999999?text=${encodeURIComponent('Olá! Gostaria de falar com o mecânico responsável sobre a ' + data.code + ' (' + data.vehicle + ')')}" target="_blank" class="btn-mechanic-whatsapp">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                            <span>Falar com o Mecânico Responsável</span>
-                        </a>
-                    </div>
-                </div>
-            `;
-        }
+          '<div class="totals">'+
+            '<div class="trow"><span>Já aprovado</span><b>'+brl(somaAprov())+'</b></div>'+
+            (pend.length?'<div class="trow"><span>Selecionado agora ('+pend.filter(i=>marcados[i.id]).length+' de '+pend.length+')</span><b>'+brl(somaMarcados())+'</b></div>':'')+
+            '<div class="trow big"><span>Total da OS</span><b>'+brl(somaAprov()+somaMarcados())+'</b></div>'+
+          '</div>'+
+            (pend.length
+              ? '<div class="assin">'+
+                  '<h6>Assinatura do responsável</h6>'+
+                  '<p>Assine com o dedo ou com o mouse. A assinatura vale como autorização de serviço e fica anexada ao laudo técnico.</p>'+
+                  '<div class="pad-assin">'+
+                    '<canvas id="canvasAssin"></canvas>'+
+                    '<div class="pad-linha"></div>'+
+                    '<div class="pad-dica" id="padDica">assine acima da linha</div>'+
+                  '</div>'+
+                  '<div class="assin-acoes">'+
+                    '<button class="assin-limpar" onclick="limparAssinatura()">Limpar e assinar de novo</button>'+
+                    '<span class="assin-st" id="assinSt">aguardando assinatura</span>'+
+                  '</div>'+
+                '</div>'+
+                '<button class="approve" id="btnAprovar" onclick="aprovar()" disabled>'+
+                  '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>'+
+                  'Aprovar o que marquei</button>'+
+                '<p class="approve-note">DESMARQUE O QUE NÃO QUER FAZER AGORA · ITENS DE SEGURANÇA FICAM REGISTRADOS COMO RECUSADOS</p>'
+              : '<p class="approve-note" style="margin-top:14px">ORÇAMENTO INTEGRALMENTE APROVADO · NADA PENDENTE DA SUA PARTE</p>')+
+        '</div>'+
 
-        function setPlateSample(plate) {
-            document.getElementById('osPlateQuery').value = plate;
-            queryOS();
-        }
+        '<div class="os-col">'+
+          '<div class="blk-t">Vistoria de entrada<span>'+o.vistoria.km+'</span></div>'+
+          '<dl class="vist">'+
+            '<div><dt>Quilometragem na entrada</dt><dd>'+o.vistoria.km+'</dd></div>'+
+            '<div><dt>Nível de combustível</dt><dd>'+o.vistoria.tanqueTxt+
+              '<div class="tanque"><div class="tanque-barra"><i style="width:'+(o.vistoria.tanque*100)+'%"></i></div>'+
+              '<div class="tanque-marcas"><span>E</span><span>1/2</span><span>F</span></div></div></dd></div>'+
+          '</dl>'+
+          '<div class="avarias">'+o.vistoria.avarias.map(function(a){
+            return '<div class="avaria"><img src="'+a.f+'" alt="'+esc(a.l)+'" loading="lazy">'+
+              '<div><b>'+a.l+'</b><span>'+a.d+'</span></div></div>';
+          }).join('')+'</div>'+
+          '<div class="checklist">'+Object.keys(o.vistoria.itens).map(function(k){
+            var v=o.vistoria.itens[k];
+            return '<div class="chk"><span>'+k+'</span><b class="'+(v==='Ausente'?'falta':'')+'">'+v+'</b></div>';
+          }).join('')+'</div>'+
+          '<p class="termo">'+o.vistoria.termo+'<br>Vistoriador: '+o.vistoria.vistoriador+'</p>'+
 
-        queryOS();
-    </script>
+          '<div class="blk-t" style="margin-top:26px">Leitura do scanner<span>'+o.scanner.dtc.filter(function(d){return d.st==='ativo'}).length+' falha(s) ativa(s)</span></div>'+
+          '<p class="scan-meta">Equipamento: <b>'+o.scanner.eq+'</b><br>Leitura em <b>'+o.scanner.lido+'</b></p>'+
+          '<div class="dtc">'+o.scanner.dtc.map(function(d){
+            var rot={ativo:'ativa',pendente:'pendente',historico:'histórico'}[d.st];
+            return '<div class="dtc-item '+d.st+'"><span class="dtc-cod">'+d.c+'</span>'+
+              '<span class="dtc-desc">'+d.d+'<small>'+d.sis+'</small></span>'+
+              '<span class="dtc-st">'+rot+'</span></div>';
+          }).join('')+'</div>'+
+          '<div class="params">'+Object.keys(o.scanner.par).map(function(k){
+            var v=o.scanner.par[k];
+            return '<div><span>'+k+'</span><b class="'+(v[2]?'fora':'')+'">'+v[0]+
+              (v[1]?' <span style="font-family:Chivo,sans-serif;font-size:10.5px;color:var(--low)">('+v[1]+')</span>':'')+'</b></div>';
+          }).join('')+'</div>'+
+
+          '<div class="blk-t" style="margin-top:26px">O que já aconteceu</div>'+
+          '<div class="log">'+o.linha.map((l,i)=>
+            '<div class="lg'+(i===o.linha.length-1?' hi':'')+'"><time>'+l.hora+'</time><h6>'+l.t+'</h6><p>'+l.nota+'</p></div>').join('')+'</div>'+
+
+          '<div class="notify"><h5>Quer ser avisado quando ficar pronto?</h5>'+
+            '<p>Escolha por onde prefere receber o aviso. A gente manda uma vez só, quando o veículo for liberado.</p>'+
+            '<div class="chan">'+
+              canalBtn('sms','SMS no seu celular','M8 2h8a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zM11 20h2')+
+              canalBtn('email','E-mail para o responsável','M2 4h20v16H2z M2 7l10 5 10-5')+
+              canalBtn('zap','WhatsApp','M12 2a10 10 0 1 0 5 18.6L22 22l-1.4-5A10 10 0 0 0 12 2z')+
+            '</div></div>'+
+
+          '<div class="tools">'+
+            '<button class="tool" onclick="copiarOS()">'+
+              '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="13" height="13" x="9" y="9" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copiar a OS</button>'+
+            '<button class="tool" onclick="window.print()">'+
+              '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>Imprimir</button>'+
+            '<a class="tool" href="tel:+556536240000">'+
+              '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.2 2 2 0 0 1 4 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.4-1.1a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>Ligar</a>'+
+          '</div>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+}
+/* o canvas precisa ser remontado sempre que a OS é repintada */
+const _pintar=pintar;
+pintar=function(){_pintar();assinado=false;assinaturaPng=null;montarCanvas()};
+
+function canalBtn(k,rot,d){
+  return '<button aria-pressed="'+(canal===k)+'" onclick="setCanal(\''+k+'\')">'+
+    '<i><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="'+d+'"/></svg></i>'+rot+'</button>';
+}
+/* ── assinatura em canvas: mouse, dedo e caneta ── */
+function montarCanvas(){
+  const c=el('canvasAssin'); if(!c) return;
+  const box=c.parentElement, dpr=window.devicePixelRatio||1;
+  c.width=box.clientWidth*dpr; c.height=box.clientHeight*dpr;
+  const ctx=c.getContext('2d');
+  ctx.scale(dpr,dpr);
+  ctx.lineWidth=2.2; ctx.lineCap='round'; ctx.lineJoin='round'; ctx.strokeStyle='#12233a';
+
+  let riscando=false, ultimo=null;
+  const ponto=e=>{
+    const r=c.getBoundingClientRect();
+    return {x:e.clientX-r.left, y:e.clientY-r.top};
+  };
+  const inicio=e=>{
+    e.preventDefault(); riscando=true; ultimo=ponto(e);
+    c.setPointerCapture(e.pointerId);
+    if(el('padDica')) el('padDica').style.display='none';
+  };
+  const mover=e=>{
+    if(!riscando) return;
+    e.preventDefault();
+    const pt=ponto(e);
+    ctx.beginPath(); ctx.moveTo(ultimo.x,ultimo.y); ctx.lineTo(pt.x,pt.y); ctx.stroke();
+    ultimo=pt;
+    if(!assinado){assinado=true;el('assinSt').textContent='assinatura registrada';el('assinSt').classList.add('ok');el('btnAprovar').disabled=false}
+  };
+  const fim=()=>{riscando=false; if(assinado) assinaturaPng=c.toDataURL('image/png')};
+
+  c.addEventListener('pointerdown',inicio);
+  c.addEventListener('pointermove',mover);
+  c.addEventListener('pointerup',fim);
+  c.addEventListener('pointercancel',fim);
+}
+function limparAssinatura(){
+  const c=el('canvasAssin'); if(!c) return;
+  c.getContext('2d').clearRect(0,0,c.width,c.height);
+  assinado=false; assinaturaPng=null;
+  el('assinSt').textContent='aguardando assinatura';
+  el('assinSt').classList.remove('ok');
+  el('btnAprovar').disabled=true;
+  if(el('padDica')) el('padDica').style.display='';
+}
+
+function setCanal(k){
+  canal = canal===k?null:k;
+  pintar();
+  if(canal) toast('Aviso configurado por '+(k==='sms'?'SMS':k==='email'?'e-mail':'WhatsApp'));
+}
+function marcar(id,v){marcados[id]=v;pintar()}
+
+/* ── aprovação: decisão fecha na página ─── */
+let recibo=null;
+function aprovar(){
+  const pend=pendentes();
+  const sim=pend.filter(i=>marcados[i.id]);
+  const nao=pend.filter(i=>!marcados[i.id]);
+  // ponytail: protocolo real vem do sistema de OS da oficina
+  const prot='AP-'+String(new Date().getFullYear()).slice(2)+'-'+String(Math.floor(Math.random()*9000)+1000);
+  const total=somaAprov()+somaMarcados();
+
+  recibo={prot:prot,os:atual.os,placa:el('placa').value,veiculo:atual.veiculo,
+    cliente:atual.cliente, km:atual.vistoria.km,
+    sim:sim.map(i=>i.d+' — '+brl(i.v)), nao:nao.map(i=>i.d), total:total,
+    critRecusado:nao.some(i=>i.crit), previsao:atual.previsao,
+    assinatura:assinaturaPng, quando:new Date().toLocaleString('pt-BR'),
+    dtc:atual.scanner.dtc.map(d=>d.c+' — '+d.d+' ('+d.st+')')};
+
+  sim.forEach(i=>i.st='aprovado');
+  nao.forEach(i=>i.st='recusado');
+  atual.itens=atual.itens.filter(i=>i.st!=='recusado');
+  atual.linha.push({t:'Orçamento aprovado pelo cliente',
+    hora:new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})+' '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}),
+    nota:sim.length+' item(ns) liberado(s)'+(nao.length?', '+nao.length+' recusado(s) e registrado(s) na OS':'')+'. Protocolo '+prot+'.'});
+  if(atual.etapa<3) atual.etapa=3;
+  atual.estado='exec'; atual.estadoTxt='Em execução';
+
+  el('os').innerHTML=
+    '<div class="card"><div class="receipt">'+
+      '<div class="receipt-i"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div>'+
+      '<h3>Orçamento aprovado</h3>'+
+      '<p>O mecânico já foi notificado no box e o serviço entra na fila de execução. Sua decisão fica registrada na OS.</p>'+
+      '<div class="prot"><span>Protocolo de aprovação</span><b>'+prot+'</b></div>'+
+      '<div class="rlist">'+
+        '<div><span>Ordem de serviço</span><b>'+atual.os+'</b></div>'+
+        '<div><span>Veículo</span><b>'+recibo.placa+'</b></div>'+
+        '<div><span>Itens liberados</span><b>'+sim.length+'</b></div>'+
+        (nao.length?'<div><span>Itens recusados</span><b>'+nao.length+'</b></div>':'')+
+        '<div><span>Total autorizado</span><b>'+brl(total)+'</b></div>'+
+        '<div><span>Nova previsão</span><b>'+atual.previsao+'</b></div>'+
+      '</div>'+
+      (recibo.critRecusado
+        ? '<p style="max-width:44ch;margin:0 auto 20px;font-size:12.5px;color:var(--stop);line-height:1.6">Você recusou um item classificado como de segurança. Ele fica registrado na OS e a oficina não se responsabiliza por falha relacionada a esse componente.</p>'
+        : '')+
+      (recibo.assinatura
+        ? '<div style="max-width:420px;margin:0 auto 20px">'+
+            '<img class="assin-img" src="'+recibo.assinatura+'" alt="Assinatura do responsável">'+
+            '<p style="font-family:\'Chivo Mono\',monospace;font-size:10.5px;color:var(--low);text-align:center">'+
+            esc(recibo.cliente)+' · assinado em '+recibo.quando+'</p></div>'
+        : '')+
+      '<div class="tools" style="max-width:460px;margin:0 auto">'+
+        '<button class="tool" onclick="baixarLaudo()">'+
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3"/></svg>Baixar laudo assinado</button>'+
+        '<button class="tool" onclick="copiarRecibo()">'+
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="13" height="13" x="9" y="9" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>Copiar comprovante</button>'+
+        '<button class="tool" onclick="window.print()">'+
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>Imprimir</button>'+
+        '<a class="tool" href="'+mailto()+'">'+
+          '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-10 5L2 7"/></svg>Enviar por e-mail</a>'+
+      '</div>'+
+      '<button class="again" onclick="pintar()">Voltar para a ordem de serviço</button>'+
+    '</div></div>';
+  toast('Aprovação registrada · '+prot);
+}
+
+function textoOS(){
+  const o=atual;
+  return 'AUTOCENTER DIESEL MT — '+o.os+'\n'+
+    'Veículo: '+o.veiculo+' ('+el('placa').value+')\n'+
+    'Cliente: '+o.cliente+'\n'+
+    'Entrada: '+o.entrada+' · '+o.box+'\n'+
+    'Situação: '+o.estadoTxt+' · previsão '+o.previsao+'\n\n'+
+    'ITENS:\n'+o.itens.map(i=>'- '+i.d+' — '+brl(i.v)+' ['+i.st+']').join('\n')+'\n\n'+
+    'Total aprovado: '+brl(somaAprov());
+}
+function textoRecibo(){
+  const r=recibo;
+  return 'AUTOCENTER DIESEL MT — APROVAÇÃO '+r.prot+'\n'+
+    'OS '+r.os+' · '+r.veiculo+' ('+r.placa+')\n\n'+
+    'AUTORIZADO:\n'+(r.sim.length?r.sim.map(s=>'- '+s).join('\n'):'- nenhum item novo')+
+    (r.nao.length?'\n\nRECUSADO:\n'+r.nao.map(s=>'- '+s).join('\n'):'')+
+    '\n\nTotal autorizado: '+brl(r.total)+
+    '\nPrevisão de entrega: '+r.previsao;
+}
+/* laudo autocontido: abre em qualquer navegador e imprime em PDF */
+function baixarLaudo(){
+  const r=recibo;
+  const linha=(k,v)=>'<tr><th>'+k+'</th><td>'+v+'</td></tr>';
+  const html='<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8">'+
+    '<title>Laudo '+r.prot+' — OS '+r.os+'</title><style>'+
+    'body{font-family:system-ui,sans-serif;color:#111;max-width:720px;margin:36px auto;padding:0 24px;line-height:1.55}'+
+    'h1{font-size:19px;margin:0 0 4px}h2{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#666;margin:26px 0 8px;font-weight:600}'+
+    '.ref{font-family:ui-monospace,monospace;color:#666;font-size:13px;margin-bottom:22px}'+
+    'table{width:100%;border-collapse:collapse;font-size:13px}'+
+    'th{text-align:left;color:#555;font-weight:500;padding:7px 12px 7px 0;width:38%;vertical-align:top;border-bottom:1px solid #eee}'+
+    'td{padding:7px 0;border-bottom:1px solid #eee;font-family:ui-monospace,monospace}'+
+    'ul{margin:0;padding-left:20px;font-size:13px}li{margin-bottom:4px}'+
+    '.sig{margin-top:36px;border-top:1px solid #ccc;padding-top:10px;text-align:center}'+
+    '.sig img{max-width:280px;display:block;margin:0 auto 6px}'+
+    '.sig p{font-size:12px;color:#666;margin:0}'+
+    '.aviso{margin-top:26px;font-size:11.5px;color:#777;border-left:2px solid #ddd;padding-left:12px;line-height:1.6}'+
+    '</style></head><body>'+
+    '<h1>AutoCenter &amp; Mecânica Diesel MT</h1>'+
+    '<p class="ref">Laudo técnico e autorização de serviço '+r.prot+' · OS '+r.os+'</p>'+
+    '<h2>Veículo</h2><table>'+
+      linha('Placa',r.placa)+linha('Descrição',r.veiculo)+linha('Cliente',r.cliente)+linha('KM na entrada',r.km)+
+    '</table>'+
+    '<h2>Códigos lidos no scanner</h2><ul>'+r.dtc.map(d=>'<li>'+d+'</li>').join('')+'</ul>'+
+    '<h2>Itens autorizados</h2><ul>'+(r.sim.length?r.sim.map(x=>'<li>'+x+'</li>').join(''):'<li>Nenhum item novo</li>')+'</ul>'+
+    (r.nao.length?'<h2>Itens recusados pelo cliente</h2><ul>'+r.nao.map(x=>'<li>'+x+'</li>').join('')+'</ul>':'')+
+    '<h2>Totais</h2><table>'+linha('Total autorizado',brl(r.total))+linha('Previsão de entrega',r.previsao)+'</table>'+
+    (r.assinatura?'<div class="sig"><img src="'+r.assinatura+'" alt="Assinatura"><p>'+r.cliente+' · assinado em '+r.quando+'</p></div>':'')+
+    (r.critRecusado?'<p class="aviso">O cliente recusou item classificado como de segurança. A recusa fica registrada na OS e a oficina não se responsabiliza por falha decorrente desse componente.</p>':'')+
+    '<p class="aviso">Documento gerado pelo sistema da oficina. Garantia de peça e serviço conforme o Código de Defesa do Consumidor, art. 26.</p>'+
+    '</body></html>';
+  const url=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));
+  const a=document.createElement('a'); a.href=url; a.download='laudo-'+r.prot+'.html'; a.click();
+  URL.revokeObjectURL(url);
+  toast('Laudo assinado baixado — abra e salve em PDF');
+}
+
+function copiarOS(){
+  navigator.clipboard.writeText(textoOS()).then(()=>toast('OS copiada'),()=>toast('Não foi possível copiar aqui'));
+}
+function copiarRecibo(){
+  navigator.clipboard.writeText(textoRecibo()).then(()=>toast('Comprovante copiado'),()=>toast('Não foi possível copiar aqui'));
+}
+function mailto(){
+  return 'mailto:?subject='+encodeURIComponent('Aprovação '+recibo.prot+' — OS '+recibo.os)+'&body='+encodeURIComponent(textoRecibo());
+}
+
+let tH;
+function toast(m){const t=el('toast');t.textContent=m;t.classList.add('on');clearTimeout(tH);tH=setTimeout(()=>t.classList.remove('on'),2600)}
+
+consultar();
+
+/* verificação mínima: validação de placa e soma do orçamento */
+console.assert(validaPlaca('RNT4E20')&&validaPlaca('ABC1234'),'os dois formatos de placa devem passar');
+console.assert(!validaPlaca('RNT4E2')&&!validaPlaca('1234ABC'),'placa inválida não pode passar');
+console.assert(somaAprov()+somaMarcados()===atual.itens.reduce((a,i)=>a+i.v,0),'com tudo marcado, o total é a soma de todos os itens');
+(function(){
+  /* toda OS precisa de vistoria e leitura de scanner — é o que dá lastro ao orçamento */
+  Object.keys(BASE).forEach(function(pl){
+    const o=BASE[pl];
+    console.assert(o.vistoria && o.vistoria.km,pl+' sem quilometragem de entrada');
+    console.assert(o.vistoria.tanque>=0 && o.vistoria.tanque<=1,pl+' com nível de tanque fora de 0 a 1');
+    console.assert(o.vistoria.avarias.length>0,pl+' sem registro fotográfico de avaria');
+    console.assert(o.scanner && o.scanner.dtc.length>0,pl+' sem código de falha lido');
+    console.assert(o.scanner.dtc.every(function(d){return ['ativo','pendente','historico'].indexOf(d.st)>=0}),pl+' com status de DTC inválido');
+    console.assert(o.etapa>=1 && o.etapa<=ETAPAS.length,pl+' fora da esteira de '+ETAPAS.length+' etapas');
+  });
+  /* parâmetro fora da faixa tem de existir em quem está com falha ativa */
+  const hilux=BASE['RNT4E20'];
+  console.assert(Object.keys(hilux.scanner.par).some(function(k){return hilux.scanner.par[k][2]}),
+    'Hilux com P0087 ativo precisa de parâmetro fora da faixa');
+})();
+</script>
 </body>
 </html>

@@ -1,0 +1,1582 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dom Barbeiro | Barbearia Clássica, Barboterapia & Agendamento Online</title>
+    <meta name="description" content="Agendamento online na Dom Barbeiro em Cuiabá. Escolha o serviço, seu barbeiro de preferência, data e horário com confirmação instantânea.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #0b0e14;
+            --bg-surface: #111622;
+            --bg-card: #171f30;
+            --bg-card-hover: #1e293f;
+            --gold-primary: #c5a059;
+            --gold-light: #dfbe7e;
+            --gold-dark: #967535;
+            --leather: #8a4b24;
+            --border-subtle: #243048;
+            --border-gold: rgba(197, 160, 89, 0.35);
+            --text-main: #f3f5f8;
+            --text-muted: #9aa7bc;
+            --text-dim: #60718b;
+            --success-color: #22c55e;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --shadow-card: 0 12px 30px rgba(0, 0, 0, 0.45);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.5;
+        }
+
+        .serif {
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        a { color: inherit; text-decoration: none; }
+        button, input, select, textarea { font: inherit; }
+
+        /* Barra Superior Institucional */
+        .top-info-strip {
+            background: #07090e;
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 8px 24px;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .top-info-strip b { color: var(--gold-light); }
+
+        .live-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #4ade80;
+            font-weight: 600;
+        }
+
+        .live-status-pill i {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 8px #22c55e;
+            animation: pulse-dot 2s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
+        }
+
+        /* Cabeçalho */
+        header {
+            background: rgba(17, 22, 34, 0.94);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--border-subtle);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 16px 24px;
+        }
+
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, var(--gold-primary), var(--leather));
+            color: #0b0e14;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 16px rgba(197, 160, 89, 0.35);
+        }
+
+        .brand-title h1 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+            line-height: 1.1;
+            color: #fff;
+        }
+
+        .brand-title span {
+            font-size: 0.68rem;
+            color: var(--gold-light);
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            font-weight: 700;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .header-vip-link {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .header-vip-link:hover { color: var(--gold-light); }
+
+        .btn-schedule-nav {
+            background: var(--gold-primary);
+            color: #0b0e14;
+            border: none;
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            font-weight: 800;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .btn-schedule-nav:hover {
+            background: var(--gold-light);
+            transform: translateY(-1px);
+        }
+
+        /* Hero */
+        .hero-banner {
+            max-width: 1200px;
+            margin: 36px auto 20px;
+            padding: 0 24px;
+        }
+
+        .hero-card {
+            background: linear-gradient(135deg, rgba(23, 31, 48, 0.95), rgba(11, 14, 20, 0.95)), url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1200&auto=format&fit=crop&q=80') center/cover;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 48px 40px;
+            display: grid;
+            grid-template-columns: 1.3fr 0.9fr;
+            gap: 40px;
+            align-items: center;
+            box-shadow: var(--shadow-card);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 5px;
+            background: linear-gradient(180deg, var(--gold-primary), var(--leather));
+        }
+
+        .hero-tag {
+            font-size: 0.72rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            font-weight: 800;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .hero-card h2 {
+            font-size: clamp(2rem, 3.8vw, 3rem);
+            font-weight: 700;
+            line-height: 1.15;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+
+        .hero-card h2 em {
+            color: var(--gold-light);
+            font-style: italic;
+        }
+
+        .hero-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .amenities-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .amenity-chip {
+            background: rgba(17, 22, 34, 0.8);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 6px 12px;
+            font-size: 0.78rem;
+            color: #d1d9e6;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .amenity-chip svg { color: var(--gold-primary); }
+
+        .hero-side-stats {
+            background: rgba(11, 14, 20, 0.75);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .hero-side-stats h4 {
+            font-size: 0.9rem;
+            color: var(--gold-light);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 700;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 10px;
+        }
+
+        .stat-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+
+        .stat-line span { color: var(--text-muted); }
+        .stat-line strong { color: #fff; font-weight: 700; }
+
+        /* Fluxo Principal de Agendamento */
+        .booking-flow-section {
+            max-width: 1200px;
+            margin: 30px auto 70px;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 1.35fr 0.85fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .step-container-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 16px;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            background: rgba(197, 160, 89, 0.15);
+            border: 1px solid var(--border-gold);
+            color: var(--gold-light);
+            display: grid;
+            place-items: center;
+            font-weight: 800;
+            font-size: 0.9rem;
+        }
+
+        .step-header h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .step-header p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* 1. Grade de Serviços */
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+
+        .service-option-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.2s;
+        }
+
+        .service-option-card:hover {
+            border-color: var(--gold-dark);
+            background: var(--bg-card-hover);
+        }
+
+        .service-option-card.active {
+            border-color: var(--gold-primary);
+            background: rgba(197, 160, 89, 0.08);
+            box-shadow: 0 0 0 1px var(--gold-primary);
+        }
+
+        .service-main-info h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .service-main-info p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .service-duration-badge {
+            font-size: 0.72rem;
+            color: var(--gold-light);
+            background: rgba(197, 160, 89, 0.12);
+            padding: 2px 8px;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 6px;
+            font-weight: 600;
+        }
+
+        .service-price-block {
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .service-price {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--gold-light);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* 2. Seleção de Barbeiro */
+        .barbers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .barber-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            cursor: pointer;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+
+        .barber-card:hover {
+            border-color: var(--gold-dark);
+            background: var(--bg-card-hover);
+        }
+
+        .barber-card.active {
+            border-color: var(--gold-primary);
+            background: rgba(197, 160, 89, 0.08);
+            box-shadow: 0 0 0 1px var(--gold-primary);
+        }
+
+        .barber-avatar-wrap {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--border-subtle);
+            position: relative;
+        }
+
+        .barber-card.active .barber-avatar-wrap {
+            border-color: var(--gold-primary);
+        }
+
+        .barber-avatar-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .barber-name {
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .barber-specialty {
+            font-size: 0.72rem;
+            color: var(--text-dim);
+            line-height: 1.3;
+        }
+
+        /* 3. Seleção de Dias e Horários */
+        .days-slider {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .day-tab {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 12px 6px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .day-tab:hover:not(.disabled) {
+            border-color: var(--gold-dark);
+        }
+
+        .day-tab.active {
+            background: var(--gold-primary);
+            border-color: var(--gold-primary);
+            color: #0b0e14;
+        }
+
+        .day-tab.active .day-name, .day-tab.active .day-month {
+            color: #0b0e14;
+            font-weight: 700;
+        }
+
+        .day-tab.active .day-num {
+            color: #0b0e14;
+        }
+
+        .day-name {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-dim);
+            font-weight: 600;
+        }
+
+        .day-num {
+            font-size: 1.25rem;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            margin: 4px 0 2px;
+            color: #fff;
+        }
+
+        .day-month {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+        }
+
+        .time-slots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 8px;
+        }
+
+        .time-slot-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 10px 6px;
+            cursor: pointer;
+            text-align: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #d1d9e6;
+            transition: all 0.2s;
+        }
+
+        .time-slot-btn:hover:not(:disabled) {
+            border-color: var(--gold-light);
+            color: #fff;
+        }
+
+        .time-slot-btn.active {
+            background: var(--gold-primary);
+            border-color: var(--gold-primary);
+            color: #0b0e14;
+            font-weight: 800;
+        }
+
+        .time-slot-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            text-decoration: line-through;
+        }
+
+        /* 4. Mimos / Adicionais */
+        .extras-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .extra-checkbox-label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: border-color 0.2s;
+        }
+
+        .extra-checkbox-label:hover {
+            border-color: var(--gold-dark);
+        }
+
+        .extra-checkbox-label.checked {
+            border-color: var(--gold-primary);
+            background: rgba(197, 160, 89, 0.06);
+        }
+
+        .extra-checkbox-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .extra-checkbox-left input {
+            accent-color: var(--gold-primary);
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Painel Lateral de Resumo / Checkout */
+        .summary-sticky-panel {
+            position: sticky;
+            top: 96px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .summary-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .summary-head {
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 14px;
+        }
+
+        .summary-head h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .summary-head p {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .summary-details-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            font-size: 0.85rem;
+        }
+
+        .summary-detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-muted);
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+            padding-bottom: 8px;
+        }
+
+        .summary-detail-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .summary-detail-row strong {
+            color: #fff;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        .form-user-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-user-field label {
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-user-field input {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            color: #fff;
+            font-size: 0.88rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-user-field input:focus {
+            border-color: var(--gold-primary);
+        }
+
+        .summary-total-box {
+            background: rgba(197, 160, 89, 0.08);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .summary-total-box span {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .summary-total-box b {
+            font-size: 1.35rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--gold-light);
+        }
+
+        .btn-confirm-appointment {
+            background: var(--gold-primary);
+            color: #0b0e14;
+            border: none;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            font-weight: 800;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+
+        .btn-confirm-appointment:hover:not(:disabled) {
+            background: var(--gold-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(197, 160, 89, 0.4);
+        }
+
+        .btn-confirm-appointment:disabled {
+            background: #243048;
+            color: #60718b;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Comprovante / Modal de Sucesso */
+        .modal-receipt-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(7, 9, 14, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .modal-receipt-backdrop.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .receipt-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-lg);
+            width: min(520px, 100%);
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 32px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            animation: zoom-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes zoom-in {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .receipt-icon-success {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            color: #4ade80;
+            display: grid;
+            place-items: center;
+            margin: 0 auto;
+        }
+
+        .receipt-header {
+            text-align: center;
+        }
+
+        .receipt-header h3 {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .receipt-header p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .receipt-voucher-ticket {
+            background: #0b0e14;
+            border: 1px dashed var(--gold-primary);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 0.85rem;
+        }
+
+        .voucher-header-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 8px;
+        }
+
+        .voucher-code {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--gold-light);
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+
+        .receipt-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-action-receipt {
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-whatsapp-receipt {
+            background: #25d366;
+            color: #052e16;
+        }
+
+        .btn-whatsapp-receipt:hover {
+            background: #20ba59;
+        }
+
+        .btn-calendar-receipt {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            color: #fff;
+        }
+
+        .btn-calendar-receipt:hover {
+            border-color: var(--gold-light);
+        }
+
+        .btn-close-receipt {
+            background: transparent;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            text-decoration: underline;
+            margin-top: 4px;
+        }
+
+        /* Clube VIP Banner */
+        .vip-club-section {
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            padding: 0 24px;
+        }
+
+        .vip-club-card {
+            background: linear-gradient(135deg, #1c1409 0%, #111622 100%);
+            border: 1px solid var(--border-gold);
+            border-radius: var(--radius-lg);
+            padding: 36px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .vip-club-info h3 {
+            font-size: 1.4rem;
+            color: var(--gold-light);
+            margin-bottom: 6px;
+        }
+
+        .vip-club-info p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            max-width: 580px;
+        }
+
+        .vip-badge-tag {
+            background: var(--gold-primary);
+            color: #0b0e14;
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            font-weight: 800;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        footer {
+            background: #07090e;
+            border-top: 1px solid var(--border-subtle);
+            padding: 36px 24px;
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--text-dim);
+        }
+
+        footer strong { color: #fff; }
+
+        @media (max-width: 960px) {
+            .hero-card { grid-template-columns: 1fr; }
+            .booking-flow-section { grid-template-columns: 1fr; }
+            .summary-sticky-panel { position: static; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Faixa Topo -->
+    <div class="top-info-strip">
+        <span>📍 Av. Senador Metello, 850 · Bairro Goiabeiras · Cuiabá - MT</span>
+        <span class="live-status-pill"><i></i> Barba & Chopp Lounge aberto até 21h</span>
+        <span>Tel / WhatsApp: <b>(65) 3624-7700</b></span>
+    </div>
+
+    <!-- Cabeçalho -->
+    <header>
+        <div class="header-inner">
+            <a href="#" class="brand-logo">
+                <div class="brand-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m14 4 6 6-6 6-6-6 6-6Z"/><path d="M4 14v4a2 2 0 0 0 2 2h4"/><path d="M20 14v4a2 2 0 0 1-2 2h-4"/></svg>
+                </div>
+                <div class="brand-title">
+                    <h1 class="serif">Dom Barbeiro</h1>
+                    <span>Clube & Barboterapia Cuiabá</span>
+                </div>
+            </a>
+
+            <div class="header-actions">
+                <a href="#clube-vip" class="header-vip-link">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12l4 6-10 12L2 9l4-6Z"/></svg>
+                    <span>Clube VIP por Assinatura</span>
+                </a>
+                <a href="#agendamento" class="btn-schedule-nav">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                    <span>Agendar Horário</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-banner">
+            <div class="hero-card">
+                <div>
+                    <span class="hero-tag">Tradição, Visagismo & Toalha Quente</span>
+                    <h2 class="serif">Mais que um corte, seu <em>ritual de cuidado</em> masculino.</h2>
+                    <p>Ambiente climatizado exclusivo, navalha esterilizada, produtos premium para barba e cabelo e aquele chopp artesanal cortesia enquanto você relaxa.</p>
+                    
+                    <div class="amenities-list">
+                        <span class="amenity-chip">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            Chopp Artesanal Cortesia
+                        </span>
+                        <span class="amenity-chip">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            Tolerância e Pontualidade
+                        </span>
+                        <span class="amenity-chip">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+                            Barboterapia com Massagem
+                        </span>
+                    </div>
+                </div>
+
+                <div class="hero-side-stats">
+                    <h4>Informações da Unidade</h4>
+                    <div class="stat-line">
+                        <span>Endereço:</span>
+                        <strong>Goiabeiras, Cuiabá</strong>
+                    </div>
+                    <div class="stat-line">
+                        <span>Horário Hoje:</span>
+                        <strong>08:30 às 21:00</strong>
+                    </div>
+                    <div class="stat-line">
+                        <span>Estacionamento:</span>
+                        <strong style="color: #4ade80;">Valet Gratuito no Local</strong>
+                    </div>
+                    <div class="stat-line">
+                        <span>Espaço Lounge:</span>
+                        <strong>Mesa de Sinuca & Café</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fluxo de Agendamento -->
+        <section class="booking-flow-section" id="agendamento">
+            <div class="step-container-card">
+
+                <!-- 1. Escolha do Serviço -->
+                <div>
+                    <div class="step-header">
+                        <div class="step-number">1</div>
+                        <div>
+                            <h3>Escolha o Serviço</h3>
+                            <p>Selecione o procedimento desejado para hoje</p>
+                        </div>
+                    </div>
+
+                    <div class="services-grid" id="servicesContainer" style="margin-top: 18px;">
+                        <!-- Injetado por JS -->
+                    </div>
+                </div>
+
+                <!-- 2. Escolha do Barbeiro -->
+                <div>
+                    <div class="step-header">
+                        <div class="step-number">2</div>
+                        <div>
+                            <h3>Escolha o Profissional</h3>
+                            <p>Prefere algum barbeiro especialista em seu estilo?</p>
+                        </div>
+                    </div>
+
+                    <div class="barbers-grid" id="barbersContainer" style="margin-top: 18px;">
+                        <!-- Injetado por JS -->
+                    </div>
+                </div>
+
+                <!-- 3. Escolha da Data e Horário -->
+                <div>
+                    <div class="step-header">
+                        <div class="step-number">3</div>
+                        <div>
+                            <h3>Data e Horário</h3>
+                            <p>Selecione o dia e a janela livre na agenda</p>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 18px;">
+                        <div class="days-slider" id="daysSlider">
+                            <!-- Injetado por JS -->
+                        </div>
+
+                        <div class="time-slots-grid" id="timeSlotsGrid">
+                            <!-- Injetado por JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Mimos & Cuidados Opcionais -->
+                <div>
+                    <div class="step-header">
+                        <div class="step-number">4</div>
+                        <div>
+                            <h3>Adicionais & Experiência</h3>
+                            <p>Deseja incluir algum cuidado extra no seu atendimento?</p>
+                        </div>
+                    </div>
+
+                    <div class="extras-list" id="extrasContainer" style="margin-top: 18px;">
+                        <!-- Injetado por JS -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Painel de Resumo / Checkout -->
+            <div class="summary-sticky-panel">
+                <div class="summary-card">
+                    <div class="summary-head">
+                        <h4>Resumo do Agendamento</h4>
+                        <p>Confira os detalhes antes de confirmar</p>
+                    </div>
+
+                    <div class="summary-details-list">
+                        <div class="summary-detail-row">
+                            <span>Serviço:</span>
+                            <strong id="summaryService">—</strong>
+                        </div>
+                        <div class="summary-detail-row">
+                            <span>Duração estimada:</span>
+                            <strong id="summaryDuration">—</strong>
+                        </div>
+                        <div class="summary-detail-row">
+                            <span>Barbeiro:</span>
+                            <strong id="summaryBarber">—</strong>
+                        </div>
+                        <div class="summary-detail-row">
+                            <span>Data e Hora:</span>
+                            <strong id="summaryDateTime" style="color: var(--gold-light);">—</strong>
+                        </div>
+                        <div class="summary-detail-row">
+                            <span>Adicionais:</span>
+                            <strong id="summaryExtras">Nenhum</strong>
+                        </div>
+                    </div>
+
+                    <div class="form-user-field">
+                        <label>Seu Nome Completo:</label>
+                        <input type="text" id="clientName" placeholder="Ex: Rodrigo Mendes" oninput="validateBookingForm()">
+                    </div>
+
+                    <div class="form-user-field">
+                        <label>WhatsApp para Confirmação:</label>
+                        <input type="tel" id="clientPhone" placeholder="Ex: (65) 99999-8888" oninput="validateBookingForm()">
+                    </div>
+
+                    <div class="summary-total-box">
+                        <span>Valor Total:</span>
+                        <b id="summaryTotalPrice">R$ 0,00</b>
+                    </div>
+
+                    <button class="btn-confirm-appointment" id="btnConfirmBooking" onclick="finishAppointment()" disabled>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>
+                        <span>Confirmar Agendamento</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Clube VIP por Assinatura -->
+        <section class="vip-club-section" id="clube-vip">
+            <div class="vip-club-card">
+                <div class="vip-club-info">
+                    <span class="hero-tag">Exclusividade Dom Barbeiro</span>
+                    <h3 class="serif">Clube de Assinatura Mensal VIP</h3>
+                    <p>Corte o cabelo e faça a barba quantas vezes quiser no mês com horário prioritário, chopp liberado em todas as visitas e 15% de desconto em pomadas e óleos importados.</p>
+                </div>
+                <div class="vip-badge-tag">
+                    A partir de R$ 189/mês
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de Comprovante de Agendamento -->
+    <div class="modal-receipt-backdrop" id="receiptModal">
+        <div class="receipt-card">
+            <div class="receipt-icon-success">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+            </div>
+
+            <div class="receipt-header">
+                <h3 class="serif">Horário Confirmado!</h3>
+                <p>Seu agendamento foi registrado com sucesso em nosso sistema.</p>
+            </div>
+
+            <div class="receipt-voucher-ticket">
+                <div class="voucher-header-line">
+                    <span style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.08em;">Voucher de Agendamento</span>
+                    <span class="voucher-code" id="voucherCode">#DB-8492</span>
+                </div>
+                <div>
+                    <small style="color: var(--text-dim); display: block; font-size: 0.72rem;">Cliente:</small>
+                    <strong id="voucherClientName" style="color: #fff; font-size: 0.95rem;">—</strong>
+                </div>
+                <div>
+                    <small style="color: var(--text-dim); display: block; font-size: 0.72rem;">Procedimento & Barbeiro:</small>
+                    <span id="voucherServiceAndBarber" style="color: #d1d9e6;">—</span>
+                </div>
+                <div>
+                    <small style="color: var(--text-dim); display: block; font-size: 0.72rem;">Quando:</small>
+                    <strong id="voucherDateTime" style="color: var(--gold-light); font-size: 0.95rem;">—</strong>
+                </div>
+                <div>
+                    <small style="color: var(--text-dim); display: block; font-size: 0.72rem;">Local:</small>
+                    <span style="color: #9aa7bc;">Dom Barbeiro · Goiabeiras (Cuiabá-MT)</span>
+                </div>
+            </div>
+
+            <div class="receipt-actions">
+                <button class="btn-action-receipt btn-whatsapp-receipt" onclick="sendWhatsAppConfirmation()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                    <span>Receber Lembrete no WhatsApp</span>
+                </button>
+                <button class="btn-action-receipt btn-calendar-receipt" onclick="downloadIcsInvite()">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"/></svg>
+                    <span>Salvar na Minha Agenda (.ics)</span>
+                </button>
+                <button class="btn-close-receipt" onclick="closeReceiptModal()">Fazer outro agendamento</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>Dom Barbeiro & Clube de Cavalheiros Ltda</strong> — CNPJ 38.910.482/0001-90</p>
+        <p style="margin-top: 4px;">Av. Senador Metello, 850 · Goiabeiras, Cuiabá - MT · Tel: (65) 3624-7700</p>
+        <p style="margin-top: 6px; color: #404f66;">Demonstração técnica e funcional desenvolvida por DevStudio.</p>
+    </footer>
+
+    <script>
+        // Dados dos Serviços
+        const servicesData = [
+            {
+                id: "corte",
+                name: "Corte Tradicional / Fade Navalhado",
+                desc: "Visagismo, lavagem especial com massagem capilar e finalização com pomada matte premium.",
+                duration: "45 min",
+                price: 65.00
+            },
+            {
+                id: "barba",
+                name: "Barboterapia na Toalha Quente",
+                desc: "Ritual completo com óleo pré-barba, toalha quente com aroma de eucalipto, navalhete e pós-barba hidratante.",
+                duration: "35 min",
+                price: 55.00
+            },
+            {
+                id: "combo",
+                name: "Combo Dom Barbeiro (Cabelo + Barboterapia)",
+                desc: "A experiência completa da casa com desconto especial, lavagem, sobrancelha e chopp artesanal liberado.",
+                duration: "60 min",
+                price: 105.00
+            },
+            {
+                id: "pigmentacao",
+                name: "Camuflagem de Fios Brancos & Pigmentação",
+                desc: "Disfarce natural de grisalhos na barba ou cabelo com durabilidade de até 15 dias sem manchar a pele.",
+                duration: "30 min",
+                price: 45.00
+            },
+            {
+                id: "detox",
+                name: "Limpeza Facial com Máscara Negra Detox",
+                desc: "Remoção profunda de cravos e impurezas com esfoliação térmica e hidratação facial com carvão ativado.",
+                duration: "25 min",
+                price: 40.00
+            }
+        ];
+
+        // Dados dos Barbeiros
+        const barbersData = [
+            {
+                id: "eduardo",
+                name: "Eduardo 'Navalha'",
+                specialty: "Mestre em Fade & Barbas Clássicas",
+                avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80"
+            },
+            {
+                id: "mateus",
+                name: "Mateus Albuquerque",
+                specialty: "Visagista & Cortes Modernos",
+                avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80"
+            },
+            {
+                id: "lucas",
+                name: "Lucas 'Don' Ferreira",
+                specialty: "Especialista em Barboterapia",
+                avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80"
+            },
+            {
+                id: "qualquer",
+                name: "Primeiro Disponível",
+                specialty: "Atendimento mais rápido da equipe",
+                avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&auto=format&fit=crop&q=80"
+            }
+        ];
+
+        // Mimos e Extras
+        const extrasData = [
+            { id: "sobrancelha", name: "Alinhamento de Sobrancelha na Navalha", price: 15.00 },
+            { id: "mentolado", name: "Lavagem Refrescante com Shampoo Ice Mentol", price: 10.00 },
+            { id: "pomada", name: "Aplicação e Modelagem com Pomada Efeito Brilho", price: 10.00 }
+        ];
+
+        // Estado da Seleção
+        let selectedService = servicesData[0];
+        let selectedBarber = barbersData[0];
+        let selectedDayIndex = 0;
+        let selectedTime = "10:00";
+        let selectedExtras = [];
+
+        const weekDays = [];
+        const timeSlots = ["08:30", "09:15", "10:00", "10:45", "11:30", "14:00", "14:45", "15:30", "16:15", "17:00", "17:45", "18:30", "19:15", "20:00"];
+
+        // Gerar 6 dias úteis a partir de hoje
+        function generateDays() {
+            const daysNames = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+            const monthNames = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+            
+            let cur = new Date();
+            while (weekDays.length < 6) {
+                cur.setDate(cur.getDate() + 1);
+                if (cur.getDay() === 0) continue; // Domingo fechado
+                weekDays.push({
+                    dateObj: new Date(cur),
+                    dayName: daysNames[cur.getDay()],
+                    dayNum: String(cur.getDate()).padStart(2, '0'),
+                    monthName: monthNames[cur.getMonth()]
+                });
+            }
+        }
+
+        function renderServices() {
+            const container = document.getElementById('servicesContainer');
+            container.innerHTML = servicesData.map(s => `
+                <div class="service-option-card ${selectedService.id === s.id ? 'active' : ''}" onclick="selectService('${s.id}')">
+                    <div class="service-main-info">
+                        <h4>${s.name}</h4>
+                        <p>${s.desc}</p>
+                        <span class="service-duration-badge">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            ${s.duration}
+                        </span>
+                    </div>
+                    <div class="service-price-block">
+                        <span class="service-price">R$ ${s.price.toFixed(2).replace('.', ',')}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderBarbers() {
+            const container = document.getElementById('barbersContainer');
+            container.innerHTML = barbersData.map(b => `
+                <div class="barber-card ${selectedBarber.id === b.id ? 'active' : ''}" onclick="selectBarber('${b.id}')">
+                    <div class="barber-avatar-wrap">
+                        <img src="${b.avatar}" alt="${b.name}">
+                    </div>
+                    <div class="barber-name">${b.name}</div>
+                    <div class="barber-specialty">${b.specialty}</div>
+                </div>
+            `).join('');
+        }
+
+        function renderDaysAndSlots() {
+            const daysContainer = document.getElementById('daysSlider');
+            daysContainer.innerHTML = weekDays.map((d, i) => `
+                <div class="day-tab ${selectedDayIndex === i ? 'active' : ''}" onclick="selectDay(${i})">
+                    <div class="day-name">${d.dayName}</div>
+                    <div class="day-num">${d.dayNum}</div>
+                    <div class="day-month">${d.monthName}</div>
+                </div>
+            `).join('');
+
+            const slotsContainer = document.getElementById('timeSlotsGrid');
+            slotsContainer.innerHTML = timeSlots.map((t, idx) => {
+                const isOccupied = (selectedDayIndex === 0 && (idx === 1 || idx === 5));
+                return `
+                    <button class="time-slot-btn ${selectedTime === t ? 'active' : ''}" 
+                            ${isOccupied ? 'disabled' : ''} 
+                            onclick="selectTime('${t}')">
+                        ${t}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function renderExtras() {
+            const container = document.getElementById('extrasContainer');
+            container.innerHTML = extrasData.map(e => {
+                const isChecked = selectedExtras.some(x => x.id === e.id);
+                return `
+                    <label class="extra-checkbox-label ${isChecked ? 'checked' : ''}" onclick="toggleExtra('${e.id}')">
+                        <div class="extra-checkbox-left">
+                            <input type="checkbox" ${isChecked ? 'checked' : ''} readonly>
+                            <span>${e.name}</span>
+                        </div>
+                        <strong style="color: var(--gold-light); font-family: 'JetBrains Mono', monospace;">+ R$ ${e.price.toFixed(2).replace('.', ',')}</strong>
+                    </label>
+                `;
+            }).join('');
+        }
+
+        function selectService(id) {
+            selectedService = servicesData.find(s => s.id === id);
+            renderServices();
+            updateSummary();
+        }
+
+        function selectBarber(id) {
+            selectedBarber = barbersData.find(b => b.id === id);
+            renderBarbers();
+            updateSummary();
+        }
+
+        function selectDay(index) {
+            selectedDayIndex = index;
+            renderDaysAndSlots();
+            updateSummary();
+        }
+
+        function selectTime(time) {
+            selectedTime = time;
+            renderDaysAndSlots();
+            updateSummary();
+        }
+
+        function toggleExtra(id) {
+            const foundIndex = selectedExtras.findIndex(x => x.id === id);
+            if (foundIndex >= 0) {
+                selectedExtras.splice(foundIndex, 1);
+            } else {
+                const item = extrasData.find(x => x.id === id);
+                selectedExtras.push(item);
+            }
+            renderExtras();
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const d = weekDays[selectedDayIndex];
+            document.getElementById('summaryService').innerText = selectedService.name;
+            document.getElementById('summaryDuration').innerText = selectedService.duration;
+            document.getElementById('summaryBarber').innerText = selectedBarber.name;
+            document.getElementById('summaryDateTime').innerText = `${d.dayName}, ${d.dayNum}/${d.monthName} às ${selectedTime}`;
+
+            if (selectedExtras.length > 0) {
+                document.getElementById('summaryExtras').innerText = selectedExtras.map(x => x.name.split(' ')[0]).join(', ');
+            } else {
+                document.getElementById('summaryExtras').innerText = "Nenhum";
+            }
+
+            const extrasTotal = selectedExtras.reduce((sum, item) => sum + item.price, 0);
+            const total = selectedService.price + extrasTotal;
+
+            document.getElementById('summaryTotalPrice').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            validateBookingForm();
+        }
+
+        function validateBookingForm() {
+            const name = document.getElementById('clientName').value.trim();
+            const phone = document.getElementById('clientPhone').value.trim();
+            const isValid = (name.length >= 3 && phone.length >= 8);
+            document.getElementById('btnConfirmBooking').disabled = !isValid;
+        }
+
+        let currentAppointment = null;
+
+        function finishAppointment() {
+            const name = document.getElementById('clientName').value.trim();
+            const phone = document.getElementById('clientPhone').value.trim();
+            const d = weekDays[selectedDayIndex];
+            const voucherNum = 'DB-' + Math.floor(1000 + Math.random() * 9000);
+
+            const extrasTotal = selectedExtras.reduce((sum, item) => sum + item.price, 0);
+            const total = selectedService.price + extrasTotal;
+
+            currentAppointment = {
+                code: voucherNum,
+                name: name,
+                phone: phone,
+                service: selectedService.name,
+                barber: selectedBarber.name,
+                when: `${d.dayName}, ${d.dayNum}/${d.monthName} às ${selectedTime}`,
+                dateObj: d.dateObj,
+                time: selectedTime,
+                total: `R$ ${total.toFixed(2).replace('.', ',')}`
+            };
+
+            document.getElementById('voucherCode').innerText = `#${currentAppointment.code}`;
+            document.getElementById('voucherClientName').innerText = currentAppointment.name;
+            document.getElementById('voucherServiceAndBarber').innerText = `${currentAppointment.service} com ${currentAppointment.barber}`;
+            document.getElementById('voucherDateTime').innerText = currentAppointment.when;
+
+            document.getElementById('receiptModal').classList.add('open');
+        }
+
+        function closeReceiptModal() {
+            document.getElementById('receiptModal').classList.remove('open');
+        }
+
+        function sendWhatsAppConfirmation() {
+            if (!currentAppointment) return;
+            let msg = `*💈 CONFIRMAÇÃO DE AGENDAMENTO — DOM BARBEIRO*\n`;
+            msg += `─────────────────────────\n`;
+            msg += `▪ *Protocolo:* ${currentAppointment.code}\n`;
+            msg += `▪ *Cliente:* ${currentAppointment.name}\n`;
+            msg += `▪ *Serviço:* ${currentAppointment.service}\n`;
+            msg += `▪ *Barbeiro:* ${currentAppointment.barber}\n`;
+            msg += `▪ *Data & Horário:* ${currentAppointment.when}\n`;
+            msg += `▪ *Valor Total:* ${currentAppointment.total}\n`;
+            msg += `─────────────────────────\n`;
+            msg += `📍 *Local:* Av. Senador Metello, 850 · Goiabeiras (Cuiabá-MT)\n`;
+            msg += `Olá! Gostaria de confirmar meu agendamento na barbearia.`;
+
+            const encoded = encodeURIComponent(msg);
+            window.open(`https://wa.me/556536247700?text=${encoded}`, '_blank');
+        }
+
+        function downloadIcsInvite() {
+            if (!currentAppointment) return;
+            const [hours, minutes] = currentAppointment.time.split(':').map(Number);
+            const startDate = new Date(currentAppointment.dateObj);
+            startDate.setHours(hours, minutes, 0, 0);
+
+            const endDate = new Date(startDate);
+            endDate.setMinutes(endDate.getMinutes() + 50);
+
+            const formatICSDate = (d) => d.toISOString().replace(/-|:|\.\d+/g, '');
+
+            const icsContent = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'PRODID:-//Dom Barbeiro Cuiaba//Agendamento//PT',
+                'BEGIN:VEVENT',
+                `UID:${currentAppointment.code}@dombarbeiro.com.br`,
+                `DTSTAMP:${formatICSDate(new Date())}`,
+                `DTSTART:${formatICSDate(startDate)}`,
+                `DTEND:${formatICSDate(endDate)}`,
+                `SUMMARY:Dom Barbeiro — ${currentAppointment.service} (${currentAppointment.barber})`,
+                `LOCATION:Av. Senador Metello, 850, Goiabeiras, Cuiabá - MT`,
+                `DESCRIPTION:Agendamento código #${currentAppointment.code}. Chegar com 5 min de antecedência para aproveitar o chopp cortesia!`,
+                'END:VEVENT',
+                'END:VCALENDAR'
+            ].join('\r\n');
+
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `agendamento-${currentAppointment.code}.ics`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Inicialização
+        generateDays();
+        renderServices();
+        renderBarbers();
+        renderDaysAndSlots();
+        renderExtras();
+        updateSummary();
+    </script>
+</body>
+</html>

@@ -1,618 +1,815 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clínica OdontoPrime | Estética Dental & Reabilitação Oral de Alto Padrão em Cuiabá</title>
-    <meta name="description" content="Especialistas em lentes de contato em porcelana dental, implantes guiados e ortodontia estética em Cuiabá - MT. Agendamento de avaliação clínica.">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-body: #fbfcfd;
-            --bg-surface: #ffffff;
-            --bg-subtle: #f4f7f9;
-            --border-soft: #e2e8f0;
-            --text-heading: #0f172a;
-            --text-body: #334155;
-            --text-muted: #64748b;
-            --gold-accent: #b48c53;
-            --gold-soft: #fcf9f2;
-            --gold-border: #e8d7be;
-            --radius-md: 8px;
-            --radius-lg: 16px;
-            --shadow-subtle: 0 4px 20px rgba(15, 23, 42, 0.05);
-            --shadow-hover: 0 10px 30px rgba(15, 23, 42, 0.08);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OdontoPrime | Estética Dental e Reabilitação Oral em Cuiabá</title>
+<meta name="description" content="Clínica de estética dental e implantes em Cuiabá. Veja a escala de cor, entenda o tratamento e reserve sua avaliação com horário confirmado.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@300;400;500;600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --porcelain:#f6f8f9; --enamel:#fff; --mist:#eef3f5;
+  --graphite:#151c21; --steel:#46606e; --slate:#69808c; --line:#e2e9ec; --line-2:#cfdae0;
+  --rose:#b9636f; --rose-soft:#f6ecee; --rose-deep:#8e4753;
+  --ok:#2c7a5b;
+  --r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Source Sans 3',system-ui,sans-serif;background:var(--porcelain);color:var(--graphite);-webkit-font-smoothing:antialiased;line-height:1.55}
+h1,h2,h3,h4,h5{font-family:'Newsreader',Georgia,serif;letter-spacing:-.015em;line-height:1.15}
+a{color:inherit}
+button,input,select,textarea{font:inherit}
+:focus-visible{outline:2px solid var(--rose);outline-offset:3px}
+.eyebrow{display:block;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--rose)}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
-        }
+/* ── topo ───────────────────────────────── */
+header{position:sticky;top:0;z-index:60;background:rgba(246,248,249,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.hd{max-width:1180px;margin:0 auto;padding:15px 24px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.mark{display:flex;align-items:center;gap:12px;text-decoration:none}
+.mark-i{width:40px;height:40px;border-radius:12px;background:var(--graphite);color:var(--porcelain);display:grid;place-items:center}
+.mark h1{font-size:19px;font-weight:600}
+.mark span{display:block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--slate);font-weight:600;margin-top:2px}
+nav{display:flex;gap:26px;align-items:center}
+nav a{font-size:13.5px;color:var(--steel);text-decoration:none;font-weight:500}
+nav a:hover{color:var(--graphite)}
+.hd-cta{background:var(--graphite);color:var(--porcelain);text-decoration:none;border-radius:10px;padding:11px 19px;font-size:13.5px;font-weight:600;display:inline-flex;align-items:center;gap:8px}
+.hd-cta:hover{background:var(--rose)}
 
-        body {
-            background-color: var(--bg-body);
-            color: var(--text-body);
-            min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
-            line-height: 1.6;
-        }
+/* ── abertura ───────────────────────────── */
+.open{max-width:1180px;margin:0 auto;padding:64px 24px 20px;display:grid;grid-template-columns:1fr .84fr;gap:56px;align-items:center}
+.open h2{font-size:clamp(34px,4.8vw,58px);font-weight:400;letter-spacing:-.025em;margin:18px 0 20px}
+.open h2 em{font-style:normal;color:var(--rose);font-weight:600}
+.open>div>p{color:var(--steel);font-size:16px;max-width:48ch;line-height:1.65}
+.creds{display:flex;gap:34px;margin-top:34px;padding-top:26px;border-top:1px solid var(--line-2);flex-wrap:wrap}
+.cred b{display:block;font-family:'Newsreader',Georgia,serif;font-size:34px;font-weight:400;letter-spacing:-.02em;line-height:1.05}
+.cred span{font-size:12px;color:var(--slate)}
 
-        h1, h2, h3, h4 {
-            font-family: 'Playfair Display', Georgia, serif;
-            color: var(--text-heading);
-            line-height: 1.2;
-        }
+.portrait{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:4/5;background:var(--mist)}
+.portrait img{width:100%;height:100%;object-fit:cover}
+.portrait-note{position:absolute;left:16px;right:16px;bottom:16px;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-radius:12px;padding:14px 16px}
+.portrait-note b{display:block;font-family:'Source Sans 3',sans-serif;font-size:14px;font-weight:600}
+.portrait-note span{font-size:12px;color:var(--slate)}
 
-        /* Top Announcement */
-        .top-medical-bar {
-            background: #0f172a;
-            color: #cbd5e1;
-            padding: 8px 24px;
-            font-size: 0.78rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+/* ── guia de tonalidade (assinatura) ───── */
+.shade{max-width:1180px;margin:56px auto 0;padding:0 24px}
+.shade-card{background:var(--enamel);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.shade-head{padding:28px 32px 22px;border-bottom:1px solid var(--line)}
+.shade-head h3{font-size:26px;font-weight:500;margin:12px 0 8px}
+.shade-head p{color:var(--steel);font-size:14.5px;max-width:66ch}
+.shade-body{display:grid;grid-template-columns:1fr 320px}
+.shade-pick{padding:26px 32px}
+.shade-lbl{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--slate);font-weight:600;margin-bottom:12px;display:flex;justify-content:space-between;gap:12px}
+.shade-lbl em{font-style:normal;letter-spacing:0;text-transform:none;color:var(--rose);font-weight:600}
 
-        .top-medical-bar strong {
-            color: var(--gold-accent);
-        }
+/* fileira ordenada por valor, como o dentista abre o guia na cadeira */
+.guia{display:flex;gap:2px;margin-bottom:8px;overflow-x:auto;padding-bottom:4px}
+.tab{flex:1 0 40px;border:1px solid var(--line-2);border-radius:2px 2px 0 0;padding:0;cursor:pointer;background:none;position:relative;transition:transform .14s}
+.tab .amostra{display:block;height:56px;border-radius:1px 1px 0 0}
+.tab .cod{display:block;font-family:'Source Sans 3',sans-serif;font-size:10.5px;font-weight:600;color:var(--slate);padding:5px 0;background:var(--porcelain);letter-spacing:.01em}
+.tab:hover{transform:translateY(-3px)}
+.tab[aria-pressed="true"]{outline:2px solid var(--graphite);outline-offset:1px;z-index:2}
+.tab[aria-pressed="true"] .cod{background:var(--graphite);color:var(--porcelain)}
+.tab[data-papel="alvo"][aria-pressed="true"]{outline-color:var(--rose)}
+.tab[data-papel="alvo"][aria-pressed="true"] .cod{background:var(--rose);color:#fff}
+.guia-reg{display:flex;justify-content:space-between;font-size:10.5px;color:var(--slate);letter-spacing:.06em;text-transform:uppercase;margin-bottom:24px}
 
-        /* Header */
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-soft);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            padding: 16px 24px;
-        }
+.grupo-nota{background:var(--porcelain);border-left:2px solid var(--graphite);padding:13px 16px;margin-bottom:24px}
+.grupo-nota b{display:block;font-size:12.5px;font-weight:700;margin-bottom:4px}
+.grupo-nota p{font-size:12.5px;color:var(--steel);line-height:1.6}
 
-        .header-wrap {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.delta{display:grid;grid-template-columns:1fr auto 1fr;gap:16px;align-items:center;border:1px solid var(--line);border-radius:4px;padding:20px}
+.dl{text-align:center}
+.dl .sw{width:72px;height:64px;margin:0 auto 10px;border:1px solid var(--line-2);border-radius:2px}
+.dl b{display:block;font-size:16px;font-weight:700}
+.dl span{font-size:11.5px;color:var(--slate)}
+.seta{color:var(--rose)}
 
-        .brand-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
+.shade-out{background:var(--graphite);color:var(--porcelain);padding:26px 24px;display:flex;flex-direction:column;justify-content:space-between}
+.shade-out .k{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#8ea1ab;font-weight:600}
+.shade-out h4{font-size:21px;font-weight:500;margin:9px 0 6px;color:#fff}
+.shade-out>div>p{font-size:13px;color:#a8bac3;line-height:1.6}
+.plan-rows{margin-top:22px;border-top:1px solid #2b363d;padding-top:4px}
+.plan-row{display:flex;justify-content:space-between;gap:14px;padding:10px 0;border-bottom:1px solid #2b363d;font-size:12.5px;color:#a8bac3}
+.plan-row:last-child{border-bottom:none}
+.plan-row b{color:#fff;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.shade-cta{width:100%;margin-top:22px;background:var(--rose);color:#fff;border:none;border-radius:4px;padding:14px;font-family:'Source Sans 3',sans-serif;font-size:14.5px;font-weight:600;cursor:pointer}
+.shade-cta:hover{background:var(--rose-deep)}
+.disclaimer{font-size:10.5px;color:#7d919b;margin-top:11px;line-height:1.55}
 
-        .brand-emblem {
-            width: 40px;
-            height: 40px;
-            background: var(--gold-soft);
-            border: 1px solid var(--gold-border);
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            color: var(--gold-accent);
-        }
+/* ── tratamentos ────────────────────────── */
+.treat{max-width:1180px;margin:70px auto 0;padding:0 24px}
+.sec-head{max-width:60ch;margin-bottom:32px}
+.sec-head h3{font-size:34px;font-weight:400;letter-spacing:-.02em;margin:12px 0 10px}
+.sec-head p{color:var(--steel);font-size:15px}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.tcard{background:var(--enamel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s,transform .2s}
+.tcard:hover{border-color:var(--line-2);transform:translateY(-3px)}
+.tcard-img{height:168px;background:var(--mist);overflow:hidden}
+.tcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.tcard:hover .tcard-img img{transform:scale(1.05)}
+.tcard-b{padding:20px;display:flex;flex-direction:column;flex:1}
+.tcard h4{font-size:17px;font-weight:600;margin-bottom:8px}
+.tcard p{font-size:13.5px;color:var(--steel);line-height:1.6;flex:1}
+.tcard-meta{display:flex;gap:14px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:11.5px;color:var(--slate)}
+.tcard-meta b{display:block;color:var(--graphite);font-family:'Source Sans 3',sans-serif;font-size:13px;font-weight:600}
 
-        .brand-text h1 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            letter-spacing: -0.01em;
-        }
+/* ── agendamento ────────────────────────── */
+.book{max-width:1180px;margin:70px auto 0;padding:0 24px}
+.book-card{background:var(--enamel);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.book-head{padding:30px 32px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.book-head h3{font-size:27px;font-weight:600;margin:12px 0 8px}
+.book-head p{color:var(--steel);font-size:14px;max-width:50ch}
+.trail{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--slate);white-space:nowrap}
+.trail i{width:24px;height:24px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;font-style:normal;font-family:'Source Sans 3',sans-serif;font-size:11px;font-weight:600}
+.trail i.on{background:var(--graphite);color:#fff;border-color:var(--graphite)}
+.trail i.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
 
-        .brand-text span {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.68rem;
-            color: var(--gold-accent);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            font-weight: 700;
-            display: block;
-        }
+.book-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.book-col{padding:28px 32px}
+.book-col+.book-col{border-left:1px solid var(--line)}
+.step{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--slate);font-weight:600;margin-bottom:14px;display:block}
+.procs{display:grid;gap:8px;margin-bottom:28px}
+.proc{display:flex;align-items:center;gap:13px;background:var(--porcelain);border:1px solid var(--line);border-radius:11px;padding:14px;cursor:pointer;text-align:left;transition:border-color .18s,background .18s}
+.proc:hover{border-color:var(--line-2)}
+.proc[aria-pressed="true"]{border-color:var(--rose);background:var(--rose-soft)}
+.proc b{font-family:'Source Sans 3',sans-serif;font-size:14px;font-weight:600;display:block}
+.proc small{font-size:11.5px;color:var(--slate);display:block;margin-top:2px}
+.proc .dur{margin-left:auto;font-size:11.5px;color:var(--slate);white-space:nowrap}
+.proc[aria-pressed="true"] .dur{color:var(--rose-deep);font-weight:600}
 
-        .btn-schedule-nav {
-            background: var(--gold-accent);
-            color: #ffffff;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s;
-            box-shadow: 0 4px 12px rgba(180, 140, 83, 0.25);
-        }
+.days{display:grid;grid-template-columns:repeat(auto-fit,minmax(66px,1fr));gap:7px;margin-bottom:26px}
+.day{background:var(--porcelain);border:1px solid var(--line);border-radius:10px;padding:11px 4px;cursor:pointer;text-align:center;transition:border-color .18s,background .18s}
+.day:hover:not(:disabled){border-color:var(--line-2)}
+.day[aria-pressed="true"]{background:var(--graphite);border-color:var(--graphite);color:#fff}
+.day:disabled{opacity:.35;cursor:not-allowed}
+.day .w{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--slate);font-weight:600}
+.day .n{font-family:'Source Sans 3',sans-serif;font-size:19px;font-weight:600;margin:2px 0}
+.day .m{font-size:10px;color:var(--slate)}
+.day[aria-pressed="true"] .w,.day[aria-pressed="true"] .m{color:#9fb0b9}
 
-        .btn-schedule-nav:hover {
-            background: #9d7742;
-            transform: translateY(-1px);
-        }
+.hours{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:7px}
+.hour{background:var(--porcelain);border:1px solid var(--line);border-radius:10px;padding:11px 4px;font-family:'Source Sans 3',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;transition:border-color .18s,background .18s}
+.hour:hover:not(:disabled){border-color:var(--line-2)}
+.hour[aria-pressed="true"]{background:var(--rose);border-color:var(--rose);color:#fff}
+.hour:disabled{opacity:.32;cursor:not-allowed;text-decoration:line-through}
 
-        /* Hero Section */
-        .hero-section {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 24px 40px;
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 48px;
-            align-items: center;
-        }
+.fields{display:grid;gap:14px}
+.f label{display:block;font-size:12.5px;font-weight:600;color:var(--steel);margin-bottom:6px}
+.f input,.f select,.f textarea{width:100%;background:var(--porcelain);border:1px solid var(--line);border-radius:10px;padding:13px 14px;font-size:14px;color:var(--graphite)}
+.f input::placeholder,.f textarea::placeholder{color:#9aabb3}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--rose);background:var(--enamel);outline:none}
+.f textarea{resize:vertical;min-height:76px;font-family:'Source Sans 3',sans-serif}
+/* anamnese preliminar */
+.anam{display:grid;gap:14px;margin-bottom:18px}
+.anam-q>span{display:block;font-size:12.5px;font-weight:600;color:var(--steel);margin-bottom:6px}
+.anam-op{display:flex;gap:5px;flex-wrap:wrap}
+.anam-op button{border:1px solid var(--line);background:var(--porcelain);color:var(--steel);border-radius:4px;padding:7px 12px;font-size:12.5px;cursor:pointer}
+.anam-op button:hover{border-color:var(--line-2)}
+.anam-op button[aria-pressed="true"]{background:var(--graphite);border-color:var(--graphite);color:var(--porcelain);font-weight:600}
+.anam-alerta{background:#fdf6ec;border-left:2px solid #b07d2a;padding:11px 14px;font-size:12.5px;color:#6d4c15;line-height:1.6;margin-top:4px}
+.anam-alerta b{font-weight:700}
 
-        .hero-tag {
-            font-size: 0.78rem;
-            color: var(--gold-accent);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            display: inline-block;
-            margin-bottom: 12px;
-        }
+/* aviso do conselho */
+.cfo{border:1px solid var(--line);border-radius:4px;padding:16px 18px;background:var(--porcelain);margin-top:22px}
+.cfo b{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--slate);font-weight:700;margin-bottom:7px}
+.cfo p{font-size:12px;color:var(--steel);line-height:1.65}
+.cfo p+p{margin-top:7px}
 
-        .hero-title {
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--text-heading);
-        }
+.consent{display:flex;gap:11px;align-items:flex-start;font-size:12.5px;color:var(--steel);line-height:1.55}
+.consent input{accent-color:var(--rose);width:17px;height:17px;margin-top:1px;flex-shrink:0}
+.book-btn{width:100%;background:var(--graphite);color:#fff;border:none;border-radius:11px;padding:16px;font-family:'Source Sans 3',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:background .18s}
+.book-btn:hover:not(:disabled){background:var(--rose)}
+.book-btn:disabled{background:var(--mist);color:#9aabb3;cursor:not-allowed}
+.hint{font-size:12px;color:var(--slate);text-align:center;min-height:17px}
 
-        .hero-title em {
-            font-style: italic;
-            font-weight: 400;
-            color: var(--gold-accent);
-        }
+/* ── confirmação ────────────────────────── */
+.done{padding:52px 32px;text-align:center;animation:up .4s ease}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.done-i{width:60px;height:60px;border-radius:50%;background:#e8f4ee;color:var(--ok);display:grid;place-items:center;margin:0 auto 20px}
+.done h3{font-size:28px;font-weight:600}
+.done>p{color:var(--steel);font-size:15px;max-width:46ch;margin:12px auto 30px}
+.card-conf{max-width:520px;margin:0 auto 26px;border:1px solid var(--line);border-radius:16px;overflow:hidden;text-align:left}
+.conf-top{background:var(--graphite);color:#fff;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.conf-top .k{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#8ea1ab;font-weight:600}
+.conf-top b{font-family:'Source Sans 3',sans-serif;font-size:20px;font-weight:600;display:block;margin-top:3px}
+.conf-when{text-align:right;font-family:'Source Sans 3',sans-serif;font-size:15px;font-weight:600;line-height:1.35}
+.conf-row{display:flex;justify-content:space-between;gap:16px;padding:13px 24px;border-bottom:1px solid var(--line);font-size:13.5px;color:var(--steel)}
+.conf-row:last-child{border-bottom:none}
+.conf-row b{color:var(--graphite);font-weight:600;text-align:right}
+.ways{max-width:520px;margin:0 auto;display:grid;gap:9px}
+.way{display:flex;align-items:center;gap:13px;background:var(--enamel);border:1px solid var(--line);border-radius:11px;padding:14px 16px;cursor:pointer;text-align:left;text-decoration:none;color:var(--graphite);font-size:13.5px;font-weight:600;transition:border-color .18s}
+.way:hover{border-color:var(--graphite)}
+.way small{display:block;font-weight:400;color:var(--slate);font-size:12px;margin-top:2px;line-height:1.45}
+.way i{width:36px;height:36px;border-radius:10px;background:var(--mist);color:var(--steel);display:grid;place-items:center;flex-shrink:0}
+.way.wa i{background:#e8f4ee;color:var(--ok)}
+.prep{max-width:520px;margin:26px auto 0;background:var(--rose-soft);border:1px solid #eddadd;border-radius:12px;padding:18px 20px;text-align:left}
+.prep b{display:block;font-family:'Source Sans 3',sans-serif;font-size:13.5px;font-weight:600;margin-bottom:8px}
+.prep ul{margin:0;padding-left:18px;font-size:13px;color:var(--steel);line-height:1.75}
+.again{background:none;border:none;color:var(--slate);font-size:12.5px;text-decoration:underline;text-underline-offset:4px;cursor:pointer;margin-top:26px}
 
-        .hero-desc {
-            font-size: 1.05rem;
-            color: var(--text-muted);
-            margin-bottom: 30px;
-            line-height: 1.7;
-        }
+footer{margin-top:80px;background:var(--graphite);color:#8ea1ab;padding:36px 24px;font-size:12.5px;line-height:1.75}
+.ft{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer b{color:var(--porcelain)}
 
-        .hero-badges-row {
-            display: flex;
-            gap: 24px;
-            padding-top: 24px;
-            border-top: 1px solid var(--border-soft);
-            flex-wrap: wrap;
-        }
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,180%);background:var(--graphite);color:#fff;padding:14px 22px;border-radius:11px;font-size:13.5px;font-weight:600;z-index:120;transition:transform .3s cubic-bezier(.4,0,.2,1);box-shadow:0 12px 32px rgba(21,28,33,.24)}
+.toast.on{transform:translate(-50%,0)}
 
-        .hero-badge-item strong {
-            display: block;
-            font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
-            color: var(--gold-accent);
-        }
-
-        .hero-badge-item span {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-        }
-
-        .hero-image-wrapper {
-            position: relative;
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            box-shadow: var(--shadow-hover);
-            border: 4px solid #ffffff;
-        }
-
-        .hero-image-wrapper img {
-            width: 100%;
-            height: 100%;
-            display: block;
-            object-fit: cover;
-        }
-
-        /* Treatments Grid */
-        .treatments-section {
-            background: var(--bg-subtle);
-            padding: 70px 24px;
-            border-top: 1px solid var(--border-soft);
-            border-bottom: 1px solid var(--border-soft);
-        }
-
-        .section-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-header-center {
-            text-align: center;
-            max-width: 640px;
-            margin: 0 auto 48px;
-        }
-
-        .section-header-center h3 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .treatments-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 28px;
-        }
-
-        .treatment-card {
-            background: #ffffff;
-            border: 1px solid var(--border-soft);
-            border-radius: var(--radius-lg);
-            overflow: hidden;
-            box-shadow: var(--shadow-subtle);
-            transition: transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .treatment-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .treatment-photo-box {
-            height: 200px;
-            background: #e2e8f0;
-            position: relative;
-        }
-
-        .treatment-photo-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .treatment-content {
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
-
-        .treatment-content h4 {
-            font-size: 1.35rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .treatment-content p {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 18px;
-        }
-
-        .treatment-tags-list {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-top: auto;
-            padding-top: 14px;
-            border-top: 1px solid var(--border-soft);
-        }
-
-        .tag-pill {
-            background: var(--gold-soft);
-            color: var(--gold-accent);
-            font-size: 0.72rem;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 4px;
-            border: 1px solid var(--gold-border);
-        }
-
-        /* Booking Form Section */
-        .booking-section {
-            max-width: 1000px;
-            margin: 70px auto 80px;
-            padding: 0 24px;
-        }
-
-        .booking-card {
-            background: #ffffff;
-            border: 1px solid var(--border-soft);
-            border-radius: var(--radius-lg);
-            padding: 40px;
-            box-shadow: var(--shadow-hover);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-        }
-
-        .booking-info h4 {
-            font-size: 1.8rem;
-            margin-bottom: 14px;
-        }
-
-        .booking-info p {
-            color: var(--text-muted);
-            font-size: 0.92rem;
-            line-height: 1.6;
-            margin-bottom: 24px;
-        }
-
-        .clinic-address-card {
-            background: var(--gold-soft);
-            border: 1px solid var(--gold-border);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            font-size: 0.82rem;
-            color: #785a2f;
-            line-height: 1.5;
-        }
-
-        .booking-form {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .form-group label {
-            font-size: 0.78rem;
-            font-weight: 700;
-            color: var(--text-heading);
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
-
-        .form-input, .form-select {
-            background: #ffffff;
-            border: 1px solid var(--border-soft);
-            border-radius: var(--radius-md);
-            padding: 12px 14px;
-            font-size: 0.9rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .form-input:focus, .form-select:focus {
-            border-color: var(--gold-accent);
-            box-shadow: 0 0 0 3px rgba(180, 140, 83, 0.12);
-        }
-
-        .btn-submit-booking {
-            background: var(--gold-accent);
-            color: #ffffff;
-            border: none;
-            border-radius: var(--radius-md);
-            padding: 14px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: background 0.2s;
-            margin-top: 8px;
-        }
-
-        .btn-submit-booking:hover {
-            background: #9d7742;
-        }
-
-        footer {
-            background: #0f172a;
-            color: #94a3b8;
-            padding: 40px 24px;
-            text-align: center;
-            font-size: 0.82rem;
-        }
-
-        @media (max-width: 860px) {
-            .hero-section { grid-template-columns: 1fr; }
-            .booking-card { grid-template-columns: 1fr; padding: 24px; }
-            .hero-title { font-size: 2.2rem; }
-        }
-    </style>
+@media (max-width:940px){
+  .open{grid-template-columns:1fr;gap:36px;padding-top:44px}
+  .portrait{max-width:420px;aspect-ratio:4/3}
+  .shade-body,.book-body{grid-template-columns:1fr}
+  .book-col+.book-col{border-left:none;border-top:1px solid var(--line)}
+  nav{display:none}
+}
+@media print{
+  header,.open,.shade,.treat,.book-head,.ways,.again,footer,.toast{display:none!important}
+  body{background:#fff}
+  .book-card,.card-conf{border-color:#ccc}
+  .conf-top{background:#eee;color:#000}
+  .conf-top .k{color:#555}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+</style>
 </head>
 <body>
 
-    <!-- Top Bar -->
-    <div class="top-medical-bar">
-        <span>📍 Edifício Helbor Dual Business · Av. Rubens de Mendonça, 1.750 · Cuiabá - MT</span>
-        <span>Direção Técnica: <strong>Dra. Amanda Ferraz · CRO-MT 6.412</strong></span>
+
+
+<header>
+  <div class="hd">
+    <a href="#" class="mark">
+      <span class="mark-i"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5c-1.5-1.5-4-2-5.5-1C4.5 5.2 4 8 4.6 11c.5 2.6 1.4 5.4 2.3 7.5.6 1.4 2 1.6 2.6.2.5-1.2.8-2.6 1.2-3.6.3-.8 1.3-.8 1.6 0 .4 1 .7 2.4 1.2 3.6.6 1.4 2 1.2 2.6-.2.9-2.1 1.8-4.9 2.3-7.5.6-3 .1-5.8-1.9-7-1.5-1-4-.5-5.5 1Z"/></svg></span>
+      <div><h1>OdontoPrime</h1><span>Estética &amp; Reabilitação</span></div>
+    </a>
+    <nav>
+      <a href="#escala">Escala de cor</a>
+      <a href="#tratamentos">Tratamentos</a>
+      <a href="#agendar">Agendar</a>
+    </nav>
+    <a href="#agendar" class="hd-cta">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      Reservar avaliação
+    </a>
+  </div>
+</header>
+
+<section class="open">
+  <div>
+    <span class="eyebrow">Planejamento digital do sorriso</span>
+    <h2>Antes de mexer no seu dente, a gente te mostra <em>exatamente</em> como vai ficar.</h2>
+    <p>Escaneamento intraoral, prova do sorriso em resina e só então a porcelana. Você aprova o resultado na sua própria boca antes de qualquer desgaste definitivo.</p>
+    <div class="creds">
+      <div class="cred"><b>2.847</b><span>pacientes atendidos</span></div>
+      <div class="cred"><b>14 anos</b><span>de clínica em Cuiabá</span></div>
+      <div class="cred"><b>4,9</b><span>média no Google (612 avaliações)</span></div>
+    </div>
+  </div>
+  <div class="portrait">
+    <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&auto=format&fit=crop&q=75" alt="Consultório odontológico da OdontoPrime" loading="lazy">
+    <div class="portrait-note">
+      <b>Dr. Rafael Silveira · CRO-MT 8420</b>
+      <span>Responsável técnico · Especialista em prótese e implantodontia</span>
+    </div>
+  </div>
+</section>
+
+<section class="shade" id="escala">
+  <div class="shade-card">
+    <div class="shade-head">
+      <span class="eyebrow">Guia VITA Classical + faixa Bleach</span>
+      <h3>O mesmo guia que o dentista abre na cadeira</h3>
+      <p>Os 16 tons da escala VITA Classical, na ordem de valor — do mais claro ao mais escuro — mais as quatro tonalidades Bleach, que ficam acima do B1 e só se alcançam com clareamento. Compare junto à janela, com luz natural, sem batom e sem roupa colorida perto do rosto.</p>
+    </div>
+    <div class="shade-body">
+      <div class="shade-pick">
+        <span class="shade-lbl"><span>1 · Tonalidade de hoje</span><em id="deSel">A3</em></span>
+        <div class="guia" id="guiaDe" role="group" aria-label="Tonalidade atual"></div>
+        <div class="guia-reg"><span>mais claro</span><span>mais escuro</span></div>
+
+        <span class="shade-lbl"><span>2 · Tonalidade pretendida</span><em id="paraSel">A1</em></span>
+        <div class="guia" id="guiaPara" role="group" aria-label="Tonalidade pretendida"></div>
+        <div class="guia-reg"><span>faixa Bleach</span><span>escala clássica</span></div>
+
+        <div class="grupo-nota" id="grupoNota"></div>
+
+        <div class="delta">
+          <div class="dl"><span class="sw" id="swDe"></span><b id="deNome">A3</b><span id="deGrupo">grupo A</span></div>
+          <div class="seta"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+          <div class="dl"><span class="sw" id="swPara"></span><b id="paraNome">A1</b><span id="paraGrupo">grupo A</span></div>
+        </div>
+      </div>
+
+      <aside class="shade-out">
+        <div>
+          <span class="k">Conduta indicada</span>
+          <h4 id="rotaTitulo">—</h4>
+          <p id="rotaTexto">—</p>
+          <div class="plan-rows">
+            <div class="plan-row"><span>Distância na escala</span><b id="rotaTons">—</b></div>
+            <div class="plan-row"><span>Sessões previstas</span><b id="rotaSessoes">—</b></div>
+            <div class="plan-row"><span>Tempo até o resultado</span><b id="rotaTempo">—</b></div>
+            <div class="plan-row"><span>Estabilidade da cor</span><b id="rotaManut">—</b></div>
+          </div>
+        </div>
+        <div>
+          <button class="shade-cta" onclick="levarParaAgenda()">Reservar avaliação com este registro</button>
+          <p class="disclaimer">Registro de cor por comparação visual tem margem de erro. O tom definitivo é aferido em consultório com espectrofotômetro e fotografia com escala, sob luz padronizada.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="treat" id="tratamentos">
+  <div class="sec-head">
+    <span class="eyebrow">O que fazemos</span>
+    <h3>Tratamentos que exigem microscópio, não força de vontade</h3>
+    <p>Cada procedimento abaixo tem protocolo escrito, materiais rastreáveis por lote e fotografia clínica em todas as etapas.</p>
+  </div>
+  <div class="tgrid" id="tgrid"></div>
+</section>
+
+<section class="book" id="agendar">
+  <div class="book-card" id="bookCard">
+    <div class="book-head">
+      <div>
+        <span class="eyebrow">Agenda real, horário confirmado</span>
+        <h3>Reserve sua avaliação</h3>
+        <p>A avaliação inclui exame clínico, fotografia e conversa sobre o plano. Dura cerca de 50 minutos e não tem custo.</p>
+      </div>
+      <div class="trail" id="trail"></div>
     </div>
 
-    <!-- Header -->
-    <header>
-        <div class="header-wrap">
-            <a href="#" class="brand-link">
-                <div class="brand-emblem">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                </div>
-                <div class="brand-text">
-                    <h1>OdontoPrime</h1>
-                    <span>Clínica de Estética Dental & Implantes</span>
-                </div>
-            </a>
+    <div class="book-body">
+      <div class="book-col">
+        <span class="step">1 · O que você quer resolver</span>
+        <div class="procs" id="procs" role="group" aria-label="Procedimento de interesse"></div>
 
-            <a href="#agendamento" class="btn-schedule-nav">
-                <span>Agendar Avaliação</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
+        <span class="step">2 · Dia</span>
+        <div class="days" id="days" role="group" aria-label="Dias disponíveis"></div>
+
+        <span class="step">3 · Horário</span>
+        <div class="hours" id="hours" role="group" aria-label="Horários disponíveis"></div>
+      </div>
+
+      <div class="book-col">
+        <span class="step">4 · Histórico preliminar</span>
+        <div class="anam" id="anamnese"></div>
+        <div id="anamAlertas"></div>
+
+        <span class="step" style="margin-top:22px">5 · Seus dados</span>
+        <div class="fields">
+          <div class="f"><label for="nome">Nome completo</label><input type="text" id="nome" placeholder="Como está no seu documento"></div>
+          <div class="f"><label for="fone">Telefone</label><input type="tel" id="fone" placeholder="(65) 90000-0000"></div>
+          <div class="f"><label for="conv">Convênio</label>
+            <select id="conv"><option>Particular</option><option>Unimed</option><option>Amil Dental</option><option>Bradesco Dental</option><option>Outro convênio</option></select>
+          </div>
+          <div class="f"><label for="obs">Algo que a equipe precisa saber</label><textarea id="obs" placeholder="Ex: tenho medo de dentista, uso anticoagulante, já fiz clareamento antes"></textarea></div>
+          <label class="consent"><input type="checkbox" id="consent" onchange="validar()"><span>Autorizo o contato da clínica sobre esta consulta e o uso dos meus dados apenas para o atendimento.</span></label>
+          <button class="book-btn" id="bookBtn" onclick="confirmar()" disabled>Confirmar avaliação</button>
+          <p class="hint" id="hint">Escolha o procedimento, o dia e o horário.</p>
+
+          <div class="cfo">
+            <b>Aviso do conselho</b>
+            <p>Este guia de cor e os tempos indicados são orientativos. O plano de tratamento e o valor só podem ser definidos após exame clínico presencial, com radiografias e fotografias, pelo cirurgião-dentista responsável.</p>
+            <p>O Código de Ética Odontológica (Resolução CFO 118/2012) e a Resolução CFO 196/2019 vedam a promessa de resultado e a divulgação de imagens de antes e depois com finalidade publicitária — por isso você não encontra nenhuma nesta página.</p>
+            <p>Resp. técnico: Dr. Rafael Silveira · CRO-MT 8420 · clínica CRO-MT 1.482-CL.</p>
+          </div>
         </div>
-    </header>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Hero -->
-    <section class="hero-section">
-        <div>
-            <span class="hero-tag">Odontologia Digital & Personalizada</span>
-            <h2 class="hero-title">A arte de esculpir o seu melhor <em>sorriso</em> em Cuiabá.</h2>
-            <p class="hero-desc">Planejamento digital com scanner intraoral 3D e tecnologia de porcelanas alemãs E-Max. Protocolos minimamente invasivos com conforto absoluto.</p>
+<footer>
+  <div class="ft">
+    <div><b>Clínica OdontoPrime Cuiabá</b><br>Responsável técnico: Dr. Rafael Silveira · CRO-MT 8420<br>Ed. Top Tower · Cuiabá – MT · CRO-MT 1.482-CL</div>
+    <div>Demonstração funcional · DevStudio<br>Agenda e valores ilustrativos</div>
+  </div>
+</footer>
 
-            <div class="hero-badges-row">
-                <div class="hero-badge-item">
-                    <strong>+2.400</strong>
-                    <span>Lentes Aplicadas</span>
-                </div>
-                <div class="hero-badge-item">
-                    <strong>100%</strong>
-                    <span>Fluxo Digital 3D</span>
-                </div>
-                <div class="hero-badge-item">
-                    <strong>10 Anos</strong>
-                    <span>de Excelência em MT</span>
-                </div>
-            </div>
-        </div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-        <div class="hero-image-wrapper">
-            <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&auto=format&fit=crop&q=80" alt="Consultório Odontológico de Alto Padrão em Cuiabá">
-        </div>
-    </section>
+<script>
+/* ── VITA Classical na ordem de valor + faixa Bleach ─────────────
+   É a sequência do guia físico: o dentista abre a régua já nesta ordem
+   para comparar valor primeiro e matiz depois. */
+const GRUPOS={
+  BL:{rot:'Bleach',nome:'Faixa de clareamento',
+      desc:'Tons acima do B1 da escala clássica. Não existem naturalmente — só se chega neles com clareamento ou com cerâmica.'},
+  A: {rot:'A',nome:'Avermelhado-amarronzado',
+      desc:'O grupo mais frequente na população brasileira. Escurece com café, chá-mate e cigarro, e responde bem ao peróxido.'},
+  B: {rot:'B',nome:'Avermelhado-amarelado',
+      desc:'Dentes de aspecto mais claro e amarelado. Costuma ser o grupo que mais ganha tons em clareamento de consultório.'},
+  C: {rot:'C',nome:'Acinzentado',
+      desc:'Tende ao cinza. Comum em dente com desgaste, translucidez alta na incisal ou histórico de tetraciclina — clareia mais devagar.'},
+  D: {rot:'D',nome:'Avermelhado-acinzentado',
+      desc:'Grupo intermediário entre o A e o C. Resposta ao clareamento fica no meio do caminho entre os dois.'}
+};
 
-    <!-- Treatments -->
-    <section class="treatments-section">
-        <div class="section-inner">
-            <div class="section-header-center">
-                <h3>Tratamentos de Alta Complexidade</h3>
-                <p style="color: var(--text-muted);">Procedimentos executados por especialistas com tecnologia guiada por computador.</p>
-            </div>
+const ESCALA=[
+  {k:'BL1', g:'BL',hex:'#fbf8f0'},
+  {k:'BL2', g:'BL',hex:'#f8f4ea'},
+  {k:'BL3', g:'BL',hex:'#f6f1e4'},
+  {k:'BL4', g:'BL',hex:'#f3eede'},
+  {k:'B1',  g:'B', hex:'#f0eadb'},
+  {k:'A1',  g:'A', hex:'#ede6d3'},
+  {k:'B2',  g:'B', hex:'#ece2cc'},
+  {k:'D2',  g:'D', hex:'#e7dcc7'},
+  {k:'A2',  g:'A', hex:'#e9dfc7'},
+  {k:'C1',  g:'C', hex:'#e2dccd'},
+  {k:'C2',  g:'C', hex:'#d9cdb4'},
+  {k:'D4',  g:'D', hex:'#d8cbb6'},
+  {k:'A3',  g:'A', hex:'#e2d5b4'},
+  {k:'D3',  g:'D', hex:'#d5c7ad'},
+  {k:'B3',  g:'B', hex:'#ddcda8'},
+  {k:'A3.5',g:'A', hex:'#d6c39c'},
+  {k:'B4',  g:'B', hex:'#d0bb8e'},
+  {k:'C3',  g:'C', hex:'#c9bda3'},
+  {k:'A4',  g:'A', hex:'#c4b189'},
+  {k:'C4',  g:'C', hex:'#b7a488'}
+];
 
-            <div class="treatments-grid">
-                <!-- Card 1 -->
-                <div class="treatment-card">
-                    <div class="treatment-photo-box">
-                        <img src="https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=600&auto=format&fit=crop&q=80" alt="Lentes de Contato Dental">
-                    </div>
-                    <div class="treatment-content">
-                        <h4>Lentes de Contato em Porcelana</h4>
-                        <p>Lâminas ultrafinas de 0.3mm em cerâmica de alta resistência. Correção de formato, espaçamento e clareamento definitivo com preservação da estrutura dental.</p>
-                        <div class="treatment-tags-list">
-                            <span class="tag-pill">Cerâmica E-Max</span>
-                            <span class="tag-pill">Scanner 3D</span>
-                        </div>
-                    </div>
-                </div>
+/* anamnese preliminar — cada resposta pode mudar ou barrar a conduta */
+const ANAMNESE=[
+  {k:'protese',q:'Usa prótese, faceta ou implante?',
+   ops:[['nao','Não'],['removivel','Prótese removível'],['fixa','Coroa ou faceta'],['implante','Implante']]},
+  {k:'sens',q:'Sente sensibilidade a frio ou a doce?',
+   ops:[['nao','Não'],['leve','De vez em quando'],['forte','Sim, com frequência']]},
+  {k:'clareou',q:'Fez clareamento nos últimos 12 meses?',
+   ops:[['nao','Não'],['consultorio','Sim, em consultório'],['caseiro','Sim, caseiro ou de farmácia']]},
+  {k:'gestante',q:'Está grávida ou amamentando?',
+   ops:[['nao','Não'],['sim','Sim']]},
+  {k:'medic',q:'Usa anticoagulante, bifosfonato ou faz quimioterapia?',
+   ops:[['nao','Não'],['sim','Sim'],['nsei','Não sei informar']]}
+];
 
-                <!-- Card 2 -->
-                <div class="treatment-card">
-                    <div class="treatment-photo-box">
-                        <img src="https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=600&auto=format&fit=crop&q=80" alt="Implantes Dentários Guiados">
-                    </div>
-                    <div class="treatment-content">
-                        <h4>Implantes Guiados por Computador</h4>
-                        <p>Cirurgia guiada sem cortes ou pontos extensos. Instalação milimétrica através de guia cirúrgico 3D com cicatrização acelerada e dentes fixos no mesmo dia.</p>
-                        <div class="treatment-tags-list">
-                            <span class="tag-pill">Sem Cortes</span>
-                            <span class="tag-pill">Carga Imediata</span>
-                        </div>
-                    </div>
-                </div>
+const PROCS=[
+  {k:'clareamento',rot:'Clareamento',       sub:'dentes amarelados ou manchados', dur:'50 min'},
+  {k:'lentes',     rot:'Lentes de contato', sub:'forma, tamanho ou espaços',      dur:'60 min'},
+  {k:'implante',   rot:'Implante',          sub:'dente perdido ou quebrado',      dur:'60 min'},
+  {k:'alinhador',  rot:'Alinhador invisível',sub:'dentes tortos ou apinhados',    dur:'50 min'},
+  {k:'harmoniza',  rot:'Harmonização facial',sub:'lábios e linhas de expressão',  dur:'40 min'},
+  {k:'checkup',    rot:'Check-up geral',    sub:'só quero uma avaliação',         dur:'40 min'}
+];
+const TRATAMENTOS=[
+  {t:'Lentes de contato em porcelana',d:'Facetas de 0,3 mm coladas sobre o esmalte. Você aprova a forma em resina antes de qualquer desgaste — se não gostar, a gente refaz o ensaio.',
+   m:[['Sessões','3 a 4'],['Duração','15+ anos']],img:'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=600&auto=format&fit=crop&q=70'},
+  {t:'Implante guiado por tomografia',d:'A cirurgia é planejada no computador e executada por um guia impresso. Menos corte, menos ponto e pós-operatório que costuma dispensar analgésico forte.',
+   m:[['Cirurgia','40 min'],['Osseointegração','3 a 6 meses']],img:'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=600&auto=format&fit=crop&q=70'},
+  {t:'Alinhadores invisíveis',d:'Placas transparentes trocadas a cada 10 dias. Você tira pra comer e pra escovar, e acompanha a simulação do movimento desde a primeira consulta.',
+   m:[['Tratamento','6 a 18 meses'],['Retornos','a cada 8 semanas']],img:'https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=600&auto=format&fit=crop&q=70'},
+  {t:'Clareamento a laser',d:'Gel de peróxido ativado por LED com barreira gengival. Dessensibilizante aplicado na mesma sessão, que é o que evita aquela dor no dia seguinte.',
+   m:[['Sessões','1 a 3'],['Ganho médio','4 a 6 tons']],img:'https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=600&auto=format&fit=crop&q=70'}
+];
 
-                <!-- Card 3 -->
-                <div class="treatment-card">
-                    <div class="treatment-photo-box">
-                        <img src="https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=600&auto=format&fit=crop&q=80" alt="Alinhadores Invisíveis">
-                    </div>
-                    <div class="treatment-content">
-                        <h4>Alinhadores Transparentes</h4>
-                        <p>Ortodontia moderna e imperceptível. Alinhamento dos dentes sem o desconforto de fios ou braquetes metálicos, com acompanhamento digital da evolução.</p>
-                        <div class="treatment-tags-list">
-                            <span class="tag-pill">Removível</span>
-                            <span class="tag-pill">Discreto</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+/* ── estado ─────────────────────────────── */
+let iDe=12, iPara=5;                /* A3 → A1 na ordem de valor */
+let rotaAtual=null;
+let anam={protese:null,sens:null,clareou:null,gestante:null,medic:null};
+let proc=null, dia=null, hora=null;
+let dias=[], horarios=[];
+const el=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
-    <!-- Booking Form -->
-    <section class="booking-section" id="agendamento">
-        <div class="booking-card">
-            <div class="booking-info">
-                <h4>Pré-Agendamento de Consulta</h4>
-                <p>Preencha os dados ao lado para nossa equipe de atendimento entrar em contato e confirmar o melhor horário na agenda médica.</p>
+/* ── guia de tonalidade ─────────────────── */
+function tabs(alvo,papel,sel,fn){
+  el(alvo).innerHTML=ESCALA.map(function(t,i){
+    return '<button class="tab" data-papel="'+papel+'" aria-pressed="'+(sel===i)+'" '+
+      'onclick="'+fn+'('+i+')" title="'+t.k+' — grupo '+t.g+'" aria-label="Tonalidade '+t.k+'">'+
+      '<span class="amostra" style="background:'+t.hex+'"></span>'+
+      '<span class="cod">'+t.k+'</span></button>';
+  }).join('');
+}
+function pintarEscala(){
+  tabs('guiaDe','atual',iDe,'setDe');
+  tabs('guiaPara','alvo',iPara,'setPara');
 
-                <div class="clinic-address-card">
-                    <strong>🏛 Localização Prime:</strong><br>
-                    Av. Historiador Rubens de Mendonça, 1.750 · Sala 1204 (Edifício Helbor)<br>
-                    Estacionamento privativo com manobrista no local.<br>
-                    Atendimento de Segunda a Sexta, das 08h às 19h.
-                </div>
-            </div>
+  const de=ESCALA[iDe], para=ESCALA[iPara];
+  el('deSel').textContent=de.k;
+  el('paraSel').textContent=para.k;
+  el('swDe').style.background=de.hex;
+  el('swPara').style.background=para.hex;
+  el('deNome').textContent=de.k;
+  el('paraNome').textContent=para.k;
+  el('deGrupo').textContent=de.g==='BL'?'faixa Bleach':'grupo '+de.g;
+  el('paraGrupo').textContent=para.g==='BL'?'faixa Bleach':'grupo '+para.g;
 
-            <form class="booking-form" onsubmit="handleBookingSubmit(event)">
-                <div class="form-group">
-                    <label>Nome Completo</label>
-                    <input type="text" class="form-input" id="patientName" required placeholder="Digite seu nome">
-                </div>
+  const g=GRUPOS[de.g];
+  el('grupoNota').innerHTML='<b>'+(de.g==='BL'?'Faixa Bleach':'Grupo '+g.rot+' — '+g.nome)+'</b><p>'+g.desc+'</p>';
 
-                <div class="form-group">
-                    <label>Telefone / WhatsApp</label>
-                    <input type="tel" class="form-input" id="patientPhone" required placeholder="(65) 99999-9999">
-                </div>
+  pintarRota();
+}
+function setDe(i){
+  iDe=i;
+  if(iPara>=iDe) iPara=Math.max(0,iDe-1);
+  pintarEscala();
+}
+function setPara(i){
+  iPara=i;
+  if(iDe<=iPara) iDe=Math.min(ESCALA.length-1,iPara+1);
+  pintarEscala();
+}
 
-                <div class="form-group">
-                    <label>Tratamento de Interesse</label>
-                    <select class="form-select" id="patientInterest">
-                        <option value="Lentes de Contato em Porcelana">Lentes de Contato em Porcelana</option>
-                        <option value="Implantes e Reabilitação Oral">Implantes Dentários Guiados</option>
-                        <option value="Alinhadores Invisíveis">Alinhadores Invisíveis</option>
-                        <option value="Clareamento Dental a Laser">Clareamento Dental a Laser</option>
-                    </select>
-                </div>
+/* a conduta sai do salto na escala, do grupo de matiz e da anamnese */
+function pintarRota(){
+  const salto=iDe-iPara, de=ESCALA[iDe], para=ESCALA[iPara];
+  const lento = de.g==='C';                    /* grupo C clareia mais devagar */
+  const bleach = para.g==='BL';                /* meta acima do B1 */
+  let r;
 
-                <div class="form-group">
-                    <label>Turno de Preferência</label>
-                    <select class="form-select" id="patientShift">
-                        <option value="Manhã (08:00 às 12:00)">Manhã (08:00 às 12:00)</option>
-                        <option value="Tarde (13:30 às 18:30)">Tarde (13:30 às 18:30)</option>
-                    </select>
-                </div>
+  if(salto<=0){
+    r={t:'Manutenção da cor',
+       p:'Você já está no tom pretendido. Aqui o trabalho é conservar: limpeza profissional e reforço quando a cor começar a cair.',
+       s:'1 sessão',w:'1 semana',m:'Limpeza a cada 6 meses'};
+  } else if(bleach && salto>7){
+    r={t:'Faceta em cerâmica',
+       p:'Faixa Bleach partindo de um tom escuro não se sustenta só com peróxido. A cerâmica entrega a cor, mantém, e ainda corrige forma e espaço.',
+       s:'3 a 4 sessões',w:'4 semanas',m:'Cor estável, revisão anual'};
+  } else if(salto<=4){
+    r={t:lento?'Clareamento de consultório, protocolo estendido':'Clareamento de consultório',
+       p:lento
+         ? 'Grupo C responde mais devagar ao peróxido. Mesmo para poucos tons, contamos com uma sessão a mais do que no grupo A.'
+         : 'Poucos tons de diferença respondem bem ao peróxido em consultório, sem desgastar estrutura dental.',
+       s:lento?'2 a 3 sessões':'1 a 2 sessões',w:lento?'4 semanas':'3 semanas',m:'Reforço a cada 12 meses'};
+  } else if(salto<=9){
+    r={t:'Clareamento combinado',
+       p:'Sessão de consultório mais moldeira para uso em casa. É o protocolo que segura saltos maiores sem disparar sensibilidade.',
+       s:'2 sessões + 21 dias de moldeira',w:'6 semanas',m:'Reforço a cada 12 meses'};
+  } else {
+    r={t:'Faceta em cerâmica',
+       p:'Salto grande não se mantém só com clareamento — a cor regride. A cerâmica resolve cor e forma de uma vez, com prova em resina antes de qualquer desgaste.',
+       s:'3 a 4 sessões',w:'4 semanas',m:'Cor estável, revisão anual'};
+  }
 
-                <button type="submit" class="btn-submit-booking">
-                    <span>Solicitar Horário no WhatsApp</span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                </button>
-            </form>
-        </div>
-    </section>
+  el('rotaTitulo').textContent=r.t;
+  el('rotaTexto').textContent=r.p;
+  el('rotaTons').textContent = salto<=0 ? 'já no alvo' : salto+(salto===1?' tom':' tons');
+  el('rotaSessoes').textContent=r.s;
+  el('rotaTempo').textContent=r.w;
+  el('rotaManut').textContent=r.m;
+  rotaAtual=r;
+}
+function levarParaAgenda(){
+  const salto=iDe-iPara;
+  proc = (salto>9 || (ESCALA[iPara].g==='BL' && salto>7)) ? 'lentes' : 'clareamento';
+  pintarProcs(); validar();
+  el('agendar').scrollIntoView({behavior:'smooth',block:'start'});
+  toast('Registro '+ESCALA[iDe].k+' → '+ESCALA[iPara].k+' anexado ao agendamento');
+}
 
-    <!-- Footer -->
-    <footer>
-        <p><strong>Clínica OdontoPrime Cuiabá Ltda</strong> — CRO-MT 1.482-CL · RT: Dra. Amanda Ferraz (CRO-MT 6.412)</p>
-        <p style="margin-top: 6px; color: #64748b;">Demonstração funcional desenvolvida por DevStudio. Em conformidade com as normas do Conselho Federal de Odontologia.</p>
-    </footer>
+/* ── anamnese: o que impede ou adia o tratamento ── */
+function pintarAnamnese(){
+  el('anamnese').innerHTML=ANAMNESE.map(function(q){
+    return '<div class="anam-q"><span>'+q.q+'</span><div class="anam-op">'+
+      q.ops.map(function(o){
+        return '<button aria-pressed="'+(anam[q.k]===o[0])+'" onclick="setAnam(\''+q.k+'\',\''+o[0]+'\')">'+o[1]+'</button>';
+      }).join('')+'</div></div>';
+  }).join('');
+  pintarAlertas();
+}
+function setAnam(k,v){anam[k]=v;pintarAnamnese();validar()}
 
-    <script>
-        function handleBookingSubmit(e) {
-            e.preventDefault();
-            const name = document.getElementById('patientName').value.trim();
-            const phone = document.getElementById('patientPhone').value.trim();
-            const interest = document.getElementById('patientInterest').value;
-            const shift = document.getElementById('patientShift').value;
+function alertas(){
+  const out=[];
+  if(anam.gestante==='sim')
+    out.push('Clareamento é <b>contraindicado na gestação e na amamentação</b> — não há estudo que garanta segurança. Podemos fazer limpeza e avaliação normalmente, e deixar o clareamento programado para depois.');
+  if(anam.clareou==='consultorio'||anam.clareou==='caseiro')
+    out.push('Clareamento repetido em menos de 12 meses aumenta a sensibilidade sem ganhar tom. Vamos <b>aferir a cor atual antes</b> de indicar uma nova sessão.');
+  if(anam.sens==='forte')
+    out.push('Com sensibilidade frequente entramos com <b>dessensibilizante duas semanas antes</b> e reduzimos a concentração do gel. Isso alonga o tratamento, mas evita a dor do dia seguinte.');
+  if(anam.protese==='fixa'||anam.protese==='implante')
+    out.push('Cerâmica e resina <b>não clareiam</b>. Se o dente natural clarear, a coroa existente vai destoar — pode ser necessário refazê-la depois, e isso entra no orçamento.');
+  if(anam.medic==='sim')
+    out.push('Anticoagulante e bifosfonato mudam a conduta cirúrgica. <b>Traga a receita ou o relatório do médico</b> na avaliação para conversarmos com quem acompanha você.');
+  if(anam.medic==='nsei')
+    out.push('Sem essa informação não conseguimos planejar procedimento cirúrgico. Se puder, <b>confira a caixa do remédio</b> antes da consulta.');
+  return out;
+}
+function pintarAlertas(){
+  const a=alertas();
+  el('anamAlertas').innerHTML=a.length
+    ? a.map(function(t){return '<p class="anam-alerta">'+t+'</p>'}).join('')
+    : '';
+}
 
-            let msg = `*🦷 PRÉ-AGENDAMENTO CLÍNICO - ODONTOPRIME*\n`;
-            msg += `────────────────────────────\n`;
-            msg += `▪ *Paciente:* ${name}\n`;
-            msg += `▪ *Contato:* ${phone}\n`;
-            msg += `▪ *Procedimento de Interesse:* ${interest}\n`;
-            msg += `▪ *Turno de Preferência:* ${shift}\n`;
-            msg += `────────────────────────────\n`;
-            msg += `Olá! Gostaria de verificar a disponibilidade na agenda médica para a realização da minha consulta de avaliação.`;
+/* ── tratamentos ────────────────────────── */
+el('tgrid').innerHTML=TRATAMENTOS.map(t=>
+  '<article class="tcard">'+
+    '<div class="tcard-img"><img src="'+t.img+'" alt="" loading="lazy"></div>'+
+    '<div class="tcard-b"><h4>'+t.t+'</h4><p>'+t.d+'</p>'+
+      '<div class="tcard-meta">'+t.m.map(x=>'<div>'+x[0]+'<b>'+x[1]+'</b></div>').join('')+'</div>'+
+    '</div></article>').join('');
 
-            const encoded = encodeURIComponent(msg);
-            window.open(`https://wa.me/5565999999999?text=${encoded}`, '_blank');
-        }
-    </script>
+/* ── agenda ─────────────────────────────── */
+const DS=['dom','seg','ter','qua','qui','sex','sáb'];
+const MS=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+const MANHA=['08:00','09:00','10:00','11:00'];
+const TARDE=['13:30','14:30','15:30','16:30','17:30'];
+/* ponytail: ocupação fixa só pra demonstrar horário indisponível — vem da agenda real */
+const OCUPADOS={0:['09:00','14:30'],1:['08:00'],2:['15:30','16:30'],3:['10:00','11:00'],4:[],5:['13:30']};
+
+function montarDias(){
+  dias=[]; const d=new Date(); d.setHours(0,0,0,0);
+  while(dias.length<6){
+    d.setDate(d.getDate()+1);
+    if(d.getDay()===0) continue;
+    dias.push({data:new Date(d),sab:d.getDay()===6});
+  }
+  el('days').innerHTML=dias.map((x,i)=>
+    '<button class="day" aria-pressed="'+(dia===i)+'" onclick="setDia('+i+')">'+
+    '<span class="w">'+DS[x.data.getDay()]+'</span>'+
+    '<span class="n">'+String(x.data.getDate()).padStart(2,'0')+'</span>'+
+    '<span class="m">'+MS[x.data.getMonth()]+'</span></button>').join('');
+}
+function montarHoras(){
+  if(dia===null){
+    el('hours').innerHTML='<p style="grid-column:1/-1;font-size:12.5px;color:var(--slate)">Escolha um dia para ver os horários livres.</p>';
+    return;
+  }
+  const d=dias[dia];
+  horarios = d.sab ? MANHA : MANHA.concat(TARDE);
+  const ocup = OCUPADOS[dia] || [];
+  el('hours').innerHTML=horarios.map(h=>{
+    const livre=ocup.indexOf(h)<0;
+    return '<button class="hour" '+(livre?'':'disabled')+' aria-pressed="'+(hora===h)+'" onclick="setHora(\''+h+'\')">'+h+'</button>';
+  }).join('');
+}
+function setProc(k){proc=k;pintarProcs();validar()}
+function pintarProcs(){
+  el('procs').innerHTML=PROCS.map(p=>
+    '<button class="proc" aria-pressed="'+(proc===p.k)+'" onclick="setProc(\''+p.k+'\')">'+
+    '<span><b>'+p.rot+'</b><small>'+p.sub+'</small></span><span class="dur">'+p.dur+'</span></button>').join('');
+}
+function setDia(i){dia=i;hora=null;montarDias();montarHoras();validar()}
+function setHora(h){hora=h;montarHoras();validar()}
+
+function pintarTrail(){
+  const passos=[proc!==null,dia!==null,hora!==null,anamCompleta(),el('consent').checked];
+  el('trail').innerHTML=passos.map((ok,i)=>
+    '<i class="'+(ok?'ok':(passos.slice(0,i).every(Boolean)?'on':''))+'">'+(ok?'✓':(i+1))+'</i>').join('')+
+    '<span>'+passos.filter(Boolean).length+' de 5</span>';
+}
+function anamCompleta(){return ANAMNESE.every(function(q){return anam[q.k]!==null})}
+function validar(){
+  pintarTrail();
+  pintarAlertas();
+  const ok = proc!==null && dia!==null && hora!==null && anamCompleta() && el('consent').checked;
+  el('bookBtn').disabled=!ok;
+  el('hint').textContent = ok ? 'Tudo pronto — '+quando()+'.'
+    : proc===null       ? 'Escolha o procedimento, o dia e o horário.'
+    : dia===null        ? 'Agora escolha o dia da avaliação.'
+    : hora===null       ? 'Falta escolher o horário.'
+    : !anamCompleta()   ? 'Responda as cinco perguntas do histórico — elas mudam a conduta.'
+    :                     'Marque a autorização de contato para confirmar.';
+}
+function quando(){
+  const d=dias[dia].data;
+  return DS[d.getDay()]+', '+String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+' às '+hora;
+}
+
+/* ── confirmação: fecha na própria página ── */
+let consulta=null;
+function confirmar(){
+  const d=dias[dia].data, p=PROCS.find(x=>x.k===proc);
+  // ponytail: protocolo real vem do sistema da clínica
+  const prot='AV-'+String(new Date().getFullYear()).slice(2)+String(Math.floor(Math.random()*9000)+1000);
+  const ini=new Date(d); ini.setHours(+hora.slice(0,2),+hora.slice(3),0,0);
+  const fim=new Date(ini); fim.setMinutes(fim.getMinutes()+parseInt(p.dur,10));
+
+  consulta={prot:prot,quando:quando(),ini:ini,fim:fim,proc:p.rot,dur:p.dur,
+    nome:(el('nome').value||'').trim()||'Não informado',
+    fone:(el('fone').value||'').trim()||'Não informado',
+    conv:el('conv').value, obs:(el('obs').value||'').trim(),
+    de:ESCALA[iDe].k, para:ESCALA[iPara].k, salto:iDe-iPara,
+    conduta:rotaAtual?rotaAtual.t:'—',
+    anam:ANAMNESE.map(function(q){
+      const o=q.ops.find(function(x){return x[0]===anam[q.k]});
+      return q.q+' '+(o?o[1]:'—');
+    }),
+    alertas:alertas().map(function(t){return t.replace(/<[^>]+>/g,'')})};
+
+  el('bookCard').innerHTML=
+    '<div class="done">'+
+      '<div class="done-i"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div>'+
+      '<h3>Avaliação reservada</h3>'+
+      '<p>Seu horário está bloqueado na agenda. Guarde o número abaixo para remarcar ou cancelar sem precisar explicar tudo de novo.</p>'+
+      '<div class="card-conf">'+
+        '<div class="conf-top"><div><span class="k">Protocolo</span><b>'+prot+'</b></div>'+
+          '<div class="conf-when">'+hora+'<br>'+String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'</div></div>'+
+        '<div class="conf-row"><span>Paciente</span><b>'+esc(consulta.nome)+'</b></div>'+
+        '<div class="conf-row"><span>Contato</span><b>'+esc(consulta.fone)+'</b></div>'+
+        '<div class="conf-row"><span>Procedimento</span><b>'+p.rot+'</b></div>'+
+        '<div class="conf-row"><span>Duração prevista</span><b>'+p.dur+'</b></div>'+
+        '<div class="conf-row"><span>Cobertura</span><b>'+consulta.conv+'</b></div>'+
+        '<div class="conf-row"><span>Registro de cor</span><b>'+consulta.de+' → '+consulta.para+' ('+consulta.salto+' tons)</b></div>'+
+        '<div class="conf-row"><span>Conduta preliminar</span><b>'+consulta.conduta+'</b></div>'+
+      '</div>'+
+      (consulta.alertas.length
+        ? '<div class="prep" style="margin:0 auto 22px"><b>Pontos levantados no histórico</b><ul>'+
+          consulta.alertas.map(function(t){return '<li>'+t+'</li>'}).join('')+'</ul></div>'
+        : '')+
+      '<div class="ways">'+
+        '<button class="way" onclick="baixarIcs()">'+
+          '<i><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"/></svg></i>'+
+          '<span>Salvar na agenda<small>Convite que abre no Google, Outlook ou iPhone</small></span></button>'+
+        '<button class="way" onclick="copiar()">'+
+          '<i><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="13" height="13" x="9" y="9" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></i>'+
+          '<span>Copiar os dados da consulta<small>Para mandar a quem vai te acompanhar</small></span></button>'+
+        '<button class="way" onclick="window.print()">'+
+          '<i><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg></i>'+
+          '<span>Imprimir o comprovante<small>Ou salvar em PDF pelo navegador</small></span></button>'+
+        '<a class="way wa" href="'+zap()+'" target="_blank" rel="noopener">'+
+          '<i><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 2.1.55 4.06 1.6 5.8L2 22l4.4-1.7a9.9 9.9 0 0 0 5.64 1.73c5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m5.8 14.15c-.24.68-1.43 1.31-1.98 1.4-.51.07-1.15.1-1.86-.12a16 16 0 0 1-1.68-.62c-2.96-1.28-4.89-4.26-5.04-4.46-.15-.2-1.2-1.6-1.2-3.05s.76-2.16 1.03-2.46c.27-.3.59-.37.78-.37h.57c.18 0 .43-.07.67.51.25.6.84 2.06.91 2.2.08.16.13.34.03.54-.1.2-.15.32-.29.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.02 1.12 1 2.06 1.31 2.36 1.46.3.15.47.13.64-.08.17-.2.74-.86.94-1.16.2-.3.39-.25.66-.15.27.1 1.72.81 2.01.96.3.15.5.22.57.35.07.12.07.72-.18 1.41"/></svg></i>'+
+          '<span>Tirar uma dúvida antes<small>A recepção responde no horário comercial</small></span></a>'+
+      '</div>'+
+      '<div class="prep"><b>Para aproveitar melhor a avaliação</b><ul>'+
+        '<li>Escove os dentes antes de vir, se puder.</li>'+
+        '<li>Traga radiografias ou moldes de tratamentos anteriores.</li>'+
+        '<li>Se usa algum medicamento contínuo, anote o nome.</li>'+
+        '<li>Chegue 10 minutos antes para o cadastro e as fotos.</li>'+
+      '</ul></div>'+
+      '<button class="again" onclick="location.reload()">Marcar outro horário</button>'+
+    '</div>';
+  el('bookCard').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function texto(){
+  const c=consulta;
+  return 'ODONTOPRIME CUIABÁ — AVALIAÇÃO '+c.prot+'\n'+
+    'Quando: '+c.quando+' ('+c.dur+')\n'+
+    'Procedimento: '+c.proc+'\n'+
+    'Paciente: '+c.nome+' · '+c.fone+'\n'+
+    'Cobertura: '+c.conv+'\n'+
+    'Registro de cor: '+c.de+' → '+c.para+' ('+c.salto+' tons)\n'+
+    'Conduta preliminar: '+c.conduta+'\n\n'+
+    'HISTÓRICO PRELIMINAR\n'+c.anam.join('\n')+
+    (c.alertas.length?'\n\nPONTOS DE ATENÇÃO\n- '+c.alertas.join('\n- '):'')+
+    (c.obs?'\n\nObservação: '+c.obs:'')+
+    '\nLocal: Av. Historiador Rubens de Mendonça, 1.750 — Ed. Top Tower, Cuiabá/MT';
+}
+function copiar(){
+  navigator.clipboard.writeText(texto())
+    .then(()=>toast('Dados da consulta copiados'),()=>toast('Não foi possível copiar aqui'));
+}
+function z(d){return d.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z'}
+function baixarIcs(){
+  const c=consulta;
+  const corpo=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//OdontoPrime//Avaliacao//PT','BEGIN:VEVENT',
+    'UID:'+c.prot+'@odontoprime.com.br','DTSTAMP:'+z(new Date()),'DTSTART:'+z(c.ini),'DTEND:'+z(c.fim),
+    'SUMMARY:Avaliação OdontoPrime — '+c.proc,
+    'LOCATION:Av. Historiador Rubens de Mendonça 1750, Ed. Top Tower, Cuiabá - MT',
+    'DESCRIPTION:'+texto().replace(/\n/g,'\\n'),
+    'BEGIN:VALARM','TRIGGER:-PT2H','ACTION:DISPLAY','DESCRIPTION:Avaliação OdontoPrime em 2 horas','END:VALARM',
+    'END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const url=URL.createObjectURL(new Blob([corpo],{type:'text/calendar'}));
+  const a=document.createElement('a'); a.href=url; a.download='avaliacao-'+c.prot+'.ics'; a.click();
+  URL.revokeObjectURL(url);
+  toast('Convite baixado — com lembrete 2h antes');
+}
+function zap(){
+  return 'https://wa.me/5565999999999?text='+encodeURIComponent('Olá! É sobre a avaliação '+consulta.prot+' ('+consulta.quando+').');
+}
+
+let tH;
+function toast(m){const t=el('toast');t.textContent=m;t.classList.add('on');clearTimeout(tH);tH=setTimeout(()=>t.classList.remove('on'),2600)}
+
+pintarEscala(); pintarProcs(); pintarAnamnese(); montarDias(); montarHoras(); validar();
+
+/* ── verificações clínicas ─────────────── */
+(function(){
+  const de=iDe,para=iPara;
+
+  console.assert(iDe>iPara,'a cor atual tem de ser mais escura que a meta');
+  console.assert(ESCALA.length===20,'20 tabs: 16 da VITA Classical + 4 Bleach');
+  console.assert(ESCALA.slice(0,4).every(function(t){return t.g==='BL'}),'os quatro Bleach abrem a régua');
+  console.assert(ESCALA[4].k==='B1','B1 é o mais claro da escala clássica');
+  console.assert(ESCALA.every(function(t){return GRUPOS[t.g]}),'todo tom pertence a um grupo de matiz');
+
+  /* salto grande tem de sair do clareamento e ir pra cerâmica */
+  iDe=19;iPara=0;pintarRota();
+  console.assert(el('rotaTitulo').textContent.indexOf('Faceta')>=0,'C4 até BL1 exige cerâmica, não peróxido');
+
+  /* A3 -> A1 sao 7 posicoes: e clareamento de rotina, nao ceramica */
+  iDe=12;iPara=5;pintarRota();
+  console.assert(el('rotaTitulo').textContent.indexOf('Clareamento')>=0,'A3 para A1 resolve com clareamento');
+
+  /* grupo C clareia mais devagar, mesmo com salto curto */
+  iDe=10;iPara=8;pintarRota();               /* C2 -> A2 */
+  console.assert(el('rotaSessoes').textContent.indexOf('2 a 3')>=0,'grupo C precisa de sessão extra');
+
+  iDe=de;iPara=para;pintarEscala();
+
+  /* a anamnese tem de barrar o clareamento na gestação */
+  const salvo=JSON.stringify(anam);
+  anam.gestante='sim';
+  console.assert(alertas().some(function(t){return t.indexOf('contraindicado')>=0}),'gestação tem de gerar contraindicação');
+  anam=JSON.parse(salvo);
+  console.assert(!anamCompleta(),'anamnese em branco não pode liberar o agendamento');
+})();
+</script>
 </body>
 </html>

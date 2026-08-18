@@ -85,3 +85,18 @@ Fichas técnicas dos projetos mockups desenvolvidos com foco regional e alto imp
 - **Entrega:** Painel online onde o cliente digita a placa do veículo e acompanha a linha do tempo da Ordem de Serviço (Recepção -> Diagnóstico -> Execução -> Pronto), com detalhamento de peças e valores.
 - **Números:** Redução de 75% nas ligações de clientes perguntando sobre prazos.
 - **Posso usar o nome do cliente?** sim (Centro Automotivo e Linha Pesada)
+
+---
+
+## Projeto 7 — Dom Barbeiro (Agendamento Online & Clube VIP)
+
+- **Print:** `barbearia.jpg`
+- **Tipo:** Sistema de agendamento online e gestão de barbearia
+- **Ano:** 2026
+- **Cliente:** Dom Barbeiro & Clube de Cavalheiros (Cuiabá - MT)
+- **Está no ar em:** `demos/barbearia.html`
+- **Problema:** Barbeiros perdiam tempo respondendo mensagens no WhatsApp no meio dos atendimentos para agendar horários, gerando furos na agenda e horários duplicados.
+- **Entrega:** Sistema web de agendamento próprio com escolha de serviço, seleção de profissional por especialidade, grade de horários livres em tempo real, chopp cortesia, clube de assinatura VIP e emissão de voucher com exportação para Google Agenda/Apple (.ics) e confirmação no WhatsApp.
+- **Números:** 0 furos na agenda e aumento de 35% na adesão ao plano de assinatura mensal.
+- **Posso usar o nome do cliente?** sim (Barbearia & Clube Masculino)
+
