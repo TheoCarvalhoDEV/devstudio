@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OdontoPrime | Estética Dental e Reabilitação Oral em Cuiabá</title>
+<meta name="description" content="Clínica de estética dental e implantes em Cuiabá. Veja a escala de cor, entenda o tratamento e reserve sua avaliação com horário confirmado.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --porcelain:#f6f8f9; --enamel:#fff; --mist:#eef3f5;
+  --graphite:#151c21; --steel:#46606e; --slate:#69808c; --line:#e2e9ec; --line-2:#cfdae0;
+  --rose:#b9636f; --rose-soft:#f6ecee; --rose-deep:#8e4753;
+  --ok:#2c7a5b;
+  --r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--porcelain);color:var(--graphite);-webkit-font-smoothing:antialiased;line-height:1.55}
+h1,h2,h3,h4,h5{font-family:'Familjen Grotesk',system-ui,sans-serif;letter-spacing:-.015em;line-height:1.15}
+a{color:inherit}
+button,input,select,textarea{font:inherit}
+:focus-visible{outline:2px solid var(--rose);outline-offset:3px}
+.eyebrow{display:block;font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--rose)}
+
+/* ── topo ───────────────────────────────── */
+.info{background:var(--graphite);color:#9fb0b9;font-size:11.5px;padding:9px 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;letter-spacing:.01em}
+.info b{color:var(--porcelain);font-weight:500}
+header{position:sticky;top:0;z-index:60;background:rgba(246,248,249,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.hd{max-width:1180px;margin:0 auto;padding:15px 24px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.mark{display:flex;align-items:center;gap:12px;text-decoration:none}
+.mark-i{width:40px;height:40px;border-radius:12px;background:var(--graphite);color:var(--porcelain);display:grid;place-items:center}
+.mark h1{font-size:19px;font-weight:600}
+.mark span{display:block;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--slate);font-weight:600;margin-top:2px}
+nav{display:flex;gap:26px;align-items:center}
+nav a{font-size:13.5px;color:var(--steel);text-decoration:none;font-weight:500}
+nav a:hover{color:var(--graphite)}
+.hd-cta{background:var(--graphite);color:var(--porcelain);text-decoration:none;border-radius:10px;padding:11px 19px;font-size:13.5px;font-weight:600;display:inline-flex;align-items:center;gap:8px}
+.hd-cta:hover{background:var(--rose)}
+
+/* ── abertura ───────────────────────────── */
+.open{max-width:1180px;margin:0 auto;padding:64px 24px 20px;display:grid;grid-template-columns:1fr .84fr;gap:56px;align-items:center}
+.open h2{font-size:clamp(32px,4.6vw,54px);font-weight:500;letter-spacing:-.03em;margin:18px 0 20px}
+.open h2 em{font-style:normal;color:var(--rose);font-weight:600}
+.open>div>p{color:var(--steel);font-size:16px;max-width:48ch;line-height:1.65}
+.creds{display:flex;gap:34px;margin-top:34px;padding-top:26px;border-top:1px solid var(--line-2);flex-wrap:wrap}
+.cred b{display:block;font-family:'Familjen Grotesk',sans-serif;font-size:27px;font-weight:600;letter-spacing:-.02em}
+.cred span{font-size:12px;color:var(--slate)}
+
+.portrait{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:4/5;background:var(--mist)}
+.portrait img{width:100%;height:100%;object-fit:cover}
+.portrait-note{position:absolute;left:16px;right:16px;bottom:16px;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-radius:12px;padding:14px 16px}
+.portrait-note b{display:block;font-family:'Familjen Grotesk',sans-serif;font-size:14px;font-weight:600}
+.portrait-note span{font-size:12px;color:var(--slate)}
+
+/* ── escala de cor (assinatura) ─────────── */
+.shade{max-width:1180px;margin:56px auto 0;padding:0 24px}
+.shade-card{background:var(--enamel);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.shade-head{padding:30px 32px 24px;border-bottom:1px solid var(--line)}
+.shade-head h3{font-size:26px;font-weight:600;margin:12px 0 8px}
+.shade-head p{color:var(--steel);font-size:14.5px;max-width:64ch}
+.shade-body{display:grid;grid-template-columns:1fr 340px}
+.shade-pick{padding:30px 32px}
+.shade-lbl{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--slate);font-weight:600;margin-bottom:16px;display:block}
+.teeth{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:30px}
+.tooth{width:52px;border:none;background:none;padding:0;cursor:pointer;text-align:center}
+.tooth svg{display:block;width:100%;height:auto;filter:drop-shadow(0 2px 4px rgba(21,28,33,.1));transition:transform .2s}
+.tooth:hover svg{transform:translateY(-3px)}
+.tooth span{display:block;font-family:'Familjen Grotesk',sans-serif;font-size:11.5px;font-weight:600;color:var(--slate);margin-top:7px;padding:2px 0;border-radius:4px}
+.tooth[aria-pressed="true"] svg{transform:translateY(-5px)}
+.tooth[aria-pressed="true"] span{background:var(--graphite);color:var(--porcelain)}
+.tooth[data-role="alvo"][aria-pressed="true"] span{background:var(--rose);color:#fff}
+
+.compare{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:center;background:var(--mist);border-radius:14px;padding:24px}
+.cmp{text-align:center}
+.cmp svg{width:78px;height:auto;margin:0 auto;display:block;filter:drop-shadow(0 3px 8px rgba(21,28,33,.14))}
+.cmp b{display:block;font-family:'Familjen Grotesk',sans-serif;font-size:15px;font-weight:600;margin-top:12px}
+.cmp span{font-size:11.5px;color:var(--slate)}
+.arrow{color:var(--rose)}
+
+.shade-out{background:var(--graphite);color:var(--porcelain);padding:30px 28px;display:flex;flex-direction:column;justify-content:space-between}
+.shade-out .k{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#8ea1ab;font-weight:600}
+.shade-out h4{font-size:24px;font-weight:600;margin:10px 0 6px;color:#fff}
+.shade-out>div>p{font-size:13.5px;color:#a8bac3;line-height:1.6}
+.plan-rows{margin-top:24px;border-top:1px solid #2b363d;padding-top:6px}
+.plan-row{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid #2b363d;font-size:13px;color:#a8bac3}
+.plan-row:last-child{border-bottom:none}
+.plan-row b{color:#fff;font-weight:500;text-align:right}
+.shade-cta{width:100%;margin-top:24px;background:var(--rose);color:#fff;border:none;border-radius:10px;padding:15px;font-family:'Familjen Grotesk',sans-serif;font-size:14.5px;font-weight:600;cursor:pointer}
+.shade-cta:hover{background:var(--rose-deep)}
+.disclaimer{font-size:11px;color:#7d919b;margin-top:12px;line-height:1.5}
+
+/* ── tratamentos ────────────────────────── */
+.treat{max-width:1180px;margin:70px auto 0;padding:0 24px}
+.sec-head{max-width:60ch;margin-bottom:32px}
+.sec-head h3{font-size:32px;font-weight:500;letter-spacing:-.025em;margin:12px 0 10px}
+.sec-head p{color:var(--steel);font-size:15px}
+.tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.tcard{background:var(--enamel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s,transform .2s}
+.tcard:hover{border-color:var(--line-2);transform:translateY(-3px)}
+.tcard-img{height:168px;background:var(--mist);overflow:hidden}
+.tcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.tcard:hover .tcard-img img{transform:scale(1.05)}
+.tcard-b{padding:20px;display:flex;flex-direction:column;flex:1}
+.tcard h4{font-size:17px;font-weight:600;margin-bottom:8px}
+.tcard p{font-size:13.5px;color:var(--steel);line-height:1.6;flex:1}
+.tcard-meta{display:flex;gap:14px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:11.5px;color:var(--slate)}
+.tcard-meta b{display:block;color:var(--graphite);font-family:'Familjen Grotesk',sans-serif;font-size:13px;font-weight:600}
+
+/* ── agendamento ────────────────────────── */
+.book{max-width:1180px;margin:70px auto 0;padding:0 24px}
+.book-card{background:var(--enamel);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.book-head{padding:30px 32px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.book-head h3{font-size:27px;font-weight:600;margin:12px 0 8px}
+.book-head p{color:var(--steel);font-size:14px;max-width:50ch}
+.trail{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--slate);white-space:nowrap}
+.trail i{width:24px;height:24px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;font-style:normal;font-family:'Familjen Grotesk',sans-serif;font-size:11px;font-weight:600}
+.trail i.on{background:var(--graphite);color:#fff;border-color:var(--graphite)}
+.trail i.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+
+.book-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.book-col{padding:28px 32px}
+.book-col+.book-col{border-left:1px solid var(--line)}
+.step{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--slate);font-weight:600;margin-bottom:14px;display:block}
+.procs{display:grid;gap:8px;margin-bottom:28px}
+.proc{display:flex;align-items:center;gap:13px;background:var(--porcelain);border:1px solid var(--line);border-radius:11px;padding:14px;cursor:pointer;text-align:left;transition:border-color .18s,background .18s}
+.proc:hover{border-color:var(--line-2)}
+.proc[aria-pressed="true"]{border-color:var(--rose);background:var(--rose-soft)}
+.proc b{font-family:'Familjen Grotesk',sans-serif;font-size:14px;font-weight:600;display:block}
+.proc small{font-size:11.5px;color:var(--slate);display:block;margin-top:2px}
+.proc .dur{margin-left:auto;font-size:11.5px;color:var(--slate);white-space:nowrap}
+.proc[aria-pressed="true"] .dur{color:var(--rose-deep);font-weight:600}
+
+.days{display:grid;grid-template-columns:repeat(auto-fit,minmax(66px,1fr));gap:7px;margin-bottom:26px}
+.day{background:var(--porcelain);border:1px solid var(--line);border-radius:10px;padding:11px 4px;cursor:pointer;text-align:center;transition:border-color .18s,background .18s}
+.day:hover:not(:disabled){border-color:var(--line-2)}
+.day[aria-pressed="true"]{background:var(--graphite);border-color:var(--graphite);color:#fff}
+.day:disabled{opacity:.35;cursor:not-allowed}
+.day .w{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--slate);font-weight:600}
+.day .n{font-family:'Familjen Grotesk',sans-serif;font-size:19px;font-weight:600;margin:2px 0}
+.day .m{font-size:10px;color:var(--slate)}
+.day[aria-pressed="true"] .w,.day[aria-pressed="true"] .m{color:#9fb0b9}
+
+.hours{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:7px}
+.hour{background:var(--porcelain);border:1px solid var(--line);border-radius:10px;padding:11px 4px;font-family:'Familjen Grotesk',sans-serif;font-size:13.5px;font-weight:600;cursor:pointer;transition:border-color .18s,background .18s}
+.hour:hover:not(:disabled){border-color:var(--line-2)}
+.hour[aria-pressed="true"]{background:var(--rose);border-color:var(--rose);color:#fff}
+.hour:disabled{opacity:.32;cursor:not-allowed;text-decoration:line-through}
+
+.fields{display:grid;gap:14px}
+.f label{display:block;font-size:12.5px;font-weight:600;color:var(--steel);margin-bottom:6px}
+.f input,.f select,.f textarea{width:100%;background:var(--porcelain);border:1px solid var(--line);border-radius:10px;padding:13px 14px;font-size:14px;color:var(--graphite)}
+.f input::placeholder,.f textarea::placeholder{color:#9aabb3}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--rose);background:var(--enamel);outline:none}
+.f textarea{resize:vertical;min-height:76px;font-family:'Inter',sans-serif}
+.consent{display:flex;gap:11px;align-items:flex-start;font-size:12.5px;color:var(--steel);line-height:1.55}
+.consent input{accent-color:var(--rose);width:17px;height:17px;margin-top:1px;flex-shrink:0}
+.book-btn{width:100%;background:var(--graphite);color:#fff;border:none;border-radius:11px;padding:16px;font-family:'Familjen Grotesk',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:background .18s}
+.book-btn:hover:not(:disabled){background:var(--rose)}
+.book-btn:disabled{background:var(--mist);color:#9aabb3;cursor:not-allowed}
+.hint{font-size:12px;color:var(--slate);text-align:center;min-height:17px}
+
+/* ── confirmação ────────────────────────── */
+.done{padding:52px 32px;text-align:center;animation:up .4s ease}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.done-i{width:60px;height:60px;border-radius:50%;background:#e8f4ee;color:var(--ok);display:grid;place-items:center;margin:0 auto 20px}
+.done h3{font-size:28px;font-weight:600}
+.done>p{color:var(--steel);font-size:15px;max-width:46ch;margin:12px auto 30px}
+.card-conf{max-width:520px;margin:0 auto 26px;border:1px solid var(--line);border-radius:16px;overflow:hidden;text-align:left}
+.conf-top{background:var(--graphite);color:#fff;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.conf-top .k{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#8ea1ab;font-weight:600}
+.conf-top b{font-family:'Familjen Grotesk',sans-serif;font-size:20px;font-weight:600;display:block;margin-top:3px}
+.conf-when{text-align:right;font-family:'Familjen Grotesk',sans-serif;font-size:15px;font-weight:600;line-height:1.35}
+.conf-row{display:flex;justify-content:space-between;gap:16px;padding:13px 24px;border-bottom:1px solid var(--line);font-size:13.5px;color:var(--steel)}
+.conf-row:last-child{border-bottom:none}
+.conf-row b{color:var(--graphite);font-weight:600;text-align:right}
+.ways{max-width:520px;margin:0 auto;display:grid;gap:9px}
+.way{display:flex;align-items:center;gap:13px;background:var(--enamel);border:1px solid var(--line);border-radius:11px;padding:14px 16px;cursor:pointer;text-align:left;text-decoration:none;color:var(--graphite);font-size:13.5px;font-weight:600;transition:border-color .18s}
+.way:hover{border-color:var(--graphite)}
+.way small{display:block;font-weight:400;color:var(--slate);font-size:12px;margin-top:2px;line-height:1.45}
+.way i{width:36px;height:36px;border-radius:10px;background:var(--mist);color:var(--steel);display:grid;place-items:center;flex-shrink:0}
+.way.wa i{background:#e8f4ee;color:var(--ok)}
+.prep{max-width:520px;margin:26px auto 0;background:var(--rose-soft);border:1px solid #eddadd;border-radius:12px;padding:18px 20px;text-align:left}
+.prep b{display:block;font-family:'Familjen Grotesk',sans-serif;font-size:13.5px;font-weight:600;margin-bottom:8px}
+.prep ul{margin:0;padding-left:18px;font-size:13px;color:var(--steel);line-height:1.75}
+.again{background:none;border:none;color:var(--slate);font-size:12.5px;text-decoration:underline;text-underline-offset:4px;cursor:pointer;margin-top:26px}
+
+footer{margin-top:80px;background:var(--graphite);color:#8ea1ab;padding:36px 24px;font-size:12.5px;line-height:1.75}
+.ft{max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer b{color:var(--porcelain)}
+
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,180%);background:var(--graphite);color:#fff;padding:14px 22px;border-radius:11px;font-size:13.5px;font-weight:600;z-index:120;transition:transform .3s cubic-bezier(.4,0,.2,1);box-shadow:0 12px 32px rgba(21,28,33,.24)}
+.toast.on{transform:translate(-50%,0)}
+
+@media (max-width:940px){
+  .open{grid-template-columns:1fr;gap:36px;padding-top:44px}
+  .portrait{max-width:420px;aspect-ratio:4/3}
+  .shade-body,.book-body{grid-template-columns:1fr}
+  .book-col+.book-col{border-left:none;border-top:1px solid var(--line)}
+  nav{display:none}
+}
+@media print{
+  header,.info,.open,.shade,.treat,.book-head,.ways,.again,footer,.toast{display:none!important}
+  body{background:#fff}
+  .book-card,.card-conf{border-color:#ccc}
+  .conf-top{background:#eee;color:#000}
+  .conf-top .k{color:#555}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+</style>
+</head>
+<body>
+
+<div class="info">
+  <span>Av. Historiador Rubens de Mendonça, 1.750 · Ed. Top Tower · Cuiabá – MT</span>
+  <span>Seg a sex 08h–19h · Sáb 08h–13h · <b>CRO-MT 1.482-CL</b></span>
+</div>
+
+<header>
+  <div class="hd">
+    <a href="#" class="mark">
+      <span class="mark-i"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5c-1.5-1.5-4-2-5.5-1C4.5 5.2 4 8 4.6 11c.5 2.6 1.4 5.4 2.3 7.5.6 1.4 2 1.6 2.6.2.5-1.2.8-2.6 1.2-3.6.3-.8 1.3-.8 1.6 0 .4 1 .7 2.4 1.2 3.6.6 1.4 2 1.2 2.6-.2.9-2.1 1.8-4.9 2.3-7.5.6-3 .1-5.8-1.9-7-1.5-1-4-.5-5.5 1Z"/></svg></span>
+      <div><h1>OdontoPrime</h1><span>Estética &amp; Reabilitação</span></div>
+    </a>
+    <nav>
+      <a href="#escala">Escala de cor</a>
+      <a href="#tratamentos">Tratamentos</a>
+      <a href="#agendar">Agendar</a>
+    </nav>
+    <a href="#agendar" class="hd-cta">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      Reservar avaliação
+    </a>
+  </div>
+</header>
+
+<section class="open">
+  <div>
+    <span class="eyebrow">Planejamento digital do sorriso</span>
+    <h2>Antes de mexer no seu dente, a gente te mostra <em>exatamente</em> como vai ficar.</h2>
+    <p>Escaneamento intraoral, prova do sorriso em resina e só então a porcelana. Você aprova o resultado na sua própria boca antes de qualquer desgaste definitivo.</p>
+    <div class="creds">
+      <div class="cred"><b>2.847</b><span>pacientes atendidos</span></div>
+      <div class="cred"><b>14 anos</b><span>de clínica em Cuiabá</span></div>
+      <div class="cred"><b>4,9</b><span>média no Google (612 avaliações)</span></div>
+    </div>
+  </div>
+  <div class="portrait">
+    <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&auto=format&fit=crop&q=75" alt="Consultório odontológico da OdontoPrime" loading="lazy">
+    <div class="portrait-note">
+      <b>Dr. Rafael Silveira · CRO-MT 8420</b>
+      <span>Responsável técnico · Especialista em prótese e implantodontia</span>
+    </div>
+  </div>
+</section>
+
+<section class="shade" id="escala">
+  <div class="shade-card">
+    <div class="shade-head">
+      <span class="eyebrow">Escala VITA · a mesma usada no consultório</span>
+      <h3>Descubra quantos tons o seu clareamento pode ganhar</h3>
+      <p>Compare seus dentes com a escala em frente ao espelho, na luz natural da janela. Depois escolha o tom que você quer alcançar — o plano de tratamento se ajusta sozinho.</p>
+    </div>
+    <div class="shade-body">
+      <div class="shade-pick">
+        <span class="shade-lbl">1 · Cor de hoje</span>
+        <div class="teeth" id="atual" role="group" aria-label="Cor atual dos dentes"></div>
+
+        <span class="shade-lbl">2 · Cor que você quer</span>
+        <div class="teeth" id="alvo" role="group" aria-label="Cor desejada"></div>
+
+        <div class="compare">
+          <div class="cmp">
+            <svg viewBox="0 0 40 52" aria-hidden="true"><path id="tDe" d="M20 2c9 0 14 5 14 13 0 11-6 35-14 35S6 26 6 15C6 7 11 2 20 2Z" fill="#e2d5b4"/><path d="M20 2c9 0 14 5 14 13 0 11-6 35-14 35" fill="rgba(255,255,255,.16)"/></svg>
+            <b id="deNome">A3</b><span>hoje</span>
+          </div>
+          <div class="arrow"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+          <div class="cmp">
+            <svg viewBox="0 0 40 52" aria-hidden="true"><path id="tPara" d="M20 2c9 0 14 5 14 13 0 11-6 35-14 35S6 26 6 15C6 7 11 2 20 2Z" fill="#f0eadb"/><path d="M20 2c9 0 14 5 14 13 0 11-6 35-14 35" fill="rgba(255,255,255,.16)"/></svg>
+            <b id="paraNome">A1</b><span>meta</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="shade-out">
+        <div>
+          <span class="k">Caminho indicado</span>
+          <h4 id="rotaTitulo">Clareamento a laser</h4>
+          <p id="rotaTexto">Uma diferença de poucos tons responde bem ao clareamento em consultório, sem desgastar o dente.</p>
+          <div class="plan-rows">
+            <div class="plan-row"><span>Distância na escala</span><b id="rotaTons">3 tons</b></div>
+            <div class="plan-row"><span>Sessões previstas</span><b id="rotaSessoes">2 sessões</b></div>
+            <div class="plan-row"><span>Tempo até o resultado</span><b id="rotaTempo">≈ 3 semanas</b></div>
+            <div class="plan-row"><span>Manutenção</span><b id="rotaManut">Retoque anual</b></div>
+          </div>
+        </div>
+        <div>
+          <button class="shade-cta" onclick="levarParaAgenda()">Reservar avaliação com esse plano</button>
+          <p class="disclaimer">A escala orienta a conversa inicial. O plano definitivo sai depois do exame clínico e das fotos em consultório.</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="treat" id="tratamentos">
+  <div class="sec-head">
+    <span class="eyebrow">O que fazemos</span>
+    <h3>Tratamentos que exigem microscópio, não força de vontade</h3>
+    <p>Cada procedimento abaixo tem protocolo escrito, materiais rastreáveis por lote e fotografia clínica em todas as etapas.</p>
+  </div>
+  <div class="tgrid" id="tgrid"></div>
+</section>
+
+<section class="book" id="agendar">
+  <div class="book-card" id="bookCard">
+    <div class="book-head">
+      <div>
+        <span class="eyebrow">Agenda real, horário confirmado</span>
+        <h3>Reserve sua avaliação</h3>
+        <p>A avaliação inclui exame clínico, fotografia e conversa sobre o plano. Dura cerca de 50 minutos e não tem custo.</p>
+      </div>
+      <div class="trail" id="trail"></div>
+    </div>
+
+    <div class="book-body">
+      <div class="book-col">
+        <span class="step">1 · O que você quer resolver</span>
+        <div class="procs" id="procs" role="group" aria-label="Procedimento de interesse"></div>
+
+        <span class="step">2 · Dia</span>
+        <div class="days" id="days" role="group" aria-label="Dias disponíveis"></div>
+
+        <span class="step">3 · Horário</span>
+        <div class="hours" id="hours" role="group" aria-label="Horários disponíveis"></div>
+      </div>
+
+      <div class="book-col">
+        <span class="step">4 · Seus dados</span>
+        <div class="fields">
+          <div class="f"><label for="nome">Nome completo</label><input type="text" id="nome" placeholder="Como está no seu documento"></div>
+          <div class="f"><label for="fone">Telefone</label><input type="tel" id="fone" placeholder="(65) 90000-0000"></div>
+          <div class="f"><label for="conv">Convênio</label>
+            <select id="conv"><option>Particular</option><option>Unimed</option><option>Amil Dental</option><option>Bradesco Dental</option><option>Outro convênio</option></select>
+          </div>
+          <div class="f"><label for="obs">Algo que a equipe precisa saber</label><textarea id="obs" placeholder="Ex: tenho medo de dentista, uso anticoagulante, já fiz clareamento antes"></textarea></div>
+          <label class="consent"><input type="checkbox" id="consent" onchange="validar()"><span>Autorizo o contato da clínica sobre esta consulta e o uso dos meus dados apenas para o atendimento.</span></label>
+          <button class="book-btn" id="bookBtn" onclick="confirmar()" disabled>Confirmar avaliação</button>
+          <p class="hint" id="hint">Escolha o procedimento, o dia e o horário.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft">
+    <div><b>Clínica OdontoPrime Cuiabá</b><br>Responsável técnico: Dr. Rafael Silveira · CRO-MT 8420<br>Ed. Top Tower · Cuiabá – MT · CRO-MT 1.482-CL</div>
+    <div>Demonstração funcional · DevStudio<br>Agenda e valores ilustrativos</div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ── escala VITA (clara → escura) ───────── */
+const ESCALA=[
+  {k:'B1',  hex:'#f5f1e6'},
+  {k:'A1',  hex:'#f0eadb'},
+  {k:'B2',  hex:'#ece2cc'},
+  {k:'A2',  hex:'#e9dfc7'},
+  {k:'D2',  hex:'#e4d9c4'},
+  {k:'A3',  hex:'#e2d5b4'},
+  {k:'B3',  hex:'#ddcda8'},
+  {k:'A3.5',hex:'#d6c39c'},
+  {k:'B4',  hex:'#d0bb8e'},
+  {k:'A4',  hex:'#c4b189'},
+  {k:'C4',  hex:'#b7a488'}
+];
+const PROCS=[
+  {k:'clareamento',rot:'Clareamento',       sub:'dentes amarelados ou manchados', dur:'50 min'},
+  {k:'lentes',     rot:'Lentes de contato', sub:'forma, tamanho ou espaços',      dur:'60 min'},
+  {k:'implante',   rot:'Implante',          sub:'dente perdido ou quebrado',      dur:'60 min'},
+  {k:'alinhador',  rot:'Alinhador invisível',sub:'dentes tortos ou apinhados',    dur:'50 min'},
+  {k:'harmoniza',  rot:'Harmonização facial',sub:'lábios e linhas de expressão',  dur:'40 min'},
+  {k:'checkup',    rot:'Check-up geral',    sub:'só quero uma avaliação',         dur:'40 min'}
+];
+const TRATAMENTOS=[
+  {t:'Lentes de contato em porcelana',d:'Facetas de 0,3 mm coladas sobre o esmalte. Você aprova a forma em resina antes de qualquer desgaste — se não gostar, a gente refaz o ensaio.',
+   m:[['Sessões','3 a 4'],['Duração','15+ anos']],img:'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=600&auto=format&fit=crop&q=70'},
+  {t:'Implante guiado por tomografia',d:'A cirurgia é planejada no computador e executada por um guia impresso. Menos corte, menos ponto e pós-operatório que costuma dispensar analgésico forte.',
+   m:[['Cirurgia','40 min'],['Osseointegração','3 a 6 meses']],img:'https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?w=600&auto=format&fit=crop&q=70'},
+  {t:'Alinhadores invisíveis',d:'Placas transparentes trocadas a cada 10 dias. Você tira pra comer e pra escovar, e acompanha a simulação do movimento desde a primeira consulta.',
+   m:[['Tratamento','6 a 18 meses'],['Retornos','a cada 8 semanas']],img:'https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=600&auto=format&fit=crop&q=70'},
+  {t:'Clareamento a laser',d:'Gel de peróxido ativado por LED com barreira gengival. Dessensibilizante aplicado na mesma sessão, que é o que evita aquela dor no dia seguinte.',
+   m:[['Sessões','1 a 3'],['Ganho médio','4 a 6 tons']],img:'https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?w=600&auto=format&fit=crop&q=70'}
+];
+
+/* ── estado ─────────────────────────────── */
+let iDe=5, iPara=1;                 /* índices na ESCALA */
+let proc=null, dia=null, hora=null;
+let dias=[], horarios=[];
+const el=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ── escala de cor ──────────────────────── */
+function dente(hex){
+  return '<svg viewBox="0 0 40 52" aria-hidden="true">'+
+    '<path d="M20 2c9 0 14 5 14 13 0 11-6 35-14 35S6 26 6 15C6 7 11 2 20 2Z" fill="'+hex+'" stroke="rgba(21,28,33,.12)"/>'+
+    '<path d="M13 8c3-2 8-2 11 0" stroke="rgba(255,255,255,.7)" stroke-width="2.5" stroke-linecap="round" fill="none"/></svg>';
+}
+function pintarEscala(){
+  el('atual').innerHTML=ESCALA.map((s,i)=>
+    '<button class="tooth" data-role="de" aria-pressed="'+(iDe===i)+'" onclick="setDe('+i+')" aria-label="Cor atual '+s.k+'">'+
+    dente(s.hex)+'<span>'+s.k+'</span></button>').join('');
+  el('alvo').innerHTML=ESCALA.map((s,i)=>
+    '<button class="tooth" data-role="alvo" aria-pressed="'+(iPara===i)+'" onclick="setPara('+i+')" aria-label="Cor desejada '+s.k+'">'+
+    dente(s.hex)+'<span>'+s.k+'</span></button>').join('');
+  el('tDe').setAttribute('fill',ESCALA[iDe].hex);
+  el('tPara').setAttribute('fill',ESCALA[iPara].hex);
+  el('deNome').textContent=ESCALA[iDe].k;
+  el('paraNome').textContent=ESCALA[iPara].k;
+  pintarRota();
+}
+function setDe(i){iDe=i;if(iPara>=iDe)iPara=Math.max(0,iDe-1);pintarEscala()}
+function setPara(i){iPara=i;if(iDe<=iPara)iDe=Math.min(ESCALA.length-1,iPara+1);pintarEscala()}
+
+function pintarRota(){
+  const salto=iDe-iPara;
+  let r;
+  if(salto<=0){
+    r={t:'Manutenção da cor',p:'Seus dentes já estão no tom que você quer. O caminho aqui é preservar: limpeza profissional e retoque leve quando a cor começar a cair.',
+       s:'1 sessão',w:'≈ 1 semana',m:'Limpeza semestral'};
+  } else if(salto<=3){
+    r={t:'Clareamento a laser',p:'Uma diferença de poucos tons responde bem ao clareamento em consultório, sem desgastar nada do dente.',
+       s:salto<=2?'1 a 2 sessões':'2 sessões',w:'≈ 3 semanas',m:'Retoque anual'};
+  } else if(salto<=6){
+    r={t:'Clareamento combinado',p:'Sessão a laser no consultório mais moldeiras para uso em casa. É o protocolo que segura saltos maiores sem sensibilidade.',
+       s:'3 sessões + 14 dias em casa',w:'≈ 6 semanas',m:'Retoque a cada 12 meses'};
+  } else {
+    r={t:'Lentes de contato dental',p:'Saltos muito grandes não se sustentam só com clareamento. Nesses casos a porcelana entrega a cor e mantém — e ainda corrige forma e espaços.',
+       s:'3 a 4 sessões',w:'≈ 4 semanas',m:'Revisão anual'};
+  }
+  el('rotaTitulo').textContent=r.t;
+  el('rotaTexto').textContent=r.p;
+  el('rotaTons').textContent = salto<=0 ? 'já no alvo' : salto+(salto===1?' tom':' tons');
+  el('rotaSessoes').textContent=r.s;
+  el('rotaTempo').textContent=r.w;
+  el('rotaManut').textContent=r.m;
+}
+function levarParaAgenda(){
+  const salto=iDe-iPara;
+  proc = salto>6 ? 'lentes' : 'clareamento';
+  pintarProcs(); validar();
+  el('agendar').scrollIntoView({behavior:'smooth',block:'start'});
+  toast('Procedimento pré-selecionado: '+PROCS.find(p=>p.k===proc).rot);
+}
+
+/* ── tratamentos ────────────────────────── */
+el('tgrid').innerHTML=TRATAMENTOS.map(t=>
+  '<article class="tcard">'+
+    '<div class="tcard-img"><img src="'+t.img+'" alt="" loading="lazy"></div>'+
+    '<div class="tcard-b"><h4>'+t.t+'</h4><p>'+t.d+'</p>'+
+      '<div class="tcard-meta">'+t.m.map(x=>'<div>'+x[0]+'<b>'+x[1]+'</b></div>').join('')+'</div>'+
+    '</div></article>').join('');
+
+/* ── agenda ─────────────────────────────── */
+const DS=['dom','seg','ter','qua','qui','sex','sáb'];
+const MS=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+const MANHA=['08:00','09:00','10:00','11:00'];
+const TARDE=['13:30','14:30','15:30','16:30','17:30'];
+/* ponytail: ocupação fixa só pra demonstrar horário indisponível — vem da agenda real */
+const OCUPADOS={0:['09:00','14:30'],1:['08:00'],2:['15:30','16:30'],3:['10:00','11:00'],4:[],5:['13:30']};
+
+function montarDias(){
+  dias=[]; const d=new Date(); d.setHours(0,0,0,0);
+  while(dias.length<6){
+    d.setDate(d.getDate()+1);
+    if(d.getDay()===0) continue;
+    dias.push({data:new Date(d),sab:d.getDay()===6});
+  }
+  el('days').innerHTML=dias.map((x,i)=>
+    '<button class="day" aria-pressed="'+(dia===i)+'" onclick="setDia('+i+')">'+
+    '<span class="w">'+DS[x.data.getDay()]+'</span>'+
+    '<span class="n">'+String(x.data.getDate()).padStart(2,'0')+'</span>'+
+    '<span class="m">'+MS[x.data.getMonth()]+'</span></button>').join('');
+}
+function montarHoras(){
+  if(dia===null){
+    el('hours').innerHTML='<p style="grid-column:1/-1;font-size:12.5px;color:var(--slate)">Escolha um dia para ver os horários livres.</p>';
+    return;
+  }
+  const d=dias[dia];
+  horarios = d.sab ? MANHA : MANHA.concat(TARDE);
+  const ocup = OCUPADOS[dia] || [];
+  el('hours').innerHTML=horarios.map(h=>{
+    const livre=ocup.indexOf(h)<0;
+    return '<button class="hour" '+(livre?'':'disabled')+' aria-pressed="'+(hora===h)+'" onclick="setHora(\''+h+'\')">'+h+'</button>';
+  }).join('');
+}
+function setProc(k){proc=k;pintarProcs();validar()}
+function pintarProcs(){
+  el('procs').innerHTML=PROCS.map(p=>
+    '<button class="proc" aria-pressed="'+(proc===p.k)+'" onclick="setProc(\''+p.k+'\')">'+
+    '<span><b>'+p.rot+'</b><small>'+p.sub+'</small></span><span class="dur">'+p.dur+'</span></button>').join('');
+}
+function setDia(i){dia=i;hora=null;montarDias();montarHoras();validar()}
+function setHora(h){hora=h;montarHoras();validar()}
+
+function pintarTrail(){
+  const passos=[proc!==null,dia!==null,hora!==null,el('consent').checked];
+  el('trail').innerHTML=passos.map((ok,i)=>
+    '<i class="'+(ok?'ok':(passos.slice(0,i).every(Boolean)?'on':''))+'">'+(ok?'✓':(i+1))+'</i>').join('')+
+    '<span>'+passos.filter(Boolean).length+' de 4</span>';
+}
+function validar(){
+  pintarTrail();
+  const ok = proc!==null && dia!==null && hora!==null && el('consent').checked;
+  el('bookBtn').disabled=!ok;
+  el('hint').textContent = ok ? 'Tudo pronto — '+quando()+'.'
+    : proc===null ? 'Escolha o procedimento, o dia e o horário.'
+    : dia===null  ? 'Agora escolha o dia da avaliação.'
+    : hora===null ? 'Falta escolher o horário.'
+    : 'Marque a autorização de contato para confirmar.';
+}
+function quando(){
+  const d=dias[dia].data;
+  return DS[d.getDay()]+', '+String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+' às '+hora;
+}
+
+/* ── confirmação: fecha na própria página ── */
+let consulta=null;
+function confirmar(){
+  const d=dias[dia].data, p=PROCS.find(x=>x.k===proc);
+  // ponytail: protocolo real vem do sistema da clínica
+  const prot='AV-'+String(new Date().getFullYear()).slice(2)+String(Math.floor(Math.random()*9000)+1000);
+  const ini=new Date(d); ini.setHours(+hora.slice(0,2),+hora.slice(3),0,0);
+  const fim=new Date(ini); fim.setMinutes(fim.getMinutes()+parseInt(p.dur,10));
+
+  consulta={prot:prot,quando:quando(),ini:ini,fim:fim,proc:p.rot,dur:p.dur,
+    nome:(el('nome').value||'').trim()||'Não informado',
+    fone:(el('fone').value||'').trim()||'Não informado',
+    conv:el('conv').value, obs:(el('obs').value||'').trim(),
+    de:ESCALA[iDe].k, para:ESCALA[iPara].k};
+
+  el('bookCard').innerHTML=
+    '<div class="done">'+
+      '<div class="done-i"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div>'+
+      '<h3>Avaliação reservada</h3>'+
+      '<p>Seu horário está bloqueado na agenda. Guarde o número abaixo para remarcar ou cancelar sem precisar explicar tudo de novo.</p>'+
+      '<div class="card-conf">'+
+        '<div class="conf-top"><div><span class="k">Protocolo</span><b>'+prot+'</b></div>'+
+          '<div class="conf-when">'+hora+'<br>'+String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'</div></div>'+
+        '<div class="conf-row"><span>Paciente</span><b>'+esc(consulta.nome)+'</b></div>'+
+        '<div class="conf-row"><span>Contato</span><b>'+esc(consulta.fone)+'</b></div>'+
+        '<div class="conf-row"><span>Procedimento</span><b>'+p.rot+'</b></div>'+
+        '<div class="conf-row"><span>Duração prevista</span><b>'+p.dur+'</b></div>'+
+        '<div class="conf-row"><span>Cobertura</span><b>'+consulta.conv+'</b></div>'+
+        '<div class="conf-row"><span>Meta de cor</span><b>'+consulta.de+' → '+consulta.para+'</b></div>'+
+      '</div>'+
+      '<div class="ways">'+
+        '<button class="way" onclick="baixarIcs()">'+
+          '<i><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"/></svg></i>'+
+          '<span>Salvar na agenda<small>Convite que abre no Google, Outlook ou iPhone</small></span></button>'+
+        '<button class="way" onclick="copiar()">'+
+          '<i><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="13" height="13" x="9" y="9" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></i>'+
+          '<span>Copiar os dados da consulta<small>Para mandar a quem vai te acompanhar</small></span></button>'+
+        '<button class="way" onclick="window.print()">'+
+          '<i><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg></i>'+
+          '<span>Imprimir o comprovante<small>Ou salvar em PDF pelo navegador</small></span></button>'+
+        '<a class="way wa" href="'+zap()+'" target="_blank" rel="noopener">'+
+          '<i><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 2.1.55 4.06 1.6 5.8L2 22l4.4-1.7a9.9 9.9 0 0 0 5.64 1.73c5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m5.8 14.15c-.24.68-1.43 1.31-1.98 1.4-.51.07-1.15.1-1.86-.12a16 16 0 0 1-1.68-.62c-2.96-1.28-4.89-4.26-5.04-4.46-.15-.2-1.2-1.6-1.2-3.05s.76-2.16 1.03-2.46c.27-.3.59-.37.78-.37h.57c.18 0 .43-.07.67.51.25.6.84 2.06.91 2.2.08.16.13.34.03.54-.1.2-.15.32-.29.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.02 1.12 1 2.06 1.31 2.36 1.46.3.15.47.13.64-.08.17-.2.74-.86.94-1.16.2-.3.39-.25.66-.15.27.1 1.72.81 2.01.96.3.15.5.22.57.35.07.12.07.72-.18 1.41"/></svg></i>'+
+          '<span>Tirar uma dúvida antes<small>A recepção responde no horário comercial</small></span></a>'+
+      '</div>'+
+      '<div class="prep"><b>Para aproveitar melhor a avaliação</b><ul>'+
+        '<li>Escove os dentes antes de vir, se puder.</li>'+
+        '<li>Traga radiografias ou moldes de tratamentos anteriores.</li>'+
+        '<li>Se usa algum medicamento contínuo, anote o nome.</li>'+
+        '<li>Chegue 10 minutos antes para o cadastro e as fotos.</li>'+
+      '</ul></div>'+
+      '<button class="again" onclick="location.reload()">Marcar outro horário</button>'+
+    '</div>';
+  el('bookCard').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function texto(){
+  const c=consulta;
+  return 'ODONTOPRIME CUIABÁ — AVALIAÇÃO '+c.prot+'\n'+
+    'Quando: '+c.quando+' ('+c.dur+')\n'+
+    'Procedimento: '+c.proc+'\n'+
+    'Paciente: '+c.nome+' · '+c.fone+'\n'+
+    'Cobertura: '+c.conv+'\n'+
+    'Meta de cor: '+c.de+' → '+c.para+
+    (c.obs?'\nObservação: '+c.obs:'')+
+    '\nLocal: Av. Historiador Rubens de Mendonça, 1.750 — Ed. Top Tower, Cuiabá/MT';
+}
+function copiar(){
+  navigator.clipboard.writeText(texto())
+    .then(()=>toast('Dados da consulta copiados'),()=>toast('Não foi possível copiar aqui'));
+}
+function z(d){return d.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z'}
+function baixarIcs(){
+  const c=consulta;
+  const corpo=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//OdontoPrime//Avaliacao//PT','BEGIN:VEVENT',
+    'UID:'+c.prot+'@odontoprime.com.br','DTSTAMP:'+z(new Date()),'DTSTART:'+z(c.ini),'DTEND:'+z(c.fim),
+    'SUMMARY:Avaliação OdontoPrime — '+c.proc,
+    'LOCATION:Av. Historiador Rubens de Mendonça 1750, Ed. Top Tower, Cuiabá - MT',
+    'DESCRIPTION:'+texto().replace(/\n/g,'\\n'),
+    'BEGIN:VALARM','TRIGGER:-PT2H','ACTION:DISPLAY','DESCRIPTION:Avaliação OdontoPrime em 2 horas','END:VALARM',
+    'END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const url=URL.createObjectURL(new Blob([corpo],{type:'text/calendar'}));
+  const a=document.createElement('a'); a.href=url; a.download='avaliacao-'+c.prot+'.ics'; a.click();
+  URL.revokeObjectURL(url);
+  toast('Convite baixado — com lembrete 2h antes');
+}
+function zap(){
+  return 'https://wa.me/5565999999999?text='+encodeURIComponent('Olá! É sobre a avaliação '+consulta.prot+' ('+consulta.quando+').');
+}
+
+let tH;
+function toast(m){const t=el('toast');t.textContent=m;t.classList.add('on');clearTimeout(tH);tH=setTimeout(()=>t.classList.remove('on'),2600)}
+
+pintarEscala(); pintarProcs(); montarDias(); montarHoras(); validar();
+
+/* verificação mínima: a escala nunca inverte e a rota acompanha o salto */
+console.assert(iDe>iPara,'a cor atual deve ser mais escura que a meta');
+(function(){
+  const de=iDe,para=iPara;
+  iDe=10;iPara=0;pintarRota();
+  console.assert(el('rotaTitulo').textContent.indexOf('Lentes')>=0,'salto grande deve indicar lentes');
+  iDe=de;iPara=para;pintarRota();
+})();
+</script>
+</body>
+</html>

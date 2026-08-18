@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KlimaCerto &amp; Solar | Dimensionamento Térmico e Energia Solar em MT</title>
+<meta name="description" content="Calculadora de carga térmica para o calor de Mato Grosso. Dimensione BTUs, veja o consumo real e agende a visita técnica com horário confirmado.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --night:#080d14; --deep:#0d141d; --panel:#121b26; --panel-2:#18232f;
+  --edge:#22303f; --edge-2:#2d3e50;
+  --ice:#7dd3fc; --cold:#38bdf8; --cool:#22d3ee;
+  --hot:#ff6b35; --ember:#f97316; --solar:#fbbf24;
+  --ok:#34d399;
+  --txt:#eef4fa; --mid:#93a6b8; --low:#5f7386;
+  --r:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--night);color:var(--txt);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:'Sora',sans-serif;letter-spacing:-.02em}
+.num{font-family:'JetBrains Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+a{color:inherit}
+button,input,select{font:inherit}
+:focus-visible{outline:2px solid var(--cool);outline-offset:3px}
+
+/* ── topo ───────────────────────────────── */
+.notice{background:#050a10;border-bottom:1px solid var(--edge);padding:8px 22px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--mid);letter-spacing:.02em}
+.notice b{color:var(--ice);font-weight:600}
+.hdr{position:sticky;top:0;z-index:50;background:rgba(8,13,20,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--edge)}
+.hdr-in{max-width:1240px;margin:0 auto;padding:14px 22px;display:flex;justify-content:space-between;align-items:center;gap:18px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand-i{width:40px;height:40px;border-radius:11px;background:linear-gradient(150deg,var(--cold),var(--cool));color:#06131c;display:grid;place-items:center;box-shadow:0 0 24px rgba(56,189,248,.28)}
+.brand h1{font-size:17px;font-weight:700;line-height:1.1}
+.brand span{font-size:10.5px;color:var(--low);letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+.hdr-nav{display:flex;gap:24px;align-items:center}
+.hdr-nav a{font-size:13.5px;color:var(--mid);text-decoration:none;font-weight:500}
+.hdr-nav a:hover{color:var(--txt)}
+.hdr-cta{background:var(--panel-2);border:1px solid var(--edge-2);color:var(--txt);border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.hdr-cta:hover{border-color:var(--cool);color:var(--ice)}
+
+/* ── abertura ───────────────────────────── */
+.top{max-width:1240px;margin:0 auto;padding:56px 22px 34px;text-align:center;position:relative}
+.top::before{content:"";position:absolute;left:50%;top:-90px;width:620px;height:300px;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(56,189,248,.16),transparent 68%);pointer-events:none}
+.pill{position:relative;display:inline-flex;align-items:center;gap:9px;border:1px solid var(--edge-2);background:var(--panel);border-radius:99px;padding:7px 15px;font-size:11.5px;color:var(--ice);letter-spacing:.08em;text-transform:uppercase;font-weight:600;margin-bottom:22px}
+.top h2{position:relative;font-size:clamp(29px,4.6vw,50px);line-height:1.06;font-weight:800;max-width:16ch;margin:0 auto}
+.top h2 .c{background:linear-gradient(96deg,var(--cold),var(--cool));-webkit-background-clip:text;background-clip:text;color:transparent}
+.top h2 .h{background:linear-gradient(96deg,var(--ember),var(--solar));-webkit-background-clip:text;background-clip:text;color:transparent}
+.top p{position:relative;color:var(--mid);font-size:15.5px;line-height:1.65;max-width:60ch;margin:20px auto 0}
+
+/* ── termômetro assinatura ──────────────── */
+.therm{max-width:1240px;margin:0 auto;padding:0 22px 8px}
+.therm-in{background:var(--deep);border:1px solid var(--edge);border-radius:var(--r);padding:20px 22px}
+.therm-top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:14px;flex-wrap:wrap}
+.therm-top h3{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--low);font-weight:600}
+.therm-read{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--mid)}
+.therm-read b{color:var(--txt)}
+.scale{position:relative;height:34px;border-radius:6px;background:linear-gradient(90deg,#0ea5e9 0%,#22d3ee 18%,#a3e635 40%,#fbbf24 62%,#f97316 82%,#dc2626 100%);overflow:visible}
+.scale-marks{display:flex;justify-content:space-between;margin-top:7px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--low)}
+.needle{position:absolute;top:-7px;bottom:-7px;width:3px;background:#fff;border-radius:2px;box-shadow:0 0 0 2px rgba(8,13,20,.85),0 0 16px rgba(255,255,255,.55);transition:left .45s cubic-bezier(.34,1.4,.5,1)}
+.needle::after{content:attr(data-l);position:absolute;top:-30px;left:50%;transform:translateX(-50%);white-space:nowrap;background:#fff;color:#0b121a;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:5px}
+
+/* ── calculadora ────────────────────────── */
+.calc{max-width:1240px;margin:0 auto;padding:26px 22px 20px;display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:start}
+.card{background:var(--deep);border:1px solid var(--edge);border-radius:var(--r);padding:24px}
+.card-h{margin-bottom:20px}
+.card-h h3{font-size:17px;font-weight:700}
+.card-h p{font-size:13px;color:var(--mid);margin-top:5px;line-height:1.55}
+
+.presets{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:24px}
+.preset{background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:11px 8px;cursor:pointer;text-align:center;transition:border-color .18s,background .18s}
+.preset:hover{border-color:var(--edge-2)}
+.preset[aria-pressed="true"]{border-color:var(--cool);background:rgba(34,211,238,.09)}
+.preset svg{color:var(--mid);margin-bottom:6px}
+.preset[aria-pressed="true"] svg{color:var(--cool)}
+.preset span{display:block;font-size:11.5px;font-weight:600;color:var(--mid)}
+.preset[aria-pressed="true"] span{color:var(--txt)}
+
+.ctrl{margin-bottom:22px}
+.ctrl-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:9px}
+.ctrl-top label{font-size:13.5px;font-weight:600}
+.ctrl-top .v{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--cool);background:var(--panel);border:1px solid var(--edge);border-radius:6px;padding:3px 10px}
+.ctrl-hint{font-size:11.5px;color:var(--low);margin-top:7px;line-height:1.5}
+input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:5px;border-radius:3px;background:var(--panel-2);outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--txt);border:4px solid var(--cool);cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.5)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--txt);border:4px solid var(--cool);cursor:pointer}
+
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.opt{background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:13px;cursor:pointer;text-align:left;transition:border-color .18s,background .18s}
+.opt:hover{border-color:var(--edge-2)}
+.opt[aria-pressed="true"]{border-color:var(--ember);background:rgba(249,115,22,.09)}
+.opt h4{font-size:13.5px;font-weight:700;margin-bottom:4px}
+.opt p{font-size:11.5px;color:var(--mid);line-height:1.45}
+.opt[aria-pressed="true"] h4{color:var(--solar)}
+
+/* ── planta do ambiente (svg) ───────────── */
+.plan{margin-top:6px;background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:16px}
+.plan-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.plan-h span{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--low);font-weight:600}
+.plan svg{width:100%;height:auto;display:block}
+
+/* ── resultado ──────────────────────────── */
+.res{position:sticky;top:88px;display:grid;gap:14px}
+.readout{background:linear-gradient(165deg,var(--panel-2),var(--deep));border:1px solid var(--edge-2);border-radius:var(--r);padding:24px;text-align:center;position:relative;overflow:hidden}
+.readout::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% -10%,rgba(56,189,248,.2),transparent 62%)}
+.readout>*{position:relative}
+.readout .lbl{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mid);font-weight:600}
+.btu{font-family:'JetBrains Mono',monospace;font-size:clamp(48px,8vw,68px);font-weight:700;line-height:1;letter-spacing:-.03em;margin:10px 0 2px;background:linear-gradient(160deg,#fff,var(--ice));-webkit-background-clip:text;background-clip:text;color:transparent}
+.btu-un{font-size:12.5px;color:var(--mid);letter-spacing:.06em}
+.model{margin-top:16px;padding-top:16px;border-top:1px solid var(--edge);font-size:13px;color:var(--ice);font-weight:600}
+
+.split{background:var(--deep);border:1px solid var(--edge);border-radius:var(--r);padding:18px}
+.split h4{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--low);font-weight:600;margin-bottom:13px}
+.bar{display:flex;height:12px;border-radius:6px;overflow:hidden;background:var(--panel);margin-bottom:12px}
+.bar i{display:block;transition:width .4s ease}
+.legend{display:grid;gap:7px}
+.legend div{display:flex;align-items:center;gap:9px;font-size:12.5px;color:var(--mid)}
+.legend i{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.legend b{margin-left:auto;font-family:'JetBrains Mono',monospace;color:var(--txt);font-weight:500}
+
+.stats{background:var(--deep);border:1px solid var(--edge);border-radius:var(--r);overflow:hidden}
+.stat{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid var(--edge);font-size:13px;color:var(--mid)}
+.stat:last-child{border-bottom:none}
+.stat b{font-family:'JetBrains Mono',monospace;color:var(--txt);font-weight:500;text-align:right}
+.stat b.good{color:var(--ok)}
+.stat b.solar{color:var(--solar)}
+.stat small{display:block;font-family:'Inter',sans-serif;font-size:10.5px;color:var(--low);margin-top:2px}
+
+.book-cta{width:100%;background:linear-gradient(100deg,var(--cold),var(--cool));color:#04121a;border:none;border-radius:var(--r);padding:17px;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:filter .18s,transform .18s}
+.book-cta:hover{filter:brightness(1.1);transform:translateY(-1px)}
+
+/* ── agendamento ────────────────────────── */
+.sched{max-width:1240px;margin:34px auto 0;padding:0 22px}
+.sched-card{background:var(--deep);border:1px solid var(--edge);border-radius:var(--r);overflow:hidden}
+.sched-head{padding:24px;border-bottom:1px solid var(--edge);display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.sched-head h3{font-size:21px;font-weight:700}
+.sched-head p{color:var(--mid);font-size:13.5px;margin-top:6px;max-width:52ch;line-height:1.6}
+.sched-carry{background:var(--panel);border:1px solid var(--edge-2);border-radius:8px;padding:11px 15px;font-size:12px;color:var(--mid);white-space:nowrap}
+.sched-carry b{display:block;font-family:'JetBrains Mono',monospace;font-size:17px;color:var(--ice);margin-top:3px}
+.sched-body{padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.step-lbl{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--low);font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:9px}
+.step-lbl i{width:19px;height:19px;border-radius:50%;background:var(--panel-2);border:1px solid var(--edge-2);color:var(--ice);display:grid;place-items:center;font-family:'JetBrains Mono',monospace;font-size:10px;font-style:normal}
+
+.days{display:grid;grid-template-columns:repeat(auto-fit,minmax(72px,1fr));gap:7px;margin-bottom:24px}
+.day{background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:10px 4px;cursor:pointer;text-align:center;transition:border-color .18s,background .18s}
+.day:hover:not(:disabled){border-color:var(--edge-2)}
+.day[aria-pressed="true"]{border-color:var(--cool);background:rgba(34,211,238,.1)}
+.day:disabled{opacity:.32;cursor:not-allowed}
+.day .dw{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--low);font-weight:600}
+.day .dd{font-family:'JetBrains Mono',monospace;font-size:19px;font-weight:700;margin:3px 0 1px}
+.day .dm{font-size:10px;color:var(--low)}
+.day[aria-pressed="true"] .dw,.day[aria-pressed="true"] .dm{color:var(--ice)}
+
+.slots{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:7px}
+.slot{background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:11px 6px;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--txt);transition:border-color .18s,background .18s}
+.slot:hover:not(:disabled){border-color:var(--edge-2)}
+.slot[aria-pressed="true"]{border-color:var(--cool);background:rgba(34,211,238,.1);color:var(--ice)}
+.slot:disabled{opacity:.3;cursor:not-allowed;text-decoration:line-through}
+.slot small{display:block;font-family:'Inter',sans-serif;font-size:10px;color:var(--low);margin-top:3px;text-decoration:none}
+
+.form-grid{display:grid;gap:13px}
+.fld label{display:block;font-size:12px;font-weight:600;color:var(--mid);margin-bottom:6px}
+.fld input,.fld select,.fld textarea{width:100%;background:var(--panel);border:1px solid var(--edge);border-radius:8px;padding:12px 13px;color:var(--txt);font-size:14px}
+.fld input::placeholder,.fld textarea::placeholder{color:var(--low)}
+.fld input:focus,.fld select:focus,.fld textarea:focus{border-color:var(--cool);outline:none}
+.fld textarea{resize:vertical;min-height:74px;font-family:'Inter',sans-serif}
+.confirm-btn{width:100%;background:var(--ok);color:#04211a;border:none;border-radius:var(--r);padding:16px;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px;transition:filter .18s}
+.confirm-btn:hover:not(:disabled){filter:brightness(1.08)}
+.confirm-btn:disabled{background:var(--panel-2);color:var(--low);cursor:not-allowed}
+.req{font-size:11.5px;color:var(--low);text-align:center;margin-top:9px;min-height:16px}
+
+/* ── confirmação ────────────────────────── */
+.done{padding:38px 24px;text-align:center;animation:rise .4s ease}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.done-ico{width:60px;height:60px;border-radius:50%;background:rgba(52,211,153,.13);border:1px solid rgba(52,211,153,.35);color:var(--ok);display:grid;place-items:center;margin:0 auto 18px}
+.done h3{font-size:24px;font-weight:800}
+.done>p{color:var(--mid);font-size:14px;line-height:1.6;max-width:46ch;margin:10px auto 24px}
+.ticket{max-width:520px;margin:0 auto 24px;background:var(--panel);border:1px solid var(--edge-2);border-radius:var(--r);overflow:hidden;text-align:left}
+.ticket-top{background:linear-gradient(100deg,var(--cold),var(--cool));color:#04121a;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;gap:14px}
+.ticket-top span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;opacity:.8}
+.ticket-top b{font-family:'JetBrains Mono',monospace;font-size:18px;display:block;margin-top:2px}
+.ticket-when{text-align:right;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700}
+.ticket-row{display:flex;justify-content:space-between;gap:14px;padding:12px 20px;border-bottom:1px solid var(--edge);font-size:13px;color:var(--mid)}
+.ticket-row:last-child{border-bottom:none}
+.ticket-row b{color:var(--txt);font-family:'JetBrains Mono',monospace;font-weight:500;text-align:right}
+.opts{max-width:520px;margin:0 auto;display:grid;gap:9px}
+.optbtn{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--edge);border-radius:9px;padding:14px 16px;cursor:pointer;text-align:left;text-decoration:none;color:var(--txt);font-size:13.5px;font-weight:600;transition:border-color .18s,background .18s}
+.optbtn:hover{border-color:var(--edge-2);background:var(--panel-2)}
+.optbtn small{display:block;font-weight:400;color:var(--mid);font-size:11.5px;margin-top:2px;line-height:1.4}
+.optbtn i{width:34px;height:34px;border-radius:8px;background:var(--panel-2);color:var(--ice);display:grid;place-items:center;flex-shrink:0}
+.optbtn.wa i{background:rgba(52,211,153,.12);color:var(--ok)}
+.again{background:none;border:none;color:var(--low);font-size:12.5px;text-decoration:underline;text-underline-offset:4px;cursor:pointer;margin-top:22px}
+
+/* ── especificações ─────────────────────── */
+.specs{max-width:1240px;margin:44px auto 0;padding:0 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.spec{background:var(--deep);border:1px solid var(--edge);border-radius:var(--r);padding:20px}
+.spec i{width:36px;height:36px;border-radius:9px;background:var(--panel-2);color:var(--ice);display:grid;place-items:center;margin-bottom:13px}
+.spec h4{font-size:14.5px;font-weight:700;margin-bottom:6px}
+.spec p{font-size:12.5px;color:var(--mid);line-height:1.6}
+
+footer{margin-top:56px;border-top:1px solid var(--edge);padding:30px 22px;background:#050a10}
+.f-in{max-width:1240px;margin:0 auto;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:12.5px;color:var(--low);line-height:1.7}
+footer b{color:var(--mid)}
+
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,180%);background:var(--panel-2);border:1px solid var(--edge-2);border-left:3px solid var(--ok);color:var(--txt);padding:13px 20px;border-radius:9px;font-size:13px;font-weight:600;z-index:120;transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.toast.on{transform:translate(-50%,0)}
+
+@media (max-width:900px){
+  .calc{grid-template-columns:1fr}
+  .res{position:static}
+  .sched-body{grid-template-columns:1fr;gap:22px}
+  .hdr-nav a{display:none}
+  .presets{grid-template-columns:repeat(2,1fr)}
+}
+@media print{
+  .hdr,.notice,.top,.therm,.calc,.specs,.opts,.again,footer,.toast{display:none!important}
+  body{background:#fff;color:#000}
+  .sched-card,.ticket{border-color:#ccc}
+  .ticket-top{background:#eee;color:#000}
+}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+</style>
+</head>
+<body>
+
+<div class="notice">
+  <span>Engenharia térmica e fotovoltaica · <b>CREA-MT 048921/D</b></span>
+  <span>Cuiabá · Várzea Grande · Sinop · Rondonópolis</span>
+</div>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <a href="#" class="brand">
+      <div class="brand-i"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <div><h1>KlimaCerto &amp; Solar</h1><span>Engenharia Térmica MT</span></div>
+    </a>
+    <nav class="hdr-nav">
+      <a href="#simulador">Simulador</a>
+      <a href="#agendar">Agendar visita</a>
+      <a href="#padrao">Padrão de instalação</a>
+    </nav>
+    <a href="#agendar" class="hdr-cta">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      Agendar visita
+    </a>
+  </div>
+</header>
+
+<section class="top">
+  <span class="pill">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg>
+    Carga térmica calculada item a item
+  </span>
+  <h2>O aparelho certo para <span class="h">40 graus</span>, não para o catálogo.</h2>
+  <p>Ar-condicionado subdimensionado nunca desliga: consome até 65% a mais e mata o compressor antes da hora. Ajuste os dados do seu ambiente e veja de onde vem cada BTU de calor.</p>
+</section>
+
+<section class="therm" aria-hidden="true">
+  <div class="therm-in">
+    <div class="therm-top">
+      <h3>Carga térmica do ambiente</h3>
+      <div class="therm-read">Total calculado: <b><span id="thermTotal">16.000</span> BTU/h</b> · classe <b id="thermClass">média</b></div>
+    </div>
+    <div class="scale"><div class="needle" id="needle" data-l="16.000" style="left:26%"></div></div>
+    <div class="scale-marks"><span>7.000</span><span>12.000</span><span>18.000</span><span>24.000</span><span>36.000</span><span>60.000</span></div>
+  </div>
+</section>
+
+<section class="calc" id="simulador">
+  <div class="card">
+    <div class="card-h">
+      <h3>Parâmetros do ambiente</h3>
+      <p>Comece por um tipo de ambiente e ajuste o que for diferente na sua casa ou empresa.</p>
+    </div>
+
+    <div class="presets" id="presets" role="group" aria-label="Tipo de ambiente"></div>
+
+    <div class="ctrl">
+      <div class="ctrl-top"><label for="area">Área do ambiente</label><span class="v" id="areaV">20 m²</span></div>
+      <input type="range" id="area" min="6" max="90" value="20" step="1">
+      <p class="ctrl-hint">Multiplique comprimento por largura. Ambientes conjugados sem porta contam como um só.</p>
+    </div>
+
+    <div class="ctrl">
+      <div class="ctrl-top"><label for="pd">Pé-direito</label><span class="v" id="pdV">2,7 m</span></div>
+      <input type="range" id="pd" min="240" max="450" value="270" step="10">
+      <p class="ctrl-hint">Forro alto guarda mais ar quente — em Cuiabá isso pesa no cálculo.</p>
+    </div>
+
+    <div class="ctrl">
+      <div class="ctrl-top"><label for="gente">Pessoas no ambiente</label><span class="v" id="genteV">2 pessoas</span></div>
+      <input type="range" id="gente" min="1" max="30" value="2" step="1">
+    </div>
+
+    <div class="ctrl">
+      <div class="ctrl-top"><label for="equip">Equipamentos ligados</label><span class="v" id="equipV">2 aparelhos</span></div>
+      <input type="range" id="equip" min="0" max="20" value="2" step="1">
+      <p class="ctrl-hint">TV, computador, forno, geladeira, estufa. Cada um vira calor dentro da sala.</p>
+    </div>
+
+    <div class="ctrl">
+      <span class="step-lbl" style="margin-bottom:9px"><i>☀</i> Insolação da parede externa</span>
+      <div class="duo" id="sol" role="group" aria-label="Insolação"></div>
+    </div>
+
+    <div class="plan">
+      <div class="plan-h"><span>Planta esquemática</span><span class="num" id="planDim" style="color:var(--mid)">4,5 × 4,5 m</span></div>
+      <svg viewBox="0 0 320 130" role="img" aria-label="Planta esquemática do ambiente com posição do sol">
+        <defs>
+          <linearGradient id="sunwall" x1="0" x2="1">
+            <stop offset="0" stop-color="#f97316" stop-opacity=".85"/><stop offset="1" stop-color="#f97316" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <rect x="60" y="18" width="200" height="94" rx="4" fill="#18232f" stroke="#2d3e50" stroke-width="1.5"/>
+        <rect id="wallSun" x="60" y="18" width="26" height="94" fill="url(#sunwall)"/>
+        <line id="wallEdge" x1="60" y1="18" x2="60" y2="112" stroke="#f97316" stroke-width="3"/>
+        <g id="sunGroup" transform="translate(28,65)">
+          <circle r="11" fill="#fbbf24"/>
+          <g stroke="#fbbf24" stroke-width="1.6" stroke-linecap="round">
+            <path d="M0-18v-5M0 18v5M-18 0h-5M18 0h5M-13-13l-3.5-3.5M13 13l3.5 3.5M13-13l3.5-3.5M-13 13l-3.5 3.5"/>
+          </g>
+        </g>
+        <rect x="236" y="30" width="18" height="26" rx="3" fill="#0d141d" stroke="#38bdf8" stroke-width="1.5"/>
+        <path d="M240 60v8M245 60v10M250 60v8" stroke="#38bdf8" stroke-width="1.4" stroke-linecap="round" opacity=".65"/>
+        <text x="245" y="86" text-anchor="middle" fill="#5f7386" font-family="JetBrains Mono, monospace" font-size="8">split</text>
+        <g id="people" fill="#93a6b8"></g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="res">
+    <div class="readout">
+      <div class="lbl">Capacidade recomendada</div>
+      <div class="btu" id="btu">12.000</div>
+      <div class="btu-un">BTU/h · fluido R-32</div>
+      <div class="model" id="model">Split Hi-Wall Inverter · 220V monofásico</div>
+    </div>
+
+    <div class="split">
+      <h4>De onde vem o calor</h4>
+      <div class="bar">
+        <i id="barBase" style="background:var(--cold)"></i>
+        <i id="barSol"  style="background:var(--ember)"></i>
+        <i id="barGente" style="background:var(--solar)"></i>
+        <i id="barEquip" style="background:var(--cool)"></i>
+      </div>
+      <div class="legend">
+        <div><i style="background:var(--cold)"></i>Volume do ambiente<b id="lgBase">—</b></div>
+        <div><i style="background:var(--ember)"></i>Insolação<b id="lgSol">—</b></div>
+        <div><i style="background:var(--solar)"></i>Pessoas<b id="lgGente">—</b></div>
+        <div><i style="background:var(--cool)"></i>Equipamentos<b id="lgEquip">—</b></div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><span>Consumo estimado<small>uso de 8h/dia com modulação inverter</small></span><b id="kwh">—</b></div>
+      <div class="stat"><span>Custo na conta de luz<small>tarifa residencial de referência</small></span><b id="custo">—</b></div>
+      <div class="stat"><span>Economia vs. convencional<small>mesmo ambiente, mesma temperatura</small></span><b class="good" id="econ">—</b></div>
+      <div class="stat"><span>Solar para zerar esse consumo<small>módulos de 550 Wp em MT</small></span><b class="solar" id="solar">—</b></div>
+    </div>
+
+    <button class="book-cta" onclick="irAgendar()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      Agendar visita com este dimensionamento
+    </button>
+  </div>
+</section>
+
+<section class="sched" id="agendar">
+  <div class="sched-card" id="schedCard">
+    <div class="sched-head">
+      <div>
+        <h3>Escolha o dia e o horário da visita</h3>
+        <p>O técnico chega com o dimensionamento já em mãos, confere a parede, a rede elétrica e o ponto de dreno. A visita e o orçamento não são cobrados.</p>
+      </div>
+      <div class="sched-carry">Dimensionamento anexado<b id="carry">12.000 BTU/h</b></div>
+    </div>
+
+    <div class="sched-body">
+      <div>
+        <span class="step-lbl"><i>1</i> Dia da visita</span>
+        <div class="days" id="days" role="group" aria-label="Dias disponíveis"></div>
+        <span class="step-lbl"><i>2</i> Janela de horário</span>
+        <div class="slots" id="slots" role="group" aria-label="Horários disponíveis"></div>
+      </div>
+
+      <div>
+        <span class="step-lbl"><i>3</i> Seus dados</span>
+        <div class="form-grid">
+          <div class="fld"><label for="nome">Nome</label><input type="text" id="nome" placeholder="Como podemos te chamar"></div>
+          <div class="fld"><label for="fone">Telefone</label><input type="tel" id="fone" placeholder="(65) 90000-0000"></div>
+          <div class="fld"><label for="cidade">Cidade</label>
+            <select id="cidade"><option>Cuiabá</option><option>Várzea Grande</option><option>Sinop</option><option>Rondonópolis</option><option>Primavera do Leste</option></select>
+          </div>
+          <div class="fld"><label for="obs">Algo que o técnico precisa saber</label><textarea id="obs" placeholder="Ex: apartamento no 8º andar, já tem infraestrutura de dreno, quero orçar solar junto"></textarea></div>
+          <button class="confirm-btn" id="confirmBtn" onclick="confirmar()" disabled>Confirmar visita técnica</button>
+          <p class="req" id="req">Escolha o dia e o horário para liberar a confirmação.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="specs" id="padrao">
+  <div class="spec">
+    <i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg></i>
+    <h4>Tubulação de cobre, sempre</h4>
+    <p>Isolamento térmico individual em cada linha e teste de estanqueidade com nitrogênio antes de carregar o gás. Nada de mangueira flexível.</p>
+  </div>
+  <div class="spec">
+    <i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></i>
+    <h4>Vácuo medido, não cronometrado</h4>
+    <p>Vacuômetro digital até menos de 500 microns. É o que tira a umidade que oxida o compressor por dentro — a falha nº 1 em instalação mal feita.</p>
+  </div>
+  <div class="spec">
+    <i><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></svg></i>
+    <h4>Solar homologado na Energisa</h4>
+    <p>Projeto, ART e todo o trâmite de acesso junto à concessionária. Você recebe o parecer aprovado antes de a obra começar.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="f-in">
+    <div><b>KlimaCerto Climatização &amp; Energia Solar MT Ltda</b><br>CREA-MT 048921/D · Av. Fernando Corrêa da Costa, Cuiabá – MT</div>
+    <div>Demonstração técnica · DevStudio<br>Cálculos ilustrativos, ajustados em vistoria</div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ── constantes de cálculo (os botões de calibração) ───────────────
+   ponytail: são estimativas de projeto — ajustadas na vistoria. */
+const BTU_M3_SOL   = 300;   /* BTU/h por m³ com parede exposta ao sol da tarde */
+const BTU_M3_SOMBRA= 230;   /* BTU/h por m³ protegido */
+const BTU_PESSOA   = 600;   /* a partir da 2ª pessoa */
+const BTU_EQUIP    = 600;
+const TARIFA       = 0.98;  /* R$/kWh residencial de referência */
+const HORAS_DIA    = 8, DIAS = 30;
+const DUTY_INV     = 0.55, DUTY_CONV = 0.75;  /* fração do tempo em carga plena */
+const W_POR_BTU_INV = 0.082, W_POR_BTU_CONV = 0.115;
+const HSP_MT       = 5.2;   /* horas de sol pleno médias em MT */
+const PERDAS_FV    = 0.80;
+const CAPACIDADES  = [7000,9000,12000,18000,22000,24000,30000,36000,48000,60000];
+
+const PRESETS=[
+  {k:'quarto',   rot:'Quarto',    area:14,pd:270,gente:2, equip:2, sol:'sombra',
+   svg:'<path d="M2 4v16M2 8h18a2 2 0 0 1 2 2v10M2 17h20M6 8v9"/>'},
+  {k:'sala',     rot:'Sala',      area:26,pd:280,gente:4, equip:3, sol:'sol',
+   svg:'<path d="M20 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v3M2 11a2 2 0 0 1 4 0v4h12v-4a2 2 0 0 1 4 0v6H2z"/>'},
+  {k:'escritorio',rot:'Escritório',area:34,pd:290,gente:8, equip:9, sol:'sol',
+   svg:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/>'},
+  {k:'loja',     rot:'Loja',      area:55,pd:340,gente:12,equip:6, sol:'sol',
+   svg:'<path d="M3 9h18l-1.5 11h-15zM3 9l2-5h14l2 5M9 13v4M15 13v4"/>'}
+];
+const SOL=[
+  {k:'sol',   h:'Sol da tarde',        p:'Parede de fachada oeste ou norte, pegando o pior do calor.'},
+  {k:'sombra',h:'Sombra ou sol da manhã',p:'Parede protegida, varanda coberta ou face sul.'}
+];
+
+/* ── estado ─────────────────────────────── */
+let st={preset:'sala',area:26,pd:280,gente:4,equip:3,sol:'sol'};
+let calc={};
+let dia=null, hora=null;
+const el=id=>document.getElementById(id);
+const nf=n=>n.toLocaleString('pt-BR');
+const brl=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0});
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ── cálculo térmico ────────────────────── */
+function calcular(){
+  const vol=st.area*(st.pd/100);
+  const base  = Math.round(vol*BTU_M3_SOMBRA);
+  const solEx = st.sol==='sol' ? Math.round(vol*(BTU_M3_SOL-BTU_M3_SOMBRA)) : 0;
+  const gente = Math.max(0,st.gente-1)*BTU_PESSOA;
+  const equip = st.equip*BTU_EQUIP;
+  const total = base+solEx+gente+equip;
+
+  const cap = CAPACIDADES.find(c=>c>=total) || CAPACIDADES[CAPACIDADES.length-1];
+  const wInv  = cap*W_POR_BTU_INV;
+  const wConv = cap*W_POR_BTU_CONV;
+  const kwhInv  = wInv *HORAS_DIA*DIAS*DUTY_INV /1000;
+  const kwhConv = wConv*HORAS_DIA*DIAS*DUTY_CONV/1000;
+  const paineis = Math.ceil(kwhInv/(0.55*HSP_MT*DIAS*PERDAS_FV));
+
+  calc={vol,base,solEx,gente,equip,total,cap,kwhInv,kwhConv,
+        custo:kwhInv*TARIFA, econAno:(kwhConv-kwhInv)*TARIFA*12, paineis};
+  return calc;
+}
+
+function classeBTU(c){
+  if(c<=9000)  return 'leve';
+  if(c<=18000) return 'média';
+  if(c<=24000) return 'alta';
+  return 'comercial';
+}
+function modeloTexto(c){
+  if(c<=12000) return 'Split Hi-Wall Inverter · 220 V monofásico';
+  if(c<=24000) return 'Split Hi-Wall Inverter · circuito dedicado 20 A';
+  if(c<=36000) return 'Piso-teto Inverter · circuito dedicado 32 A';
+  return 'Cassete ou piso-teto Inverter · avaliar entrada trifásica';
+}
+
+/* ── pintura da interface ───────────────── */
+function pintar(){
+  const c=calcular();
+
+  el('areaV').textContent  = st.area+' m²';
+  el('pdV').textContent    = (st.pd/100).toFixed(2).replace('.',',')+' m';
+  el('genteV').textContent = st.gente+(st.gente>1?' pessoas':' pessoa');
+  el('equipV').textContent = st.equip+(st.equip===1?' aparelho':' aparelhos');
+  const lado=Math.sqrt(st.area);
+  el('planDim').textContent=lado.toFixed(1).replace('.',',')+' × '+lado.toFixed(1).replace('.',',')+' m';
+
+  el('btu').textContent   = nf(c.cap);
+  el('model').textContent = modeloTexto(c.cap);
+  el('carry').textContent = nf(c.cap)+' BTU/h';
+
+  /* termômetro: posição logarítmica entre 7k e 60k */
+  const p=Math.max(0,Math.min(1,(Math.log(c.total)-Math.log(7000))/(Math.log(60000)-Math.log(7000))));
+  const n=el('needle');
+  n.style.left=(p*100).toFixed(1)+'%';
+  n.dataset.l=nf(c.total);
+  el('thermTotal').textContent=nf(c.total);
+  el('thermClass').textContent=classeBTU(c.cap);
+
+  /* composição da carga */
+  const pc=v=>(v/c.total*100).toFixed(1)+'%';
+  el('barBase').style.width =pc(c.base);
+  el('barSol').style.width  =pc(c.solEx);
+  el('barGente').style.width=pc(c.gente);
+  el('barEquip').style.width=pc(c.equip);
+  el('lgBase').textContent =nf(c.base)+' BTU';
+  el('lgSol').textContent  =c.solEx?nf(c.solEx)+' BTU':'sem exposição';
+  el('lgGente').textContent=nf(c.gente)+' BTU';
+  el('lgEquip').textContent=nf(c.equip)+' BTU';
+
+  el('kwh').textContent  =Math.round(c.kwhInv)+' kWh/mês';
+  el('custo').textContent=brl(c.custo)+'/mês';
+  el('econ').textContent =brl(c.econAno)+'/ano';
+  el('solar').textContent=c.paineis+(c.paineis===1?' módulo':' módulos');
+
+  /* planta: parede de sol e bonequinhos */
+  const solOn=st.sol==='sol';
+  el('wallSun').setAttribute('opacity',solOn?'1':'0');
+  el('wallEdge').setAttribute('stroke',solOn?'#f97316':'#2d3e50');
+  el('sunGroup').setAttribute('opacity',solOn?'1':'.25');
+  const q=Math.min(st.gente,10);
+  let g='';
+  for(let i=0;i<q;i++){
+    const x=100+(i%5)*30, y=48+Math.floor(i/5)*34;
+    g+='<g transform="translate('+x+','+y+')"><circle cy="-6" r="4.2"/><path d="M0 -1v10M-5 3h10" stroke="#93a6b8" stroke-width="2" stroke-linecap="round" fill="none"/></g>';
+  }
+  el('people').innerHTML=g;
+}
+
+/* ── controles ──────────────────────────── */
+function pintarPresets(){
+  el('presets').innerHTML=PRESETS.map(p=>
+    '<button class="preset" aria-pressed="'+(st.preset===p.k)+'" onclick="usarPreset(\''+p.k+'\')">'+
+    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">'+p.svg+'</svg>'+
+    '<span>'+p.rot+'</span></button>').join('');
+}
+function usarPreset(k){
+  const p=PRESETS.find(x=>x.k===k);
+  st={preset:k,area:p.area,pd:p.pd,gente:p.gente,equip:p.equip,sol:p.sol};
+  el('area').value=p.area; el('pd').value=p.pd; el('gente').value=p.gente; el('equip').value=p.equip;
+  pintarPresets(); pintarSol(); pintar();
+}
+function pintarSol(){
+  el('sol').innerHTML=SOL.map(s=>
+    '<button class="opt" aria-pressed="'+(st.sol===s.k)+'" onclick="setSol(\''+s.k+'\')">'+
+    '<h4>'+s.h+'</h4><p>'+s.p+'</p></button>').join('');
+}
+function setSol(k){st.sol=k;st.preset=null;pintarPresets();pintarSol();pintar()}
+
+['area','pd','gente','equip'].forEach(id=>{
+  el(id).addEventListener('input',e=>{
+    st[id]=parseInt(e.target.value,10); st.preset=null; pintarPresets(); pintar();
+  });
+});
+
+/* ── agenda ─────────────────────────────── */
+const DS=['dom','seg','ter','qua','qui','sex','sáb'];
+const MS=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+const JANELAS=[
+  {h:'07:30',f:'09:30',rot:'manhã cedo'},
+  {h:'09:30',f:'11:30',rot:'meio da manhã'},
+  {h:'13:30',f:'15:30',rot:'início da tarde'},
+  {h:'15:30',f:'17:30',rot:'fim da tarde'}
+];
+let dias=[];
+function montarDias(){
+  dias=[]; const d=new Date(); d.setHours(0,0,0,0);
+  while(dias.length<6){
+    d.setDate(d.getDate()+1);
+    if(d.getDay()===0) continue;                    /* não atende domingo */
+    const sab=d.getDay()===6;
+    dias.push({data:new Date(d),sab:sab,vagas:sab?1:JANELAS.length});
+  }
+  el('days').innerHTML=dias.map((x,i)=>
+    '<button class="day" aria-pressed="'+(dia===i)+'" onclick="setDia('+i+')">'+
+    '<span class="dw">'+DS[x.data.getDay()]+'</span>'+
+    '<span class="dd">'+String(x.data.getDate()).padStart(2,'0')+'</span>'+
+    '<span class="dm">'+MS[x.data.getMonth()]+'</span></button>').join('');
+}
+function setDia(i){dia=i;hora=null;montarDias();montarSlots();validar()}
+function montarSlots(){
+  if(dia===null){
+    el('slots').innerHTML='<p style="font-size:12.5px;color:var(--low);grid-column:1/-1">Escolha um dia para ver as janelas livres.</p>';
+    return;
+  }
+  const d=dias[dia];
+  el('slots').innerHTML=JANELAS.map((j,i)=>{
+    const livre = d.sab ? i===0 : true;             /* sábado só de manhã cedo */
+    return '<button class="slot" '+(livre?'':'disabled')+' aria-pressed="'+(hora===i)+'" onclick="setHora('+i+')">'+
+      j.h+'–'+j.f+'<small>'+(livre?j.rot:'sem equipe')+'</small></button>';
+  }).join('');
+}
+function setHora(i){hora=i;montarSlots();validar()}
+function validar(){
+  const ok=dia!==null&&hora!==null;
+  el('confirmBtn').disabled=!ok;
+  el('req').textContent = ok
+    ? 'Visita para '+quandoTexto()+'. Você recebe o comprovante aqui na tela.'
+    : (dia===null?'Escolha o dia e o horário para liberar a confirmação.':'Falta escolher a janela de horário.');
+}
+function quandoTexto(){
+  const d=dias[dia].data, j=JANELAS[hora];
+  return DS[d.getDay()]+', '+String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+' entre '+j.h+' e '+j.f;
+}
+function irAgendar(){
+  el('agendar').scrollIntoView({behavior:'smooth',block:'start'});
+  if(dia===null){setTimeout(()=>el('days').querySelector('.day').focus(),420)}
+}
+
+/* ── confirmação: o fecho fica na página ── */
+let ordem=null;
+function confirmar(){
+  const c=calc, d=dias[dia].data, j=JANELAS[hora];
+  // ponytail: numeração real vem do sistema de ordens de serviço
+  const os='VT-'+String(new Date().getFullYear()).slice(2)+'-'+String(Math.floor(Math.random()*9000)+1000);
+  const inicio=new Date(d); inicio.setHours(+j.h.slice(0,2),+j.h.slice(3),0,0);
+  const fim=new Date(d);    fim.setHours(+j.f.slice(0,2),+j.f.slice(3),0,0);
+
+  ordem={os:os,quando:quandoTexto(),inicio:inicio,fim:fim,
+    nome:(el('nome').value||'').trim()||'Não informado',
+    fone:(el('fone').value||'').trim()||'Não informado',
+    cidade:el('cidade').value,
+    obs:(el('obs').value||'').trim(),
+    cap:c.cap,kwh:Math.round(c.kwhInv),custo:c.custo,paineis:c.paineis,
+    area:st.area,pd:(st.pd/100).toFixed(2).replace('.',','),gente:st.gente,
+    sol:st.sol==='sol'?'sol da tarde':'sombra / sol da manhã'};
+
+  el('schedCard').innerHTML=
+    '<div class="done">'+
+      '<div class="done-ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div>'+
+      '<h3>Visita confirmada</h3>'+
+      '<p>A equipe recebeu seu dimensionamento junto com o endereço. Se precisar remarcar, use o número da ordem abaixo.</p>'+
+      '<div class="ticket">'+
+        '<div class="ticket-top"><div><span>Ordem de visita</span><b>'+os+'</b></div>'+
+          '<div class="ticket-when">'+j.h+' – '+j.f+'<br>'+String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'</div></div>'+
+        '<div class="ticket-row"><span>Cliente</span><b>'+esc(ordem.nome)+'</b></div>'+
+        '<div class="ticket-row"><span>Contato</span><b>'+esc(ordem.fone)+'</b></div>'+
+        '<div class="ticket-row"><span>Cidade</span><b>'+ordem.cidade+'</b></div>'+
+        '<div class="ticket-row"><span>Ambiente</span><b>'+st.area+' m² · pé-direito '+ordem.pd+' m</b></div>'+
+        '<div class="ticket-row"><span>Insolação</span><b>'+ordem.sol+'</b></div>'+
+        '<div class="ticket-row"><span>Capacidade indicada</span><b>'+nf(c.cap)+' BTU/h inverter</b></div>'+
+        '<div class="ticket-row"><span>Consumo previsto</span><b>'+Math.round(c.kwhInv)+' kWh · '+brl(c.custo)+'/mês</b></div>'+
+      '</div>'+
+      '<div class="opts">'+
+        '<button class="optbtn" onclick="baixarIcs()">'+
+          '<i><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M12 14v4M10 16h4"/></svg></i>'+
+          '<span>Salvar na minha agenda<small>Baixa um convite que abre no Google, Outlook ou iPhone</small></span></button>'+
+        '<button class="optbtn" onclick="copiarResumo()">'+
+          '<i><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect width="13" height="13" x="9" y="9" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></i>'+
+          '<span>Copiar o dimensionamento<small>O laudo em texto, para mandar a quem decide a compra</small></span></button>'+
+        '<button class="optbtn" onclick="window.print()">'+
+          '<i><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg></i>'+
+          '<span>Imprimir o comprovante<small>Ou salvar em PDF pelo próprio navegador</small></span></button>'+
+        '<a class="optbtn wa" href="'+zap()+'" target="_blank" rel="noopener">'+
+          '<i><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 2.1.55 4.06 1.6 5.8L2 22l4.4-1.7a9.9 9.9 0 0 0 5.64 1.73c5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2m5.8 14.15c-.24.68-1.43 1.31-1.98 1.4-.51.07-1.15.1-1.86-.12a16 16 0 0 1-1.68-.62c-2.96-1.28-4.89-4.26-5.04-4.46-.15-.2-1.2-1.6-1.2-3.05s.76-2.16 1.03-2.46c.27-.3.59-.37.78-.37h.57c.18 0 .43-.07.67.51.25.6.84 2.06.91 2.2.08.16.13.34.03.54-.1.2-.15.32-.29.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.3.76 1.25 1.63 2.02 1.12 1 2.06 1.31 2.36 1.46.3.15.47.13.64-.08.17-.2.74-.86.94-1.16.2-.3.39-.25.66-.15.27.1 1.72.81 2.01.96.3.15.5.22.57.35.07.12.07.72-.18 1.41"/></svg></i>'+
+          '<span>Falar com o técnico antes<small>Se quiser adiantar alguma dúvida pelo WhatsApp</small></span></a>'+
+      '</div>'+
+      '<button class="again" onclick="location.reload()">Simular outro ambiente</button>'+
+    '</div>';
+  el('schedCard').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function resumoTexto(){
+  const o=ordem;
+  return 'KLIMACERTO & SOLAR — VISITA TÉCNICA '+o.os+'\n'+
+    'Quando: '+o.quando+'\n'+
+    'Cliente: '+o.nome+' · '+o.fone+' · '+o.cidade+'\n\n'+
+    'DIMENSIONAMENTO\n'+
+    'Ambiente: '+o.area+' m², pé-direito '+o.pd+' m\n'+
+    'Ocupação: '+o.gente+' pessoa(s) · insolação: '+o.sol+'\n'+
+    'Capacidade indicada: '+nf(o.cap)+' BTU/h inverter\n'+
+    'Consumo previsto: '+o.kwh+' kWh/mês ('+brl(o.custo)+')\n'+
+    'Solar equivalente: '+o.paineis+' módulo(s) de 550 Wp'+
+    (o.obs?'\n\nObservação: '+o.obs:'');
+}
+function copiarResumo(){
+  navigator.clipboard.writeText(resumoTexto())
+    .then(()=>toast('Dimensionamento copiado'),()=>toast('Não foi possível copiar aqui'));
+}
+function ics(d){return d.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z'}
+function baixarIcs(){
+  const o=ordem;
+  const corpo=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//KlimaCerto MT//Visita Tecnica//PT',
+    'BEGIN:VEVENT','UID:'+o.os+'@klimacerto.com.br','DTSTAMP:'+ics(new Date()),
+    'DTSTART:'+ics(o.inicio),'DTEND:'+ics(o.fim),
+    'SUMMARY:Visita técnica KlimaCerto ('+o.os+')',
+    'LOCATION:'+o.cidade+' - MT',
+    'DESCRIPTION:'+resumoTexto().replace(/\n/g,'\\n'),
+    'END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const url=URL.createObjectURL(new Blob([corpo],{type:'text/calendar'}));
+  const a=document.createElement('a');
+  a.href=url; a.download='visita-'+o.os+'.ics'; a.click();
+  URL.revokeObjectURL(url);
+  toast('Convite baixado — abra para adicionar na agenda');
+}
+function zap(){
+  return 'https://wa.me/5565999999999?text='+encodeURIComponent('Olá! Sobre a visita '+ordem.os+' ('+ordem.quando+').');
+}
+
+let tH;
+function toast(m){const t=el('toast');t.textContent=m;t.classList.add('on');clearTimeout(tH);tH=setTimeout(()=>t.classList.remove('on'),2600)}
+
+/* ── início ─────────────────────────────── */
+pintarPresets(); pintarSol(); pintar(); montarDias(); montarSlots(); validar();
+
+/* verificação mínima: carga sobe com sol e a capacidade é comercial */
+(function(){
+  const antes=JSON.stringify(st);
+  st.sol='sombra'; const a=calcular().total;
+  st.sol='sol';    const b=calcular().total;
+  console.assert(b>a,'insolação deve aumentar a carga térmica');
+  console.assert(CAPACIDADES.indexOf(calcular().cap)>=0,'capacidade precisa ser comercial');
+  st=JSON.parse(antes); calcular();
+})();
+</script>
+</body>
+</html>
